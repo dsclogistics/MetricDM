@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ad927e3485cb419b8834d99659831941" Name="Diagram1">
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.DSC_CUST_ACCT" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.DSC_LC" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.DSC_MTRC_LC_BLDG" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_BLDG_MTRC_PERIOD" Width="1.5" PointX="5.25" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_DATA_SRC" Width="1.5" PointX="3" PointY="26.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_DATA_TYPE" Width="1.5" PointX="1.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_METRIC" Width="1.5" PointX="0.75" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_METRIC_HIERARCHY" Width="1.5" PointX="5.25" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_METRIC_PERIOD" Width="1.5" PointX="3" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_METRIC_PERIOD_VALUE" Width="1.5" PointX="8.25" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_METRIC_PRODUCTS" Width="1.5" PointX="8.25" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_MGMT_AUTH" Width="1.5" PointX="10.5" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_MPBG" Width="1.5" PointX="5.25" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_MPG" Width="1.5" PointX="11.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_PRODUCT" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_TIME_PERIOD_TYPE" Width="1.5" PointX="0.75" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_TM_PERIODS" Width="1.5" PointX="3" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.RZ_MTRC_PERIOD_STATUS" Width="1.5" PointX="8.25" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.RZ_MTRC_PERIOD_VAL_GOAL" Width="1.5" PointX="10.5" PointY="20.875" IsExpanded="true" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship8" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship14" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship16" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship28" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship15" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship17" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship13" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship5" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship10" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship11" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship12" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship18" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship24" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship27" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship29" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship6" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship20" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship32" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship26" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship3" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship31" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship30" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship21" ManuallyRouted="false" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship22" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,1596 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DSC_MTRC_DEVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DSC_CUST_ACCT">
+          <Key>
+            <PropertyRef Name="dsc_cust_id" />
+          </Key>
+          <Property Name="dsc_cust_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dsc_cust_acct" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="dsc_cust_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="dsc_cust_parent_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="dsc_cust_eff_end_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DSC_LC">
+          <Key>
+            <PropertyRef Name="dsc_lc_id" />
+          </Key>
+          <Property Name="dsc_lc_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dsc_lc_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="dsc_lc_code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="dsc_lc_timezone" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="dsc_lc_eff_end_date" Type="date" />
+        </EntityType>
+        <EntityType Name="DSC_MTRC_LC_BLDG">
+          <Key>
+            <PropertyRef Name="dsc_mtrc_lc_bldg_id" />
+          </Key>
+          <Property Name="dsc_mtrc_lc_bldg_id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dsc_lc_id" Type="int" Nullable="false" />
+          <Property Name="dsc_mtrc_lc_bldg_name" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="dsc_mtrc_lc_bldg_code" Type="varchar" MaxLength="15" />
+          <Property Name="dsc_mtrc_lc_bldg_eff_start_dt" Type="date" Nullable="false" />
+          <Property Name="dsc_mtrc_lc_bldg_eff_end_dt" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MTRC_BLDG_MTRC_PERIOD">
+          <Key>
+            <PropertyRef Name="bmp_id" />
+          </Key>
+          <Property Name="bmp_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="data_src_id" Type="smallint" />
+          <Property Name="dsc_mtrc_lc_bldg_id" Type="smallint" />
+          <Property Name="mtrc_period_id" Type="int" Nullable="false" />
+          <Property Name="bmp_is_editable_yn" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="bmp_is_manual_yn" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="bmp_na_allow_yn" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MTRC_DATA_SRC">
+          <Key>
+            <PropertyRef Name="data_src_id" />
+          </Key>
+          <Property Name="data_src_id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="data_src_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="data_src_desc" Type="varchar" MaxLength="250" />
+          <Property Name="data_src_type" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="data_src_conn_str" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="MTRC_DATA_TYPE">
+          <Key>
+            <PropertyRef Name="data_type_id" />
+          </Key>
+          <Property Name="data_type_id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="data_type_name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="data_type_token" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="data_type_num_yn" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MTRC_METRIC">
+          <Key>
+            <PropertyRef Name="mtrc_id" />
+          </Key>
+          <Property Name="mtrc_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="data_type_id" Type="smallint" Nullable="false" />
+          <Property Name="mtrc_name" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="mtrc_token" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="mtrc_desc" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="mtrc_eff_start_dt" Type="date" Nullable="false" />
+          <Property Name="mtrc_eff_end_dt" Type="date" Nullable="false" />
+          <Property Name="mtrc_min_val" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="mtrc_max_val" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="mtrc_max_dec_places" Type="smallint" />
+          <Property Name="mtrc_max_str_size" Type="smallint" />
+          <Property Name="mtrc_na_allow_yn" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MTRC_METRIC_HIERARCHY">
+          <Key>
+            <PropertyRef Name="mtrc_hier_id" />
+          </Key>
+          <Property Name="mtrc_hier_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mtrc_period_id_parent" Type="int" Nullable="false" />
+          <Property Name="mtrc_period_id_child" Type="int" Nullable="false" />
+          <Property Name="mtrc_hier_type" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MTRC_METRIC_PERIOD">
+          <Key>
+            <PropertyRef Name="mtrc_period_id" />
+          </Key>
+          <Property Name="mtrc_period_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mtrc_id" Type="int" Nullable="false" />
+          <Property Name="tpt_id" Type="smallint" Nullable="false" />
+          <Property Name="mtrc_period_name" Type="varchar" MaxLength="35" />
+          <Property Name="mtrc_period_token" Type="varchar" MaxLength="35" />
+          <Property Name="mtrc_period_desc" Type="varchar" MaxLength="250" />
+          <Property Name="mtrc_period_calc_yn" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="mtrc_period_min_val" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="mtrc_period_max_val" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="mtrc_period_max_dec_places" Type="smallint" />
+          <Property Name="mtrc_period_max_str_size" Type="smallint" />
+          <Property Name="mtrc_period_na_allow_yn" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="mtrc_period_can_import_yn" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="mtrc_period_is_auto_yn" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MTRC_METRIC_PERIOD_VALUE">
+          <Key>
+            <PropertyRef Name="mtrc_period_val_id" />
+          </Key>
+          <Property Name="mtrc_period_val_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mtrc_period_id" Type="int" Nullable="false" />
+          <Property Name="dsc_mtrc_lc_bldg_id" Type="smallint" Nullable="false" />
+          <Property Name="tm_period_id" Type="int" />
+          <Property Name="mtrc_period_val_added_dtm" Type="datetime" Nullable="false" />
+          <Property Name="mtrc_period_val_added_by_usr_id" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="mtrc_period_val_upd_dtm" Type="datetime" />
+          <Property Name="mtrc_period_val_upd_by_user_id" Type="varchar" MaxLength="70" />
+          <Property Name="mtrc_period_val_is_na_yn" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="mtrc_period_val_value" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MTRC_METRIC_PRODUCTS">
+          <Key>
+            <PropertyRef Name="mtrc_prod_id" />
+          </Key>
+          <Property Name="mtrc_prod_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prod_id" Type="smallint" Nullable="false" />
+          <Property Name="mtrc_period_id" Type="int" Nullable="false" />
+          <Property Name="mtrc_prod_top_lvl_parent_yn" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="mtrc_prod_display_text" Type="varchar" MaxLength="35" />
+          <Property Name="mtrc_prod_display_order" Type="smallint" />
+          <Property Name="mtrc_prod_eff_start_dt" Type="date" Nullable="false" />
+          <Property Name="mtrc_prod_eff_end_dt" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MTRC_MGMT_AUTH">
+          <Key>
+            <PropertyRef Name="mma_id" />
+          </Key>
+          <Property Name="mma_id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mtrc_prod_id" Type="int" Nullable="false" />
+          <Property Name="mma_dsc_ad_username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="mma_eff_start_date" Type="date" Nullable="false" />
+          <Property Name="mma_eff_end_date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MTRC_MPBG">
+          <Key>
+            <PropertyRef Name="mpbg_id" />
+          </Key>
+          <Property Name="mpbg_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dsc_mtrc_lc_bldg_id" Type="smallint" Nullable="false" />
+          <Property Name="mtrc_period_id" Type="int" Nullable="false" />
+          <Property Name="prod_id" Type="smallint" Nullable="false" />
+          <Property Name="mpbg_less_val" Type="decimal" Precision="20" Scale="6" />
+          <Property Name="mpbg_less_eq_val" Type="decimal" Precision="20" Scale="6" />
+          <Property Name="mpbg_greater_val" Type="decimal" Precision="20" Scale="6" />
+          <Property Name="mpbg_greater_eq_val" Type="decimal" Precision="20" Scale="6" />
+          <Property Name="mpbg_equal_val" Type="varchar" MaxLength="100" />
+          <Property Name="mpbg_score" Type="int" Nullable="false" />
+          <Property Name="mpbg_display_text" Type="varchar" MaxLength="50" />
+          <Property Name="mpbg_start_eff_dtm" Type="datetime" Nullable="false" />
+          <Property Name="mpbg_end_eff_dtm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MTRC_MPG">
+          <Key>
+            <PropertyRef Name="mpg_id" />
+          </Key>
+          <Property Name="mpg_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mtrc_period_id" Type="int" Nullable="false" />
+          <Property Name="prod_id" Type="smallint" />
+          <Property Name="mpg_less_val" Type="decimal" Precision="20" Scale="6" />
+          <Property Name="mpg_less_eq_val" Type="decimal" Precision="20" Scale="6" />
+          <Property Name="mpg_greater_val" Type="decimal" Precision="20" Scale="6" />
+          <Property Name="mpg_greater_eq_val" Type="decimal" Precision="20" Scale="6" />
+          <Property Name="mpg_equal_val" Type="varchar" MaxLength="100" />
+          <Property Name="mpg_score" Type="int" Nullable="false" />
+          <Property Name="mpg_display_text" Type="varchar" MaxLength="50" />
+          <Property Name="mpg_allow_bldg_override" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="mpg_start_eff_dtm" Type="datetime" Nullable="false" />
+          <Property Name="mpg_end_eff_dtm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MTRC_PRODUCT">
+          <Key>
+            <PropertyRef Name="prod_id" />
+          </Key>
+          <Property Name="prod_id" Type="smallint" Nullable="false" />
+          <Property Name="prod_name" Type="varchar" MaxLength="35" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MTRC_TIME_PERIOD_TYPE">
+          <Key>
+            <PropertyRef Name="tpt_id" />
+          </Key>
+          <Property Name="tpt_id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tpt_name" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MTRC_TM_PERIODS">
+          <Key>
+            <PropertyRef Name="tm_period_id" />
+          </Key>
+          <Property Name="tm_period_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tpt_id" Type="smallint" />
+          <Property Name="tm_per_start_dtm" Type="datetime" Nullable="false" />
+          <Property Name="tm_per_end_dtm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DSC_MTRC_DEV.dbo.MTRC_WMS_BLDG_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RZ_MTRC_PERIOD_STATUS">
+          <Key>
+            <PropertyRef Name="rz_mps_id" />
+          </Key>
+          <Property Name="rz_mps_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tm_period_id" Type="int" Nullable="false" />
+          <Property Name="mtrc_period_id" Type="int" Nullable="false" />
+          <Property Name="rz_mps_status" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="rz_mps_opened_on_dtm" Type="datetime" />
+          <Property Name="rz_mps_closed_on_dtm" Type="datetime" />
+          <Property Name="rz_mps_closed_by_usr_id" Type="varchar" MaxLength="70" />
+        </EntityType>
+        <EntityType Name="RZ_MTRC_PERIOD_VAL_GOAL">
+          <Key>
+            <PropertyRef Name="rz_mpvg_id" />
+          </Key>
+          <Property Name="rz_mpvg_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mtrc_period_val_id" Type="bigint" Nullable="false" />
+          <Property Name="rz_mpvg_goal_met_yn" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="rz_mpvg_created_dtm" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="relationship10">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="MTRC_METRIC_HIERARCHY" Type="Self.MTRC_METRIC_HIERARCHY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_HIERARCHY">
+              <PropertyRef Name="mtrc_period_id_parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship11">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="MTRC_METRIC_HIERARCHY" Type="Self.MTRC_METRIC_HIERARCHY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_HIERARCHY">
+              <PropertyRef Name="mtrc_period_id_child" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship12">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="MTRC_METRIC_PERIOD_VALUE" Type="Self.MTRC_METRIC_PERIOD_VALUE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PERIOD_VALUE">
+              <PropertyRef Name="mtrc_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship13">
+          <End Role="MTRC_DATA_TYPE" Type="Self.MTRC_DATA_TYPE" Multiplicity="1" />
+          <End Role="MTRC_METRIC" Type="Self.MTRC_METRIC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_DATA_TYPE">
+              <PropertyRef Name="data_type_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC">
+              <PropertyRef Name="data_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship14">
+          <End Role="DSC_MTRC_LC_BLDG" Type="Self.DSC_MTRC_LC_BLDG" Multiplicity="1" />
+          <End Role="MTRC_METRIC_PERIOD_VALUE" Type="Self.MTRC_METRIC_PERIOD_VALUE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DSC_MTRC_LC_BLDG">
+              <PropertyRef Name="dsc_mtrc_lc_bldg_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PERIOD_VALUE">
+              <PropertyRef Name="dsc_mtrc_lc_bldg_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship15">
+          <End Role="MTRC_DATA_SRC" Type="Self.MTRC_DATA_SRC" Multiplicity="0..1" />
+          <End Role="MTRC_BLDG_MTRC_PERIOD" Type="Self.MTRC_BLDG_MTRC_PERIOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_DATA_SRC">
+              <PropertyRef Name="data_src_id" />
+            </Principal>
+            <Dependent Role="MTRC_BLDG_MTRC_PERIOD">
+              <PropertyRef Name="data_src_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship16">
+          <End Role="DSC_MTRC_LC_BLDG" Type="Self.DSC_MTRC_LC_BLDG" Multiplicity="0..1" />
+          <End Role="MTRC_BLDG_MTRC_PERIOD" Type="Self.MTRC_BLDG_MTRC_PERIOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DSC_MTRC_LC_BLDG">
+              <PropertyRef Name="dsc_mtrc_lc_bldg_id" />
+            </Principal>
+            <Dependent Role="MTRC_BLDG_MTRC_PERIOD">
+              <PropertyRef Name="dsc_mtrc_lc_bldg_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship17">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="MTRC_BLDG_MTRC_PERIOD" Type="Self.MTRC_BLDG_MTRC_PERIOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_BLDG_MTRC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship18">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="MTRC_METRIC_PRODUCTS" Type="Self.MTRC_METRIC_PRODUCTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PRODUCTS">
+              <PropertyRef Name="mtrc_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship20">
+          <End Role="MTRC_TM_PERIODS" Type="Self.MTRC_TM_PERIODS" Multiplicity="0..1" />
+          <End Role="MTRC_METRIC_PERIOD_VALUE" Type="Self.MTRC_METRIC_PERIOD_VALUE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_TM_PERIODS">
+              <PropertyRef Name="tm_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PERIOD_VALUE">
+              <PropertyRef Name="tm_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship21">
+          <End Role="MTRC_TIME_PERIOD_TYPE" Type="Self.MTRC_TIME_PERIOD_TYPE" Multiplicity="0..1" />
+          <End Role="MTRC_TM_PERIODS" Type="Self.MTRC_TM_PERIODS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_TIME_PERIOD_TYPE">
+              <PropertyRef Name="tpt_id" />
+            </Principal>
+            <Dependent Role="MTRC_TM_PERIODS">
+              <PropertyRef Name="tpt_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship22">
+          <End Role="MTRC_TM_PERIODS" Type="Self.MTRC_TM_PERIODS" Multiplicity="1" />
+          <End Role="RZ_MTRC_PERIOD_STATUS" Type="Self.RZ_MTRC_PERIOD_STATUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_TM_PERIODS">
+              <PropertyRef Name="tm_period_id" />
+            </Principal>
+            <Dependent Role="RZ_MTRC_PERIOD_STATUS">
+              <PropertyRef Name="tm_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship24">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="RZ_MTRC_PERIOD_STATUS" Type="Self.RZ_MTRC_PERIOD_STATUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="RZ_MTRC_PERIOD_STATUS">
+              <PropertyRef Name="mtrc_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship26">
+          <End Role="MTRC_METRIC_PRODUCTS" Type="Self.MTRC_METRIC_PRODUCTS" Multiplicity="1" />
+          <End Role="MTRC_MGMT_AUTH" Type="Self.MTRC_MGMT_AUTH" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PRODUCTS">
+              <PropertyRef Name="mtrc_prod_id" />
+            </Principal>
+            <Dependent Role="MTRC_MGMT_AUTH">
+              <PropertyRef Name="mtrc_prod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship27">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="MTRC_MPG" Type="Self.MTRC_MPG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_MPG">
+              <PropertyRef Name="mtrc_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship28">
+          <End Role="DSC_MTRC_LC_BLDG" Type="Self.DSC_MTRC_LC_BLDG" Multiplicity="1" />
+          <End Role="MTRC_MPBG" Type="Self.MTRC_MPBG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DSC_MTRC_LC_BLDG">
+              <PropertyRef Name="dsc_mtrc_lc_bldg_id" />
+            </Principal>
+            <Dependent Role="MTRC_MPBG">
+              <PropertyRef Name="dsc_mtrc_lc_bldg_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship29">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="MTRC_MPBG" Type="Self.MTRC_MPBG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_MPBG">
+              <PropertyRef Name="mtrc_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship3">
+          <End Role="MTRC_PRODUCT" Type="Self.MTRC_PRODUCT" Multiplicity="1" />
+          <End Role="MTRC_METRIC_PRODUCTS" Type="Self.MTRC_METRIC_PRODUCTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_PRODUCT">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PRODUCTS">
+              <PropertyRef Name="prod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship30">
+          <End Role="MTRC_PRODUCT" Type="Self.MTRC_PRODUCT" Multiplicity="0..1" />
+          <End Role="MTRC_MPG" Type="Self.MTRC_MPG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_PRODUCT">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="MTRC_MPG">
+              <PropertyRef Name="prod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship31">
+          <End Role="MTRC_PRODUCT" Type="Self.MTRC_PRODUCT" Multiplicity="1" />
+          <End Role="MTRC_MPBG" Type="Self.MTRC_MPBG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_PRODUCT">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="MTRC_MPBG">
+              <PropertyRef Name="prod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship32">
+          <End Role="MTRC_METRIC_PERIOD_VALUE" Type="Self.MTRC_METRIC_PERIOD_VALUE" Multiplicity="1" />
+          <End Role="RZ_MTRC_PERIOD_VAL_GOAL" Type="Self.RZ_MTRC_PERIOD_VAL_GOAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD_VALUE">
+              <PropertyRef Name="mtrc_period_val_id" />
+            </Principal>
+            <Dependent Role="RZ_MTRC_PERIOD_VAL_GOAL">
+              <PropertyRef Name="mtrc_period_val_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship5">
+          <End Role="MTRC_METRIC" Type="Self.MTRC_METRIC" Multiplicity="1" />
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC">
+              <PropertyRef Name="mtrc_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship6">
+          <End Role="MTRC_TIME_PERIOD_TYPE" Type="Self.MTRC_TIME_PERIOD_TYPE" Multiplicity="1" />
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_TIME_PERIOD_TYPE">
+              <PropertyRef Name="tpt_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="tpt_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship8">
+          <End Role="DSC_LC" Type="Self.DSC_LC" Multiplicity="1" />
+          <End Role="DSC_MTRC_LC_BLDG" Type="Self.DSC_MTRC_LC_BLDG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DSC_LC">
+              <PropertyRef Name="dsc_lc_id" />
+            </Principal>
+            <Dependent Role="DSC_MTRC_LC_BLDG">
+              <PropertyRef Name="dsc_lc_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DSC_MTRC_DEVModelStoreContainer">
+          <EntitySet Name="DSC_CUST_ACCT" EntityType="Self.DSC_CUST_ACCT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DSC_LC" EntityType="Self.DSC_LC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DSC_MTRC_LC_BLDG" EntityType="Self.DSC_MTRC_LC_BLDG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MTRC_BLDG_MTRC_PERIOD" EntityType="Self.MTRC_BLDG_MTRC_PERIOD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MTRC_DATA_SRC" EntityType="Self.MTRC_DATA_SRC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MTRC_DATA_TYPE" EntityType="Self.MTRC_DATA_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MTRC_METRIC" EntityType="Self.MTRC_METRIC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MTRC_METRIC_HIERARCHY" EntityType="Self.MTRC_METRIC_HIERARCHY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MTRC_METRIC_PERIOD" EntityType="Self.MTRC_METRIC_PERIOD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MTRC_METRIC_PERIOD_VALUE" EntityType="Self.MTRC_METRIC_PERIOD_VALUE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MTRC_METRIC_PRODUCTS" EntityType="Self.MTRC_METRIC_PRODUCTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MTRC_MGMT_AUTH" EntityType="Self.MTRC_MGMT_AUTH" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MTRC_MPBG" EntityType="Self.MTRC_MPBG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MTRC_MPG" EntityType="Self.MTRC_MPG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MTRC_PRODUCT" EntityType="Self.MTRC_PRODUCT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MTRC_TIME_PERIOD_TYPE" EntityType="Self.MTRC_TIME_PERIOD_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MTRC_TM_PERIODS" EntityType="Self.MTRC_TM_PERIODS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RZ_MTRC_PERIOD_STATUS" EntityType="Self.RZ_MTRC_PERIOD_STATUS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RZ_MTRC_PERIOD_VAL_GOAL" EntityType="Self.RZ_MTRC_PERIOD_VAL_GOAL" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="relationship10" Association="Self.relationship10">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="MTRC_METRIC_HIERARCHY" EntitySet="MTRC_METRIC_HIERARCHY" />
+          </AssociationSet>
+          <AssociationSet Name="relationship11" Association="Self.relationship11">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="MTRC_METRIC_HIERARCHY" EntitySet="MTRC_METRIC_HIERARCHY" />
+          </AssociationSet>
+          <AssociationSet Name="relationship12" Association="Self.relationship12">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="MTRC_METRIC_PERIOD_VALUE" EntitySet="MTRC_METRIC_PERIOD_VALUE" />
+          </AssociationSet>
+          <AssociationSet Name="relationship13" Association="Self.relationship13">
+            <End Role="MTRC_DATA_TYPE" EntitySet="MTRC_DATA_TYPE" />
+            <End Role="MTRC_METRIC" EntitySet="MTRC_METRIC" />
+          </AssociationSet>
+          <AssociationSet Name="relationship14" Association="Self.relationship14">
+            <End Role="DSC_MTRC_LC_BLDG" EntitySet="DSC_MTRC_LC_BLDG" />
+            <End Role="MTRC_METRIC_PERIOD_VALUE" EntitySet="MTRC_METRIC_PERIOD_VALUE" />
+          </AssociationSet>
+          <AssociationSet Name="relationship15" Association="Self.relationship15">
+            <End Role="MTRC_DATA_SRC" EntitySet="MTRC_DATA_SRC" />
+            <End Role="MTRC_BLDG_MTRC_PERIOD" EntitySet="MTRC_BLDG_MTRC_PERIOD" />
+          </AssociationSet>
+          <AssociationSet Name="relationship16" Association="Self.relationship16">
+            <End Role="DSC_MTRC_LC_BLDG" EntitySet="DSC_MTRC_LC_BLDG" />
+            <End Role="MTRC_BLDG_MTRC_PERIOD" EntitySet="MTRC_BLDG_MTRC_PERIOD" />
+          </AssociationSet>
+          <AssociationSet Name="relationship17" Association="Self.relationship17">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="MTRC_BLDG_MTRC_PERIOD" EntitySet="MTRC_BLDG_MTRC_PERIOD" />
+          </AssociationSet>
+          <AssociationSet Name="relationship18" Association="Self.relationship18">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="MTRC_METRIC_PRODUCTS" EntitySet="MTRC_METRIC_PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="relationship20" Association="Self.relationship20">
+            <End Role="MTRC_TM_PERIODS" EntitySet="MTRC_TM_PERIODS" />
+            <End Role="MTRC_METRIC_PERIOD_VALUE" EntitySet="MTRC_METRIC_PERIOD_VALUE" />
+          </AssociationSet>
+          <AssociationSet Name="relationship21" Association="Self.relationship21">
+            <End Role="MTRC_TIME_PERIOD_TYPE" EntitySet="MTRC_TIME_PERIOD_TYPE" />
+            <End Role="MTRC_TM_PERIODS" EntitySet="MTRC_TM_PERIODS" />
+          </AssociationSet>
+          <AssociationSet Name="relationship22" Association="Self.relationship22">
+            <End Role="MTRC_TM_PERIODS" EntitySet="MTRC_TM_PERIODS" />
+            <End Role="RZ_MTRC_PERIOD_STATUS" EntitySet="RZ_MTRC_PERIOD_STATUS" />
+          </AssociationSet>
+          <AssociationSet Name="relationship24" Association="Self.relationship24">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="RZ_MTRC_PERIOD_STATUS" EntitySet="RZ_MTRC_PERIOD_STATUS" />
+          </AssociationSet>
+          <AssociationSet Name="relationship26" Association="Self.relationship26">
+            <End Role="MTRC_METRIC_PRODUCTS" EntitySet="MTRC_METRIC_PRODUCTS" />
+            <End Role="MTRC_MGMT_AUTH" EntitySet="MTRC_MGMT_AUTH" />
+          </AssociationSet>
+          <AssociationSet Name="relationship27" Association="Self.relationship27">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="MTRC_MPG" EntitySet="MTRC_MPG" />
+          </AssociationSet>
+          <AssociationSet Name="relationship28" Association="Self.relationship28">
+            <End Role="DSC_MTRC_LC_BLDG" EntitySet="DSC_MTRC_LC_BLDG" />
+            <End Role="MTRC_MPBG" EntitySet="MTRC_MPBG" />
+          </AssociationSet>
+          <AssociationSet Name="relationship29" Association="Self.relationship29">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="MTRC_MPBG" EntitySet="MTRC_MPBG" />
+          </AssociationSet>
+          <AssociationSet Name="relationship3" Association="Self.relationship3">
+            <End Role="MTRC_PRODUCT" EntitySet="MTRC_PRODUCT" />
+            <End Role="MTRC_METRIC_PRODUCTS" EntitySet="MTRC_METRIC_PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="relationship30" Association="Self.relationship30">
+            <End Role="MTRC_PRODUCT" EntitySet="MTRC_PRODUCT" />
+            <End Role="MTRC_MPG" EntitySet="MTRC_MPG" />
+          </AssociationSet>
+          <AssociationSet Name="relationship31" Association="Self.relationship31">
+            <End Role="MTRC_PRODUCT" EntitySet="MTRC_PRODUCT" />
+            <End Role="MTRC_MPBG" EntitySet="MTRC_MPBG" />
+          </AssociationSet>
+          <AssociationSet Name="relationship32" Association="Self.relationship32">
+            <End Role="MTRC_METRIC_PERIOD_VALUE" EntitySet="MTRC_METRIC_PERIOD_VALUE" />
+            <End Role="RZ_MTRC_PERIOD_VAL_GOAL" EntitySet="RZ_MTRC_PERIOD_VAL_GOAL" />
+          </AssociationSet>
+          <AssociationSet Name="relationship5" Association="Self.relationship5">
+            <End Role="MTRC_METRIC" EntitySet="MTRC_METRIC" />
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+          </AssociationSet>
+          <AssociationSet Name="relationship6" Association="Self.relationship6">
+            <End Role="MTRC_TIME_PERIOD_TYPE" EntitySet="MTRC_TIME_PERIOD_TYPE" />
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+          </AssociationSet>
+          <AssociationSet Name="relationship8" Association="Self.relationship8">
+            <End Role="DSC_LC" EntitySet="DSC_LC" />
+            <End Role="DSC_MTRC_LC_BLDG" EntitySet="DSC_MTRC_LC_BLDG" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DSC_MTRC_DEVModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DSC_CUST_ACCT">
+          <Key>
+            <PropertyRef Name="dsc_cust_id" />
+          </Key>
+          <Property Name="dsc_cust_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dsc_cust_acct1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dsc_cust_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dsc_cust_parent_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dsc_cust_eff_end_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="DSC_LC">
+          <Key>
+            <PropertyRef Name="dsc_lc_id" />
+          </Key>
+          <Property Name="dsc_lc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dsc_lc_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dsc_lc_code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dsc_lc_timezone" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="dsc_lc_eff_end_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="DSC_MTRC_LC_BLDG" Relationship="Self.relationship8" FromRole="DSC_LC" ToRole="DSC_MTRC_LC_BLDG" />
+        </EntityType>
+        <EntityType Name="DSC_MTRC_LC_BLDG">
+          <Key>
+            <PropertyRef Name="dsc_mtrc_lc_bldg_id" />
+          </Key>
+          <Property Name="dsc_mtrc_lc_bldg_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dsc_lc_id" Type="Int32" Nullable="false" />
+          <Property Name="dsc_mtrc_lc_bldg_name" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dsc_mtrc_lc_bldg_code" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="dsc_mtrc_lc_bldg_eff_start_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="dsc_mtrc_lc_bldg_eff_end_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="DSC_LC" Relationship="Self.relationship8" FromRole="DSC_MTRC_LC_BLDG" ToRole="DSC_LC" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD_VALUE" Relationship="Self.relationship14" FromRole="DSC_MTRC_LC_BLDG" ToRole="MTRC_METRIC_PERIOD_VALUE" />
+          <NavigationProperty Name="MTRC_BLDG_MTRC_PERIOD" Relationship="Self.relationship16" FromRole="DSC_MTRC_LC_BLDG" ToRole="MTRC_BLDG_MTRC_PERIOD" />
+          <NavigationProperty Name="MTRC_MPBG" Relationship="Self.relationship28" FromRole="DSC_MTRC_LC_BLDG" ToRole="MTRC_MPBG" />
+        </EntityType>
+        <EntityType Name="MTRC_BLDG_MTRC_PERIOD">
+          <Key>
+            <PropertyRef Name="bmp_id" />
+          </Key>
+          <Property Name="bmp_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="data_src_id" Type="Int16" />
+          <Property Name="dsc_mtrc_lc_bldg_id" Type="Int16" />
+          <Property Name="mtrc_period_id" Type="Int32" Nullable="false" />
+          <Property Name="bmp_is_editable_yn" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="bmp_is_manual_yn" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="bmp_na_allow_yn" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DSC_MTRC_LC_BLDG" Relationship="Self.relationship16" FromRole="MTRC_BLDG_MTRC_PERIOD" ToRole="DSC_MTRC_LC_BLDG" />
+          <NavigationProperty Name="MTRC_DATA_SRC" Relationship="Self.relationship15" FromRole="MTRC_BLDG_MTRC_PERIOD" ToRole="MTRC_DATA_SRC" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD" Relationship="Self.relationship17" FromRole="MTRC_BLDG_MTRC_PERIOD" ToRole="MTRC_METRIC_PERIOD" />
+        </EntityType>
+        <EntityType Name="MTRC_DATA_SRC">
+          <Key>
+            <PropertyRef Name="data_src_id" />
+          </Key>
+          <Property Name="data_src_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="data_src_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_src_desc" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="data_src_type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_src_conn_str" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MTRC_BLDG_MTRC_PERIOD" Relationship="Self.relationship15" FromRole="MTRC_DATA_SRC" ToRole="MTRC_BLDG_MTRC_PERIOD" />
+        </EntityType>
+        <EntityType Name="MTRC_DATA_TYPE">
+          <Key>
+            <PropertyRef Name="data_type_id" />
+          </Key>
+          <Property Name="data_type_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="data_type_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_type_token" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_type_num_yn" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="MTRC_METRIC" Relationship="Self.relationship13" FromRole="MTRC_DATA_TYPE" ToRole="MTRC_METRIC" />
+        </EntityType>
+        <EntityType Name="MTRC_METRIC">
+          <Key>
+            <PropertyRef Name="mtrc_id" />
+          </Key>
+          <Property Name="mtrc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="data_type_id" Type="Int16" Nullable="false" />
+          <Property Name="mtrc_name" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mtrc_token" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mtrc_desc" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mtrc_eff_start_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="mtrc_eff_end_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="mtrc_min_val" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="mtrc_max_val" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="mtrc_max_dec_places" Type="Int16" />
+          <Property Name="mtrc_max_str_size" Type="Int16" />
+          <Property Name="mtrc_na_allow_yn" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="MTRC_DATA_TYPE" Relationship="Self.relationship13" FromRole="MTRC_METRIC" ToRole="MTRC_DATA_TYPE" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD" Relationship="Self.relationship5" FromRole="MTRC_METRIC" ToRole="MTRC_METRIC_PERIOD" />
+        </EntityType>
+        <EntityType Name="MTRC_METRIC_HIERARCHY">
+          <Key>
+            <PropertyRef Name="mtrc_hier_id" />
+          </Key>
+          <Property Name="mtrc_hier_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mtrc_period_id_parent" Type="Int32" Nullable="false" />
+          <Property Name="mtrc_period_id_child" Type="Int32" Nullable="false" />
+          <Property Name="mtrc_hier_type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD" Relationship="Self.relationship10" FromRole="MTRC_METRIC_HIERARCHY" ToRole="MTRC_METRIC_PERIOD" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD1" Relationship="Self.relationship11" FromRole="MTRC_METRIC_HIERARCHY" ToRole="MTRC_METRIC_PERIOD" />
+        </EntityType>
+        <EntityType Name="MTRC_METRIC_PERIOD">
+          <Key>
+            <PropertyRef Name="mtrc_period_id" />
+          </Key>
+          <Property Name="mtrc_period_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mtrc_id" Type="Int32" Nullable="false" />
+          <Property Name="tpt_id" Type="Int16" Nullable="false" />
+          <Property Name="mtrc_period_name" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="mtrc_period_token" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="mtrc_period_desc" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="mtrc_period_calc_yn" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mtrc_period_min_val" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="mtrc_period_max_val" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="mtrc_period_max_dec_places" Type="Int16" />
+          <Property Name="mtrc_period_max_str_size" Type="Int16" />
+          <Property Name="mtrc_period_na_allow_yn" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mtrc_period_can_import_yn" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mtrc_period_is_auto_yn" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="MTRC_BLDG_MTRC_PERIOD" Relationship="Self.relationship17" FromRole="MTRC_METRIC_PERIOD" ToRole="MTRC_BLDG_MTRC_PERIOD" />
+          <NavigationProperty Name="MTRC_METRIC" Relationship="Self.relationship5" FromRole="MTRC_METRIC_PERIOD" ToRole="MTRC_METRIC" />
+          <NavigationProperty Name="MTRC_METRIC_HIERARCHY" Relationship="Self.relationship10" FromRole="MTRC_METRIC_PERIOD" ToRole="MTRC_METRIC_HIERARCHY" />
+          <NavigationProperty Name="MTRC_METRIC_HIERARCHY1" Relationship="Self.relationship11" FromRole="MTRC_METRIC_PERIOD" ToRole="MTRC_METRIC_HIERARCHY" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD_VALUE" Relationship="Self.relationship12" FromRole="MTRC_METRIC_PERIOD" ToRole="MTRC_METRIC_PERIOD_VALUE" />
+          <NavigationProperty Name="MTRC_METRIC_PRODUCTS" Relationship="Self.relationship18" FromRole="MTRC_METRIC_PERIOD" ToRole="MTRC_METRIC_PRODUCTS" />
+          <NavigationProperty Name="RZ_MTRC_PERIOD_STATUS" Relationship="Self.relationship24" FromRole="MTRC_METRIC_PERIOD" ToRole="RZ_MTRC_PERIOD_STATUS" />
+          <NavigationProperty Name="MTRC_MPG" Relationship="Self.relationship27" FromRole="MTRC_METRIC_PERIOD" ToRole="MTRC_MPG" />
+          <NavigationProperty Name="MTRC_MPBG" Relationship="Self.relationship29" FromRole="MTRC_METRIC_PERIOD" ToRole="MTRC_MPBG" />
+          <NavigationProperty Name="MTRC_TIME_PERIOD_TYPE" Relationship="Self.relationship6" FromRole="MTRC_METRIC_PERIOD" ToRole="MTRC_TIME_PERIOD_TYPE" />
+        </EntityType>
+        <EntityType Name="MTRC_METRIC_PERIOD_VALUE">
+          <Key>
+            <PropertyRef Name="mtrc_period_val_id" />
+          </Key>
+          <Property Name="mtrc_period_val_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mtrc_period_id" Type="Int32" Nullable="false" />
+          <Property Name="dsc_mtrc_lc_bldg_id" Type="Int16" Nullable="false" />
+          <Property Name="tm_period_id" Type="Int32" />
+          <Property Name="mtrc_period_val_added_dtm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="mtrc_period_val_added_by_usr_id" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mtrc_period_val_upd_dtm" Type="DateTime" Precision="3" />
+          <Property Name="mtrc_period_val_upd_by_user_id" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="mtrc_period_val_is_na_yn" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mtrc_period_val_value" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DSC_MTRC_LC_BLDG" Relationship="Self.relationship14" FromRole="MTRC_METRIC_PERIOD_VALUE" ToRole="DSC_MTRC_LC_BLDG" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD" Relationship="Self.relationship12" FromRole="MTRC_METRIC_PERIOD_VALUE" ToRole="MTRC_METRIC_PERIOD" />
+          <NavigationProperty Name="MTRC_TM_PERIODS" Relationship="Self.relationship20" FromRole="MTRC_METRIC_PERIOD_VALUE" ToRole="MTRC_TM_PERIODS" />
+          <NavigationProperty Name="RZ_MTRC_PERIOD_VAL_GOAL" Relationship="Self.relationship32" FromRole="MTRC_METRIC_PERIOD_VALUE" ToRole="RZ_MTRC_PERIOD_VAL_GOAL" />
+        </EntityType>
+        <EntityType Name="MTRC_METRIC_PRODUCTS">
+          <Key>
+            <PropertyRef Name="mtrc_prod_id" />
+          </Key>
+          <Property Name="mtrc_prod_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prod_id" Type="Int16" Nullable="false" />
+          <Property Name="mtrc_period_id" Type="Int32" Nullable="false" />
+          <Property Name="mtrc_prod_top_lvl_parent_yn" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mtrc_prod_display_text" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="mtrc_prod_display_order" Type="Int16" />
+          <Property Name="mtrc_prod_eff_start_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="mtrc_prod_eff_end_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD" Relationship="Self.relationship18" FromRole="MTRC_METRIC_PRODUCTS" ToRole="MTRC_METRIC_PERIOD" />
+          <NavigationProperty Name="MTRC_MGMT_AUTH" Relationship="Self.relationship26" FromRole="MTRC_METRIC_PRODUCTS" ToRole="MTRC_MGMT_AUTH" />
+          <NavigationProperty Name="MTRC_PRODUCT" Relationship="Self.relationship3" FromRole="MTRC_METRIC_PRODUCTS" ToRole="MTRC_PRODUCT" />
+        </EntityType>
+        <EntityType Name="MTRC_MGMT_AUTH">
+          <Key>
+            <PropertyRef Name="mma_id" />
+          </Key>
+          <Property Name="mma_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mtrc_prod_id" Type="Int32" Nullable="false" />
+          <Property Name="mma_dsc_ad_username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mma_eff_start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="mma_eff_end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="MTRC_METRIC_PRODUCTS" Relationship="Self.relationship26" FromRole="MTRC_MGMT_AUTH" ToRole="MTRC_METRIC_PRODUCTS" />
+        </EntityType>
+        <EntityType Name="MTRC_MPBG">
+          <Key>
+            <PropertyRef Name="mpbg_id" />
+          </Key>
+          <Property Name="mpbg_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dsc_mtrc_lc_bldg_id" Type="Int16" Nullable="false" />
+          <Property Name="mtrc_period_id" Type="Int32" Nullable="false" />
+          <Property Name="prod_id" Type="Int16" Nullable="false" />
+          <Property Name="mpbg_less_val" Type="Decimal" Precision="20" Scale="6" />
+          <Property Name="mpbg_less_eq_val" Type="Decimal" Precision="20" Scale="6" />
+          <Property Name="mpbg_greater_val" Type="Decimal" Precision="20" Scale="6" />
+          <Property Name="mpbg_greater_eq_val" Type="Decimal" Precision="20" Scale="6" />
+          <Property Name="mpbg_equal_val" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="mpbg_score" Type="Int32" Nullable="false" />
+          <Property Name="mpbg_display_text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mpbg_start_eff_dtm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="mpbg_end_eff_dtm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="DSC_MTRC_LC_BLDG" Relationship="Self.relationship28" FromRole="MTRC_MPBG" ToRole="DSC_MTRC_LC_BLDG" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD" Relationship="Self.relationship29" FromRole="MTRC_MPBG" ToRole="MTRC_METRIC_PERIOD" />
+          <NavigationProperty Name="MTRC_PRODUCT" Relationship="Self.relationship31" FromRole="MTRC_MPBG" ToRole="MTRC_PRODUCT" />
+        </EntityType>
+        <EntityType Name="MTRC_MPG">
+          <Key>
+            <PropertyRef Name="mpg_id" />
+          </Key>
+          <Property Name="mpg_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mtrc_period_id" Type="Int32" Nullable="false" />
+          <Property Name="prod_id" Type="Int16" />
+          <Property Name="mpg_less_val" Type="Decimal" Precision="20" Scale="6" />
+          <Property Name="mpg_less_eq_val" Type="Decimal" Precision="20" Scale="6" />
+          <Property Name="mpg_greater_val" Type="Decimal" Precision="20" Scale="6" />
+          <Property Name="mpg_greater_eq_val" Type="Decimal" Precision="20" Scale="6" />
+          <Property Name="mpg_equal_val" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="mpg_score" Type="Int32" Nullable="false" />
+          <Property Name="mpg_display_text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mpg_allow_bldg_override" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mpg_start_eff_dtm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="mpg_end_eff_dtm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD" Relationship="Self.relationship27" FromRole="MTRC_MPG" ToRole="MTRC_METRIC_PERIOD" />
+          <NavigationProperty Name="MTRC_PRODUCT" Relationship="Self.relationship30" FromRole="MTRC_MPG" ToRole="MTRC_PRODUCT" />
+        </EntityType>
+        <EntityType Name="MTRC_PRODUCT">
+          <Key>
+            <PropertyRef Name="prod_id" />
+          </Key>
+          <Property Name="prod_id" Type="Int16" Nullable="false" />
+          <Property Name="prod_name" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="MTRC_METRIC_PRODUCTS" Relationship="Self.relationship3" FromRole="MTRC_PRODUCT" ToRole="MTRC_METRIC_PRODUCTS" />
+          <NavigationProperty Name="MTRC_MPBG" Relationship="Self.relationship31" FromRole="MTRC_PRODUCT" ToRole="MTRC_MPBG" />
+          <NavigationProperty Name="MTRC_MPG" Relationship="Self.relationship30" FromRole="MTRC_PRODUCT" ToRole="MTRC_MPG" />
+        </EntityType>
+        <EntityType Name="MTRC_TIME_PERIOD_TYPE">
+          <Key>
+            <PropertyRef Name="tpt_id" />
+          </Key>
+          <Property Name="tpt_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tpt_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD" Relationship="Self.relationship6" FromRole="MTRC_TIME_PERIOD_TYPE" ToRole="MTRC_METRIC_PERIOD" />
+          <NavigationProperty Name="MTRC_TM_PERIODS" Relationship="Self.relationship21" FromRole="MTRC_TIME_PERIOD_TYPE" ToRole="MTRC_TM_PERIODS" />
+        </EntityType>
+        <EntityType Name="MTRC_TM_PERIODS">
+          <Key>
+            <PropertyRef Name="tm_period_id" />
+          </Key>
+          <Property Name="tm_period_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tpt_id" Type="Int16" />
+          <Property Name="tm_per_start_dtm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="tm_per_end_dtm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD_VALUE" Relationship="Self.relationship20" FromRole="MTRC_TM_PERIODS" ToRole="MTRC_METRIC_PERIOD_VALUE" />
+          <NavigationProperty Name="MTRC_TIME_PERIOD_TYPE" Relationship="Self.relationship21" FromRole="MTRC_TM_PERIODS" ToRole="MTRC_TIME_PERIOD_TYPE" />
+          <NavigationProperty Name="RZ_MTRC_PERIOD_STATUS" Relationship="Self.relationship22" FromRole="MTRC_TM_PERIODS" ToRole="RZ_MTRC_PERIOD_STATUS" />
+        </EntityType>
+        <EntityType Name="RZ_MTRC_PERIOD_STATUS">
+          <Key>
+            <PropertyRef Name="rz_mps_id" />
+          </Key>
+          <Property Name="rz_mps_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tm_period_id" Type="Int32" Nullable="false" />
+          <Property Name="mtrc_period_id" Type="Int32" Nullable="false" />
+          <Property Name="rz_mps_status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rz_mps_opened_on_dtm" Type="DateTime" Precision="3" />
+          <Property Name="rz_mps_closed_on_dtm" Type="DateTime" Precision="3" />
+          <Property Name="rz_mps_closed_by_usr_id" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD" Relationship="Self.relationship24" FromRole="RZ_MTRC_PERIOD_STATUS" ToRole="MTRC_METRIC_PERIOD" />
+          <NavigationProperty Name="MTRC_TM_PERIODS" Relationship="Self.relationship22" FromRole="RZ_MTRC_PERIOD_STATUS" ToRole="MTRC_TM_PERIODS" />
+        </EntityType>
+        <EntityType Name="RZ_MTRC_PERIOD_VAL_GOAL">
+          <Key>
+            <PropertyRef Name="rz_mpvg_id" />
+          </Key>
+          <Property Name="rz_mpvg_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mtrc_period_val_id" Type="Int64" Nullable="false" />
+          <Property Name="rz_mpvg_goal_met_yn" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rz_mpvg_created_dtm" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD_VALUE" Relationship="Self.relationship32" FromRole="RZ_MTRC_PERIOD_VAL_GOAL" ToRole="MTRC_METRIC_PERIOD_VALUE" />
+        </EntityType>
+        <Association Name="relationship8">
+          <End Role="DSC_LC" Type="Self.DSC_LC" Multiplicity="1" />
+          <End Role="DSC_MTRC_LC_BLDG" Type="Self.DSC_MTRC_LC_BLDG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DSC_LC">
+              <PropertyRef Name="dsc_lc_id" />
+            </Principal>
+            <Dependent Role="DSC_MTRC_LC_BLDG">
+              <PropertyRef Name="dsc_lc_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship14">
+          <End Role="DSC_MTRC_LC_BLDG" Type="Self.DSC_MTRC_LC_BLDG" Multiplicity="1" />
+          <End Role="MTRC_METRIC_PERIOD_VALUE" Type="Self.MTRC_METRIC_PERIOD_VALUE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DSC_MTRC_LC_BLDG">
+              <PropertyRef Name="dsc_mtrc_lc_bldg_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PERIOD_VALUE">
+              <PropertyRef Name="dsc_mtrc_lc_bldg_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship16">
+          <End Role="DSC_MTRC_LC_BLDG" Type="Self.DSC_MTRC_LC_BLDG" Multiplicity="0..1" />
+          <End Role="MTRC_BLDG_MTRC_PERIOD" Type="Self.MTRC_BLDG_MTRC_PERIOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DSC_MTRC_LC_BLDG">
+              <PropertyRef Name="dsc_mtrc_lc_bldg_id" />
+            </Principal>
+            <Dependent Role="MTRC_BLDG_MTRC_PERIOD">
+              <PropertyRef Name="dsc_mtrc_lc_bldg_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship28">
+          <End Role="DSC_MTRC_LC_BLDG" Type="Self.DSC_MTRC_LC_BLDG" Multiplicity="1" />
+          <End Role="MTRC_MPBG" Type="Self.MTRC_MPBG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DSC_MTRC_LC_BLDG">
+              <PropertyRef Name="dsc_mtrc_lc_bldg_id" />
+            </Principal>
+            <Dependent Role="MTRC_MPBG">
+              <PropertyRef Name="dsc_mtrc_lc_bldg_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship15">
+          <End Role="MTRC_DATA_SRC" Type="Self.MTRC_DATA_SRC" Multiplicity="0..1" />
+          <End Role="MTRC_BLDG_MTRC_PERIOD" Type="Self.MTRC_BLDG_MTRC_PERIOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_DATA_SRC">
+              <PropertyRef Name="data_src_id" />
+            </Principal>
+            <Dependent Role="MTRC_BLDG_MTRC_PERIOD">
+              <PropertyRef Name="data_src_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship17">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="MTRC_BLDG_MTRC_PERIOD" Type="Self.MTRC_BLDG_MTRC_PERIOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_BLDG_MTRC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship13">
+          <End Role="MTRC_DATA_TYPE" Type="Self.MTRC_DATA_TYPE" Multiplicity="1" />
+          <End Role="MTRC_METRIC" Type="Self.MTRC_METRIC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_DATA_TYPE">
+              <PropertyRef Name="data_type_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC">
+              <PropertyRef Name="data_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship5">
+          <End Role="MTRC_METRIC" Type="Self.MTRC_METRIC" Multiplicity="1" />
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC">
+              <PropertyRef Name="mtrc_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship10">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="MTRC_METRIC_HIERARCHY" Type="Self.MTRC_METRIC_HIERARCHY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_HIERARCHY">
+              <PropertyRef Name="mtrc_period_id_parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship11">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="MTRC_METRIC_HIERARCHY" Type="Self.MTRC_METRIC_HIERARCHY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_HIERARCHY">
+              <PropertyRef Name="mtrc_period_id_child" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship12">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="MTRC_METRIC_PERIOD_VALUE" Type="Self.MTRC_METRIC_PERIOD_VALUE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PERIOD_VALUE">
+              <PropertyRef Name="mtrc_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship18">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="MTRC_METRIC_PRODUCTS" Type="Self.MTRC_METRIC_PRODUCTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PRODUCTS">
+              <PropertyRef Name="mtrc_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship24">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="RZ_MTRC_PERIOD_STATUS" Type="Self.RZ_MTRC_PERIOD_STATUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="RZ_MTRC_PERIOD_STATUS">
+              <PropertyRef Name="mtrc_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship27">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="MTRC_MPG" Type="Self.MTRC_MPG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_MPG">
+              <PropertyRef Name="mtrc_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship29">
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="1" />
+          <End Role="MTRC_MPBG" Type="Self.MTRC_MPBG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_MPBG">
+              <PropertyRef Name="mtrc_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship6">
+          <End Role="MTRC_TIME_PERIOD_TYPE" Type="Self.MTRC_TIME_PERIOD_TYPE" Multiplicity="1" />
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_TIME_PERIOD_TYPE">
+              <PropertyRef Name="tpt_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="tpt_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship20">
+          <End Role="MTRC_TM_PERIODS" Type="Self.MTRC_TM_PERIODS" Multiplicity="0..1" />
+          <End Role="MTRC_METRIC_PERIOD_VALUE" Type="Self.MTRC_METRIC_PERIOD_VALUE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_TM_PERIODS">
+              <PropertyRef Name="tm_period_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PERIOD_VALUE">
+              <PropertyRef Name="tm_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship32">
+          <End Role="MTRC_METRIC_PERIOD_VALUE" Type="Self.MTRC_METRIC_PERIOD_VALUE" Multiplicity="1" />
+          <End Role="RZ_MTRC_PERIOD_VAL_GOAL" Type="Self.RZ_MTRC_PERIOD_VAL_GOAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PERIOD_VALUE">
+              <PropertyRef Name="mtrc_period_val_id" />
+            </Principal>
+            <Dependent Role="RZ_MTRC_PERIOD_VAL_GOAL">
+              <PropertyRef Name="mtrc_period_val_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship26">
+          <End Role="MTRC_METRIC_PRODUCTS" Type="Self.MTRC_METRIC_PRODUCTS" Multiplicity="1" />
+          <End Role="MTRC_MGMT_AUTH" Type="Self.MTRC_MGMT_AUTH" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC_PRODUCTS">
+              <PropertyRef Name="mtrc_prod_id" />
+            </Principal>
+            <Dependent Role="MTRC_MGMT_AUTH">
+              <PropertyRef Name="mtrc_prod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship3">
+          <End Role="MTRC_PRODUCT" Type="Self.MTRC_PRODUCT" Multiplicity="1" />
+          <End Role="MTRC_METRIC_PRODUCTS" Type="Self.MTRC_METRIC_PRODUCTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_PRODUCT">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PRODUCTS">
+              <PropertyRef Name="prod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship31">
+          <End Role="MTRC_PRODUCT" Type="Self.MTRC_PRODUCT" Multiplicity="1" />
+          <End Role="MTRC_MPBG" Type="Self.MTRC_MPBG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_PRODUCT">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="MTRC_MPBG">
+              <PropertyRef Name="prod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship30">
+          <End Role="MTRC_PRODUCT" Type="Self.MTRC_PRODUCT" Multiplicity="0..1" />
+          <End Role="MTRC_MPG" Type="Self.MTRC_MPG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_PRODUCT">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="MTRC_MPG">
+              <PropertyRef Name="prod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship21">
+          <End Role="MTRC_TIME_PERIOD_TYPE" Type="Self.MTRC_TIME_PERIOD_TYPE" Multiplicity="0..1" />
+          <End Role="MTRC_TM_PERIODS" Type="Self.MTRC_TM_PERIODS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_TIME_PERIOD_TYPE">
+              <PropertyRef Name="tpt_id" />
+            </Principal>
+            <Dependent Role="MTRC_TM_PERIODS">
+              <PropertyRef Name="tpt_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship22">
+          <End Role="MTRC_TM_PERIODS" Type="Self.MTRC_TM_PERIODS" Multiplicity="1" />
+          <End Role="RZ_MTRC_PERIOD_STATUS" Type="Self.RZ_MTRC_PERIOD_STATUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_TM_PERIODS">
+              <PropertyRef Name="tm_period_id" />
+            </Principal>
+            <Dependent Role="RZ_MTRC_PERIOD_STATUS">
+              <PropertyRef Name="tm_period_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DSC_MTRC_DEVEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DSC_CUST_ACCT" EntityType="Self.DSC_CUST_ACCT" />
+          <EntitySet Name="DSC_LC" EntityType="Self.DSC_LC" />
+          <EntitySet Name="DSC_MTRC_LC_BLDG" EntityType="Self.DSC_MTRC_LC_BLDG" />
+          <EntitySet Name="MTRC_BLDG_MTRC_PERIOD" EntityType="Self.MTRC_BLDG_MTRC_PERIOD" />
+          <EntitySet Name="MTRC_DATA_SRC" EntityType="Self.MTRC_DATA_SRC" />
+          <EntitySet Name="MTRC_DATA_TYPE" EntityType="Self.MTRC_DATA_TYPE" />
+          <EntitySet Name="MTRC_METRIC" EntityType="Self.MTRC_METRIC" />
+          <EntitySet Name="MTRC_METRIC_HIERARCHY" EntityType="Self.MTRC_METRIC_HIERARCHY" />
+          <EntitySet Name="MTRC_METRIC_PERIOD" EntityType="Self.MTRC_METRIC_PERIOD" />
+          <EntitySet Name="MTRC_METRIC_PERIOD_VALUE" EntityType="Self.MTRC_METRIC_PERIOD_VALUE" />
+          <EntitySet Name="MTRC_METRIC_PRODUCTS" EntityType="Self.MTRC_METRIC_PRODUCTS" />
+          <EntitySet Name="MTRC_MGMT_AUTH" EntityType="Self.MTRC_MGMT_AUTH" />
+          <EntitySet Name="MTRC_MPBG" EntityType="Self.MTRC_MPBG" />
+          <EntitySet Name="MTRC_MPG" EntityType="Self.MTRC_MPG" />
+          <EntitySet Name="MTRC_PRODUCT" EntityType="Self.MTRC_PRODUCT" />
+          <EntitySet Name="MTRC_TIME_PERIOD_TYPE" EntityType="Self.MTRC_TIME_PERIOD_TYPE" />
+          <EntitySet Name="MTRC_TM_PERIODS" EntityType="Self.MTRC_TM_PERIODS" />
+          <EntitySet Name="RZ_MTRC_PERIOD_STATUS" EntityType="Self.RZ_MTRC_PERIOD_STATUS" />
+          <EntitySet Name="RZ_MTRC_PERIOD_VAL_GOAL" EntityType="Self.RZ_MTRC_PERIOD_VAL_GOAL" />
+          <AssociationSet Name="relationship8" Association="Self.relationship8">
+            <End Role="DSC_LC" EntitySet="DSC_LC" />
+            <End Role="DSC_MTRC_LC_BLDG" EntitySet="DSC_MTRC_LC_BLDG" />
+          </AssociationSet>
+          <AssociationSet Name="relationship14" Association="Self.relationship14">
+            <End Role="DSC_MTRC_LC_BLDG" EntitySet="DSC_MTRC_LC_BLDG" />
+            <End Role="MTRC_METRIC_PERIOD_VALUE" EntitySet="MTRC_METRIC_PERIOD_VALUE" />
+          </AssociationSet>
+          <AssociationSet Name="relationship16" Association="Self.relationship16">
+            <End Role="DSC_MTRC_LC_BLDG" EntitySet="DSC_MTRC_LC_BLDG" />
+            <End Role="MTRC_BLDG_MTRC_PERIOD" EntitySet="MTRC_BLDG_MTRC_PERIOD" />
+          </AssociationSet>
+          <AssociationSet Name="relationship28" Association="Self.relationship28">
+            <End Role="DSC_MTRC_LC_BLDG" EntitySet="DSC_MTRC_LC_BLDG" />
+            <End Role="MTRC_MPBG" EntitySet="MTRC_MPBG" />
+          </AssociationSet>
+          <AssociationSet Name="relationship15" Association="Self.relationship15">
+            <End Role="MTRC_DATA_SRC" EntitySet="MTRC_DATA_SRC" />
+            <End Role="MTRC_BLDG_MTRC_PERIOD" EntitySet="MTRC_BLDG_MTRC_PERIOD" />
+          </AssociationSet>
+          <AssociationSet Name="relationship17" Association="Self.relationship17">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="MTRC_BLDG_MTRC_PERIOD" EntitySet="MTRC_BLDG_MTRC_PERIOD" />
+          </AssociationSet>
+          <AssociationSet Name="relationship13" Association="Self.relationship13">
+            <End Role="MTRC_DATA_TYPE" EntitySet="MTRC_DATA_TYPE" />
+            <End Role="MTRC_METRIC" EntitySet="MTRC_METRIC" />
+          </AssociationSet>
+          <AssociationSet Name="relationship5" Association="Self.relationship5">
+            <End Role="MTRC_METRIC" EntitySet="MTRC_METRIC" />
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+          </AssociationSet>
+          <AssociationSet Name="relationship10" Association="Self.relationship10">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="MTRC_METRIC_HIERARCHY" EntitySet="MTRC_METRIC_HIERARCHY" />
+          </AssociationSet>
+          <AssociationSet Name="relationship11" Association="Self.relationship11">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="MTRC_METRIC_HIERARCHY" EntitySet="MTRC_METRIC_HIERARCHY" />
+          </AssociationSet>
+          <AssociationSet Name="relationship12" Association="Self.relationship12">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="MTRC_METRIC_PERIOD_VALUE" EntitySet="MTRC_METRIC_PERIOD_VALUE" />
+          </AssociationSet>
+          <AssociationSet Name="relationship18" Association="Self.relationship18">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="MTRC_METRIC_PRODUCTS" EntitySet="MTRC_METRIC_PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="relationship24" Association="Self.relationship24">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="RZ_MTRC_PERIOD_STATUS" EntitySet="RZ_MTRC_PERIOD_STATUS" />
+          </AssociationSet>
+          <AssociationSet Name="relationship27" Association="Self.relationship27">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="MTRC_MPG" EntitySet="MTRC_MPG" />
+          </AssociationSet>
+          <AssociationSet Name="relationship29" Association="Self.relationship29">
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+            <End Role="MTRC_MPBG" EntitySet="MTRC_MPBG" />
+          </AssociationSet>
+          <AssociationSet Name="relationship6" Association="Self.relationship6">
+            <End Role="MTRC_TIME_PERIOD_TYPE" EntitySet="MTRC_TIME_PERIOD_TYPE" />
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+          </AssociationSet>
+          <AssociationSet Name="relationship20" Association="Self.relationship20">
+            <End Role="MTRC_TM_PERIODS" EntitySet="MTRC_TM_PERIODS" />
+            <End Role="MTRC_METRIC_PERIOD_VALUE" EntitySet="MTRC_METRIC_PERIOD_VALUE" />
+          </AssociationSet>
+          <AssociationSet Name="relationship32" Association="Self.relationship32">
+            <End Role="MTRC_METRIC_PERIOD_VALUE" EntitySet="MTRC_METRIC_PERIOD_VALUE" />
+            <End Role="RZ_MTRC_PERIOD_VAL_GOAL" EntitySet="RZ_MTRC_PERIOD_VAL_GOAL" />
+          </AssociationSet>
+          <AssociationSet Name="relationship26" Association="Self.relationship26">
+            <End Role="MTRC_METRIC_PRODUCTS" EntitySet="MTRC_METRIC_PRODUCTS" />
+            <End Role="MTRC_MGMT_AUTH" EntitySet="MTRC_MGMT_AUTH" />
+          </AssociationSet>
+          <AssociationSet Name="relationship3" Association="Self.relationship3">
+            <End Role="MTRC_PRODUCT" EntitySet="MTRC_PRODUCT" />
+            <End Role="MTRC_METRIC_PRODUCTS" EntitySet="MTRC_METRIC_PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="relationship31" Association="Self.relationship31">
+            <End Role="MTRC_PRODUCT" EntitySet="MTRC_PRODUCT" />
+            <End Role="MTRC_MPBG" EntitySet="MTRC_MPBG" />
+          </AssociationSet>
+          <AssociationSet Name="relationship30" Association="Self.relationship30">
+            <End Role="MTRC_PRODUCT" EntitySet="MTRC_PRODUCT" />
+            <End Role="MTRC_MPG" EntitySet="MTRC_MPG" />
+          </AssociationSet>
+          <AssociationSet Name="relationship21" Association="Self.relationship21">
+            <End Role="MTRC_TIME_PERIOD_TYPE" EntitySet="MTRC_TIME_PERIOD_TYPE" />
+            <End Role="MTRC_TM_PERIODS" EntitySet="MTRC_TM_PERIODS" />
+          </AssociationSet>
+          <AssociationSet Name="relationship22" Association="Self.relationship22">
+            <End Role="MTRC_TM_PERIODS" EntitySet="MTRC_TM_PERIODS" />
+            <End Role="RZ_MTRC_PERIOD_STATUS" EntitySet="RZ_MTRC_PERIOD_STATUS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DSC_MTRC_DEVModelStoreContainer" CdmEntityContainer="DSC_MTRC_DEVEntities">
+          <EntitySetMapping Name="DSC_CUST_ACCT">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.DSC_CUST_ACCT">
+              <MappingFragment StoreEntitySet="DSC_CUST_ACCT">
+                <ScalarProperty Name="dsc_cust_id" ColumnName="dsc_cust_id" />
+                <ScalarProperty Name="dsc_cust_acct1" ColumnName="dsc_cust_acct" />
+                <ScalarProperty Name="dsc_cust_name" ColumnName="dsc_cust_name" />
+                <ScalarProperty Name="dsc_cust_parent_name" ColumnName="dsc_cust_parent_name" />
+                <ScalarProperty Name="dsc_cust_eff_end_date" ColumnName="dsc_cust_eff_end_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DSC_LC">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.DSC_LC">
+              <MappingFragment StoreEntitySet="DSC_LC">
+                <ScalarProperty Name="dsc_lc_id" ColumnName="dsc_lc_id" />
+                <ScalarProperty Name="dsc_lc_name" ColumnName="dsc_lc_name" />
+                <ScalarProperty Name="dsc_lc_code" ColumnName="dsc_lc_code" />
+                <ScalarProperty Name="dsc_lc_timezone" ColumnName="dsc_lc_timezone" />
+                <ScalarProperty Name="dsc_lc_eff_end_date" ColumnName="dsc_lc_eff_end_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DSC_MTRC_LC_BLDG">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.DSC_MTRC_LC_BLDG">
+              <MappingFragment StoreEntitySet="DSC_MTRC_LC_BLDG">
+                <ScalarProperty Name="dsc_mtrc_lc_bldg_id" ColumnName="dsc_mtrc_lc_bldg_id" />
+                <ScalarProperty Name="dsc_lc_id" ColumnName="dsc_lc_id" />
+                <ScalarProperty Name="dsc_mtrc_lc_bldg_name" ColumnName="dsc_mtrc_lc_bldg_name" />
+                <ScalarProperty Name="dsc_mtrc_lc_bldg_code" ColumnName="dsc_mtrc_lc_bldg_code" />
+                <ScalarProperty Name="dsc_mtrc_lc_bldg_eff_start_dt" ColumnName="dsc_mtrc_lc_bldg_eff_start_dt" />
+                <ScalarProperty Name="dsc_mtrc_lc_bldg_eff_end_dt" ColumnName="dsc_mtrc_lc_bldg_eff_end_dt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MTRC_BLDG_MTRC_PERIOD">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_BLDG_MTRC_PERIOD">
+              <MappingFragment StoreEntitySet="MTRC_BLDG_MTRC_PERIOD">
+                <ScalarProperty Name="bmp_id" ColumnName="bmp_id" />
+                <ScalarProperty Name="data_src_id" ColumnName="data_src_id" />
+                <ScalarProperty Name="dsc_mtrc_lc_bldg_id" ColumnName="dsc_mtrc_lc_bldg_id" />
+                <ScalarProperty Name="mtrc_period_id" ColumnName="mtrc_period_id" />
+                <ScalarProperty Name="bmp_is_editable_yn" ColumnName="bmp_is_editable_yn" />
+                <ScalarProperty Name="bmp_is_manual_yn" ColumnName="bmp_is_manual_yn" />
+                <ScalarProperty Name="bmp_na_allow_yn" ColumnName="bmp_na_allow_yn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MTRC_DATA_SRC">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_DATA_SRC">
+              <MappingFragment StoreEntitySet="MTRC_DATA_SRC">
+                <ScalarProperty Name="data_src_id" ColumnName="data_src_id" />
+                <ScalarProperty Name="data_src_name" ColumnName="data_src_name" />
+                <ScalarProperty Name="data_src_desc" ColumnName="data_src_desc" />
+                <ScalarProperty Name="data_src_type" ColumnName="data_src_type" />
+                <ScalarProperty Name="data_src_conn_str" ColumnName="data_src_conn_str" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MTRC_DATA_TYPE">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_DATA_TYPE">
+              <MappingFragment StoreEntitySet="MTRC_DATA_TYPE">
+                <ScalarProperty Name="data_type_id" ColumnName="data_type_id" />
+                <ScalarProperty Name="data_type_name" ColumnName="data_type_name" />
+                <ScalarProperty Name="data_type_token" ColumnName="data_type_token" />
+                <ScalarProperty Name="data_type_num_yn" ColumnName="data_type_num_yn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MTRC_METRIC">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_METRIC">
+              <MappingFragment StoreEntitySet="MTRC_METRIC">
+                <ScalarProperty Name="mtrc_id" ColumnName="mtrc_id" />
+                <ScalarProperty Name="data_type_id" ColumnName="data_type_id" />
+                <ScalarProperty Name="mtrc_name" ColumnName="mtrc_name" />
+                <ScalarProperty Name="mtrc_token" ColumnName="mtrc_token" />
+                <ScalarProperty Name="mtrc_desc" ColumnName="mtrc_desc" />
+                <ScalarProperty Name="mtrc_eff_start_dt" ColumnName="mtrc_eff_start_dt" />
+                <ScalarProperty Name="mtrc_eff_end_dt" ColumnName="mtrc_eff_end_dt" />
+                <ScalarProperty Name="mtrc_min_val" ColumnName="mtrc_min_val" />
+                <ScalarProperty Name="mtrc_max_val" ColumnName="mtrc_max_val" />
+                <ScalarProperty Name="mtrc_max_dec_places" ColumnName="mtrc_max_dec_places" />
+                <ScalarProperty Name="mtrc_max_str_size" ColumnName="mtrc_max_str_size" />
+                <ScalarProperty Name="mtrc_na_allow_yn" ColumnName="mtrc_na_allow_yn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MTRC_METRIC_HIERARCHY">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_METRIC_HIERARCHY">
+              <MappingFragment StoreEntitySet="MTRC_METRIC_HIERARCHY">
+                <ScalarProperty Name="mtrc_hier_id" ColumnName="mtrc_hier_id" />
+                <ScalarProperty Name="mtrc_period_id_parent" ColumnName="mtrc_period_id_parent" />
+                <ScalarProperty Name="mtrc_period_id_child" ColumnName="mtrc_period_id_child" />
+                <ScalarProperty Name="mtrc_hier_type" ColumnName="mtrc_hier_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MTRC_METRIC_PERIOD">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_METRIC_PERIOD">
+              <MappingFragment StoreEntitySet="MTRC_METRIC_PERIOD">
+                <ScalarProperty Name="mtrc_period_id" ColumnName="mtrc_period_id" />
+                <ScalarProperty Name="mtrc_id" ColumnName="mtrc_id" />
+                <ScalarProperty Name="tpt_id" ColumnName="tpt_id" />
+                <ScalarProperty Name="mtrc_period_name" ColumnName="mtrc_period_name" />
+                <ScalarProperty Name="mtrc_period_token" ColumnName="mtrc_period_token" />
+                <ScalarProperty Name="mtrc_period_desc" ColumnName="mtrc_period_desc" />
+                <ScalarProperty Name="mtrc_period_calc_yn" ColumnName="mtrc_period_calc_yn" />
+                <ScalarProperty Name="mtrc_period_min_val" ColumnName="mtrc_period_min_val" />
+                <ScalarProperty Name="mtrc_period_max_val" ColumnName="mtrc_period_max_val" />
+                <ScalarProperty Name="mtrc_period_max_dec_places" ColumnName="mtrc_period_max_dec_places" />
+                <ScalarProperty Name="mtrc_period_max_str_size" ColumnName="mtrc_period_max_str_size" />
+                <ScalarProperty Name="mtrc_period_na_allow_yn" ColumnName="mtrc_period_na_allow_yn" />
+                <ScalarProperty Name="mtrc_period_can_import_yn" ColumnName="mtrc_period_can_import_yn" />
+                <ScalarProperty Name="mtrc_period_is_auto_yn" ColumnName="mtrc_period_is_auto_yn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MTRC_METRIC_PERIOD_VALUE">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_METRIC_PERIOD_VALUE">
+              <MappingFragment StoreEntitySet="MTRC_METRIC_PERIOD_VALUE">
+                <ScalarProperty Name="mtrc_period_val_id" ColumnName="mtrc_period_val_id" />
+                <ScalarProperty Name="mtrc_period_id" ColumnName="mtrc_period_id" />
+                <ScalarProperty Name="dsc_mtrc_lc_bldg_id" ColumnName="dsc_mtrc_lc_bldg_id" />
+                <ScalarProperty Name="tm_period_id" ColumnName="tm_period_id" />
+                <ScalarProperty Name="mtrc_period_val_added_dtm" ColumnName="mtrc_period_val_added_dtm" />
+                <ScalarProperty Name="mtrc_period_val_added_by_usr_id" ColumnName="mtrc_period_val_added_by_usr_id" />
+                <ScalarProperty Name="mtrc_period_val_upd_dtm" ColumnName="mtrc_period_val_upd_dtm" />
+                <ScalarProperty Name="mtrc_period_val_upd_by_user_id" ColumnName="mtrc_period_val_upd_by_user_id" />
+                <ScalarProperty Name="mtrc_period_val_is_na_yn" ColumnName="mtrc_period_val_is_na_yn" />
+                <ScalarProperty Name="mtrc_period_val_value" ColumnName="mtrc_period_val_value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MTRC_METRIC_PRODUCTS">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_METRIC_PRODUCTS">
+              <MappingFragment StoreEntitySet="MTRC_METRIC_PRODUCTS">
+                <ScalarProperty Name="mtrc_prod_id" ColumnName="mtrc_prod_id" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+                <ScalarProperty Name="mtrc_period_id" ColumnName="mtrc_period_id" />
+                <ScalarProperty Name="mtrc_prod_top_lvl_parent_yn" ColumnName="mtrc_prod_top_lvl_parent_yn" />
+                <ScalarProperty Name="mtrc_prod_display_text" ColumnName="mtrc_prod_display_text" />
+                <ScalarProperty Name="mtrc_prod_display_order" ColumnName="mtrc_prod_display_order" />
+                <ScalarProperty Name="mtrc_prod_eff_start_dt" ColumnName="mtrc_prod_eff_start_dt" />
+                <ScalarProperty Name="mtrc_prod_eff_end_dt" ColumnName="mtrc_prod_eff_end_dt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MTRC_MGMT_AUTH">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_MGMT_AUTH">
+              <MappingFragment StoreEntitySet="MTRC_MGMT_AUTH">
+                <ScalarProperty Name="mma_id" ColumnName="mma_id" />
+                <ScalarProperty Name="mtrc_prod_id" ColumnName="mtrc_prod_id" />
+                <ScalarProperty Name="mma_dsc_ad_username" ColumnName="mma_dsc_ad_username" />
+                <ScalarProperty Name="mma_eff_start_date" ColumnName="mma_eff_start_date" />
+                <ScalarProperty Name="mma_eff_end_date" ColumnName="mma_eff_end_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MTRC_MPBG">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_MPBG">
+              <MappingFragment StoreEntitySet="MTRC_MPBG">
+                <ScalarProperty Name="mpbg_id" ColumnName="mpbg_id" />
+                <ScalarProperty Name="dsc_mtrc_lc_bldg_id" ColumnName="dsc_mtrc_lc_bldg_id" />
+                <ScalarProperty Name="mtrc_period_id" ColumnName="mtrc_period_id" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+                <ScalarProperty Name="mpbg_less_val" ColumnName="mpbg_less_val" />
+                <ScalarProperty Name="mpbg_less_eq_val" ColumnName="mpbg_less_eq_val" />
+                <ScalarProperty Name="mpbg_greater_val" ColumnName="mpbg_greater_val" />
+                <ScalarProperty Name="mpbg_greater_eq_val" ColumnName="mpbg_greater_eq_val" />
+                <ScalarProperty Name="mpbg_equal_val" ColumnName="mpbg_equal_val" />
+                <ScalarProperty Name="mpbg_score" ColumnName="mpbg_score" />
+                <ScalarProperty Name="mpbg_display_text" ColumnName="mpbg_display_text" />
+                <ScalarProperty Name="mpbg_start_eff_dtm" ColumnName="mpbg_start_eff_dtm" />
+                <ScalarProperty Name="mpbg_end_eff_dtm" ColumnName="mpbg_end_eff_dtm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MTRC_MPG">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_MPG">
+              <MappingFragment StoreEntitySet="MTRC_MPG">
+                <ScalarProperty Name="mpg_id" ColumnName="mpg_id" />
+                <ScalarProperty Name="mtrc_period_id" ColumnName="mtrc_period_id" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+                <ScalarProperty Name="mpg_less_val" ColumnName="mpg_less_val" />
+                <ScalarProperty Name="mpg_less_eq_val" ColumnName="mpg_less_eq_val" />
+                <ScalarProperty Name="mpg_greater_val" ColumnName="mpg_greater_val" />
+                <ScalarProperty Name="mpg_greater_eq_val" ColumnName="mpg_greater_eq_val" />
+                <ScalarProperty Name="mpg_equal_val" ColumnName="mpg_equal_val" />
+                <ScalarProperty Name="mpg_score" ColumnName="mpg_score" />
+                <ScalarProperty Name="mpg_display_text" ColumnName="mpg_display_text" />
+                <ScalarProperty Name="mpg_allow_bldg_override" ColumnName="mpg_allow_bldg_override" />
+                <ScalarProperty Name="mpg_start_eff_dtm" ColumnName="mpg_start_eff_dtm" />
+                <ScalarProperty Name="mpg_end_eff_dtm" ColumnName="mpg_end_eff_dtm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MTRC_PRODUCT">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_PRODUCT">
+              <MappingFragment StoreEntitySet="MTRC_PRODUCT">
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+                <ScalarProperty Name="prod_name" ColumnName="prod_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MTRC_TIME_PERIOD_TYPE">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_TIME_PERIOD_TYPE">
+              <MappingFragment StoreEntitySet="MTRC_TIME_PERIOD_TYPE">
+                <ScalarProperty Name="tpt_id" ColumnName="tpt_id" />
+                <ScalarProperty Name="tpt_name" ColumnName="tpt_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MTRC_TM_PERIODS">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_TM_PERIODS">
+              <MappingFragment StoreEntitySet="MTRC_TM_PERIODS">
+                <ScalarProperty Name="tm_period_id" ColumnName="tm_period_id" />
+                <ScalarProperty Name="tpt_id" ColumnName="tpt_id" />
+                <ScalarProperty Name="tm_per_start_dtm" ColumnName="tm_per_start_dtm" />
+                <ScalarProperty Name="tm_per_end_dtm" ColumnName="tm_per_end_dtm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RZ_MTRC_PERIOD_STATUS">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.RZ_MTRC_PERIOD_STATUS">
+              <MappingFragment StoreEntitySet="RZ_MTRC_PERIOD_STATUS">
+                <ScalarProperty Name="rz_mps_id" ColumnName="rz_mps_id" />
+                <ScalarProperty Name="tm_period_id" ColumnName="tm_period_id" />
+                <ScalarProperty Name="mtrc_period_id" ColumnName="mtrc_period_id" />
+                <ScalarProperty Name="rz_mps_status" ColumnName="rz_mps_status" />
+                <ScalarProperty Name="rz_mps_opened_on_dtm" ColumnName="rz_mps_opened_on_dtm" />
+                <ScalarProperty Name="rz_mps_closed_on_dtm" ColumnName="rz_mps_closed_on_dtm" />
+                <ScalarProperty Name="rz_mps_closed_by_usr_id" ColumnName="rz_mps_closed_by_usr_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RZ_MTRC_PERIOD_VAL_GOAL">
+            <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.RZ_MTRC_PERIOD_VAL_GOAL">
+              <MappingFragment StoreEntitySet="RZ_MTRC_PERIOD_VAL_GOAL">
+                <ScalarProperty Name="rz_mpvg_id" ColumnName="rz_mpvg_id" />
+                <ScalarProperty Name="mtrc_period_val_id" ColumnName="mtrc_period_val_id" />
+                <ScalarProperty Name="rz_mpvg_goal_met_yn" ColumnName="rz_mpvg_goal_met_yn" />
+                <ScalarProperty Name="rz_mpvg_created_dtm" ColumnName="rz_mpvg_created_dtm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
