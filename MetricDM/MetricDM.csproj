@@ -160,6 +160,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DSC_BUILDINGController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MetricPeriodController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -299,6 +300,11 @@
     <Content Include="Views\DSC_BUILDING\Details.cshtml" />
     <Content Include="Views\DSC_BUILDING\Edit.cshtml" />
     <Content Include="Views\DSC_BUILDING\Index.cshtml" />
+    <Content Include="Views\MetricPeriod\Create.cshtml" />
+    <Content Include="Views\MetricPeriod\Delete.cshtml" />
+    <Content Include="Views\MetricPeriod\Details.cshtml" />
+    <Content Include="Views\MetricPeriod\Edit.cshtml" />
+    <Content Include="Views\MetricPeriod\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
