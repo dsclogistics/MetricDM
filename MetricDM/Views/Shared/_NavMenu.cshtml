@@ -17,36 +17,43 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar" style="font-size:large">
         <div class="col-md-7 col-md-offset-2">
-            <ul class="nav navbar-nav menuItem" id="mDashboard">
-                <li><a href="\Home\Index">PLACEHOLDER</a></li>
+            <ul class="nav navbar-nav menuItem" >
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Metric Maintenance
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Metric Listing", "Index", "MetricPeriod")</li>
+                        <li><a href="/MetricPeriod/MetricMaintenance/0">Metric Maintenance</a></li>
+                        <li class="disabled"><a href="#">Future Option 02</a></li>
+                        <li class="disabled"><a href="#">Future Option 03</a></li>
+                    </ul>
+                </li>
             </ul>
             <ul class="nav navbar-nav menuItem">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        DROPDOWN 1111
+                        Dropdown Sample
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         @*<li>@Html.ActionLink("Find Observation", "Index", "Observation")</li>*@
-                        <li class="disabled"><a href="#">First Action Plan</a></li>
-                        <li class="disabled"><a href="#">Second Action Plan</a></li>
-                        <li class="disabled"><a href="#">Third Action Plan</a></li>
+                        <li class="disabled"><a href="#">Not Enabled 01</a></li>
+                        <li class="disabled"><a href="#">Not Enabled 02</a></li>
+                        <li class="disabled"><a href="#">Not Enabled 03</a></li>
                     </ul>
                 </li>
             </ul>
             <ul class="nav navbar-nav menuItem" id="mTables">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        DB TABLES a
+                        DB TABLES
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        @*<li>@Html.ActionLink("Find Observation", "Index", "Observation")</li>*@
-                        <li><a href="/DSC_CUST_ACCT">Customer Accounts</a></li>
+                        <li><a href="/DSC_BUILDING">Buildings</a></li>
                         <li><a href="/DSC_LC">LCs</a></li>
-                        <li><a href="/DSC_MTRC_LC_BLDG">Buildings</a></li>
-                        <li><a href="/MTRC_PRODUCT">Metric Products</a></li>
-                        <li><a href="/MTRC_METRIC">Metric Cathegories</a></li>
                     </ul>
                 </li>
             </ul>

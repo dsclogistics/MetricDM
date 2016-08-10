@@ -134,6 +134,38 @@ namespace MetricDM.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: /MetricPeriod/Maintenance/5
+        public ActionResult MetricMaintenance(int? id)
+        {
+            id = (id==null)?0:id;    //Assign a Zero value to Id if it's null
+            ViewBag.metric_sel_list = new SelectList(db.MTRC_METRIC, "mtrc_id", "mtrc_name", id);
+
+            //Load all the Metrics into a Drop down List for Selection
+            MTRC_METRIC selectedMetric;
+            if (id == 0) { selectedMetric = null;}
+            else { selectedMetric = db.MTRC_METRIC.Find(id); }            
+            //if (selectedMetric == null)
+            //{
+            //    throw new Exception("The selected Metric does not exist");
+            //}
+            return View(selectedMetric);
+        }
+
+        // GET: /MetricPeriod/Maintenance/5
+        public ActionResult MetricPeriodMaintenance(int? id)
+        {
+            //id = (id == null) ? 0 : id;    //Assign a Zero value to Id if it's null
+            //ViewBag.metric_sel_list = new SelectList(db.MTRC_METRIC, "mtrc_id", "mtrc_name", id);
+
+            ////Load all the Metrics into a Drop down List for Selection
+            //MTRC_METRIC selectedMetric = db.MTRC_METRIC.Find(id);
+            ////if (selectedMetric == null)
+            ////{
+            ////    throw new Exception("The selected Metric does not exist");
+            ////}
+            return View();
+        }
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

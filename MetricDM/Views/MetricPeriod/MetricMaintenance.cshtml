@@ -1,0 +1,134 @@
+﻿@model MetricDM.Models.MTRC_METRIC
+
+@{
+    ViewBag.Title = "Maintenance";    
+}
+<br />
+<h2>Metric Maintenance - Select a Metric to Maintain</h2>
+<br /><br />
+@Html.DropDownList("metric_sel_list", null,"--- Select Metric ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:500px" })
+
+@if (!(Model == null)) { 
+<div>
+    <h4>MTRC_METRIC</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.mtrc_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mtrc_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mtrc_token)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mtrc_token)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mtrc_desc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mtrc_desc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mtrc_eff_start_dt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mtrc_eff_start_dt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mtrc_eff_end_dt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mtrc_eff_end_dt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mtrc_min_val)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mtrc_min_val)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mtrc_max_val)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mtrc_max_val)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mtrc_max_dec_places)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mtrc_max_dec_places)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mtrc_max_str_size)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mtrc_max_str_size)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mtrc_na_allow_yn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mtrc_na_allow_yn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MTRC_DATA_TYPE.data_type_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MTRC_DATA_TYPE.data_type_name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.mtrc_id })
+</p>
+    
+    <div class="row" style="width:80%; border:4px double black">
+        <div class="row" style="border-bottom: 1px solid black">AVAILABLE METRIC PERIODS FOR SEECTED METRIC</div>
+        <div>
+            <br /><br /><br />
+            Some Details for all the Metric Periods for the selected Metric will be placed here...
+            <br /><br /><br />
+            <br /><br /><br />
+        </div>
+    </div>
+    
+}
+else { 
+<div>
+    There are no Details to Display. Select a value from the dropdown.
+</div>
+}
+
+
+<script>
+    $("#metric_sel_list").on("change", function () {
+        var selId = $(this).val();
+        location.href = "/MetricPeriod/MetricMaintenance/" + selId;
+        //alert("Valueselected is id: " + selId);
+    })
+</script>
