@@ -6,13 +6,14 @@
 <br />
 <h2>Metric Maintenance - Select a Metric to Maintain</h2>
 <br /><br />
-@Html.DropDownList("metric_sel_list", null,"--- Select Metric ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:500px" })
+<div style="text-align:left; font-weight:bold">Select a Metric to Maintain:</div>
+@Html.DropDownList("metric_sel_list", null,"--- Select Metric ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:350px" })
 
 @if (!(Model == null)) { 
 <div>
-    <h4>MTRC_METRIC</h4>
+    <h4>SELECTED METRIC DETAILS</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal" id="MetricDetails">
         <dt>
             @Html.DisplayNameFor(model => model.mtrc_name)
         </dt>
