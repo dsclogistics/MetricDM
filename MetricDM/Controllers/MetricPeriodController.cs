@@ -138,12 +138,15 @@ namespace MetricDM.Controllers
         public ActionResult MetricMaintenance(int? id)
         {
             id = (id==null)?0:id;    //Assign a Zero value to Id if it's null
-            ViewBag.metric_sel_list = new SelectList(db.MTRC_METRIC, "mtrc_id", "mtrc_name", id);
+            ViewBag.metric_sel_list = new SelectList(db.MTRC_METRIC, "mtrc_id", "mtrc_name", id);            
 
             //Load all the Metrics into a Drop down List for Selection
             MTRC_METRIC selectedMetric;
             if (id == 0) { selectedMetric = null;}
-            else { selectedMetric = db.MTRC_METRIC.Find(id); }            
+            else { 
+                selectedMetric = db.MTRC_METRIC.Find(id);
+                ViewBag.data_type_id = new SelectList(db.MTRC_DATA_TYPE, "data_type_id", "data_type_name", selectedMetric.data_type_id);
+            }
             //if (selectedMetric == null)
             //{
             //    throw new Exception("The selected Metric does not exist");

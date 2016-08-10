@@ -188,6 +188,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MetricDM_Entity.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelViews.cs" />
     <Compile Include="Models\MTRC_BLDG_MTRC_PERIOD.cs">
       <DependentUpon>MetricDM_Entity.tt</DependentUpon>
     </Compile>

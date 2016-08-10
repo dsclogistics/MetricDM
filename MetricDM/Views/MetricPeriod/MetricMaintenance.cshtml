@@ -15,123 +15,181 @@
 
 </style>
 <br />
-<h2>Metric Maintenance - Select a Metric to Maintain</h2>
-<br /><br />
-<div style="text-align:left; font-weight:bold">Select a Metric to Maintain:</div>
-@Html.DropDownList("metric_sel_list", null,"--- Select Metric ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:350px" })
-
-@if (!(Model == null)) { 
-<div style="text-align:center;">
-    <h4>SELECTED METRIC DETAILS</h4>
-    <hr />
-    <dl class="dl-horizontal MetricDetails" style="width:50%; margin:0 auto">
-        <dt>
-            @Html.DisplayNameFor(model => model.mtrc_name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.mtrc_name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.mtrc_token)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.mtrc_token)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.mtrc_desc)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.mtrc_desc)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.mtrc_eff_start_dt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.mtrc_eff_start_dt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.mtrc_eff_end_dt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.mtrc_eff_end_dt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.mtrc_min_val)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.mtrc_min_val)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.mtrc_max_val)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.mtrc_max_val)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.mtrc_max_dec_places)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.mtrc_max_dec_places)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.mtrc_max_str_size)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.mtrc_max_str_size)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.mtrc_na_allow_yn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.mtrc_na_allow_yn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MTRC_DATA_TYPE.data_type_name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MTRC_DATA_TYPE.data_type_name)
-        </dd>
-
-    </dl>
+<h2>Metric Maintenance</h2>
+<div class="row" style="margin:0; ">
+    <div class="col-sm-5" style="text-align:right; padding:0px 0px"><span class="form-control" style="font-weight:bold; max-width:220px; float:right; background-color: lightgray">Select a Metric to Maintain: </span></div>
+    <div class="col-sm-5" style="text-align: left; padding-left: 0px">@Html.DropDownList("metric_sel_list", null, "--- Select Metric ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:350px" })</div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.mtrc_id })
-</p>
+
+
+@if (!(Model == null))
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+    <br />
+    //Draw a section where the Form Edit Fields will be displayed for the selected Metric
+    <div style="border: 4px double black; border-radius: 10px">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.mtrc_id)
+        <input type="hidden" name="@Model.mtrc_id" />    
+        <br />
+        <div class="row">
+            <div class="col-sm-6" >
+                <div class="form-group">
+                    @Html.LabelFor(model => model.mtrc_name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.mtrc_name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mtrc_name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6" >
+                <div class="form-group">
+                    @Html.LabelFor(model => model.mtrc_desc, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.mtrc_desc, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mtrc_desc, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div style="border:1px solid black; text-align:left; margin-left:10px; margin-top:20px; padding-left:8px; border-radius:6px">
+                    <span class="form-control" style="margin-top: -10px; width:110px; border:none; background-color:none; margin-left:5px; padding: 0px 0px 0px 5px; ">Effective Dates</span>
+                    <div class="row">
+                        <div class="col-sm-6">From: @Html.EditorFor(model => model.mtrc_eff_start_dt, new { htmlAttributes = new { @class = "form-control" } }) </div>
+                        <div class="col-sm-6">To: @Html.EditorFor(model => model.mtrc_eff_end_dt, new { htmlAttributes = new { @class = "form-control" } })</div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.mtrc_eff_start_dt, "", new { @class = "text-danger" })<br />
+                    @Html.ValidationMessageFor(model => model.mtrc_eff_end_dt, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6" >
+                <div class="row" style="border:1px solid black; margin: 20px 0px 0px 0px">
+                    <div style="font-weight:bold; margin-bottom:15px;">METADATA:</div>
+                    <table style="width:100%; margin:0 auto">
+                        <tr>
+                            <td style="vertical-align:middle; width:33%">
+                                <table style="width:100%">
+                                    <tr>
+                                        <td style="vertical-align:middle; width:50%">
+                                            @Html.LabelFor(model => model.mtrc_min_val, htmlAttributes: new { @class = "control-label col-md-4", style = "text-align:right; padding:0" })
+                                        </td>
+                                        <td style="width:50%">
+                                            <div>
+                                                @Html.EditorFor(model => model.mtrc_min_val, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.mtrc_min_val, "", new { @class = "text-danger" })
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </td>
+                            <td style="vertical-align:middle; width:33%">
+                                <table style="width:100%">
+                                    <tr>
+                                        @Html.LabelFor(model => model.mtrc_max_val, htmlAttributes: new { @class = "control-label col-md-4", style = "text-align:right; padding:0; vertical-align:middle" })
+                                        <td style="width:50%">
+                                            <div>
+                                                @Html.EditorFor(model => model.mtrc_max_val, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.mtrc_max_val, "", new { @class = "text-danger" })
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="vertical-align:middle; width:33%">
+                                <table style="width:100%">
+                                    <tr>
+                                        <td style="vertical-align:middle; width:50%">@Html.LabelFor(model => model.mtrc_max_dec_places, htmlAttributes: new { @class = "control-label ", style = "text-align:right; padding:0; margin:0; vertical-align:middle" })</td>
+                                        <td style="width:50%">
+                                            <div>
+                                                @Html.EditorFor(model => model.mtrc_max_dec_places, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.mtrc_max_dec_places, "", new { @class = "text-danger" })
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-6"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-6"></div>
+        </div>
+        <br />
+    </div>
     
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(model => model.data_type_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("data_type_id", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.data_type_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.mtrc_token, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.mtrc_token, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mtrc_token, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.mtrc_max_str_size, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.mtrc_max_str_size, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mtrc_max_str_size, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.mtrc_na_allow_yn, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.mtrc_na_allow_yn, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mtrc_na_allow_yn, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
     <div class="row" style="width:80%; border:4px double black">
         <div class="row" style="border-bottom: 1px solid black; margin:0">AVAILABLE METRIC PERIODS FOR SEECTED METRIC</div>
         <div>
             <br /><br /><br />
             Some Details for all the Metric Periods for the "<span style="font-weight:bold">@Model.mtrc_name</span>"  Metric will be placed here...
             <br /><br /><br />
-            <br /><br /><br />
         </div>
     </div>
-    
+    <br /><br /><br />
+
 }
-else { 
-<div>
+else
+{
+<div style="color: red">
     There are no Details to Display. Select a value from the dropdown.
 </div>
 }
@@ -144,3 +202,6 @@ else {
         //alert("Valueselected is id: " + selId);
     })
 </script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
