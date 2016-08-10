@@ -3,6 +3,17 @@
 @{
     ViewBag.Title = "Maintenance";
 }
+<style>
+    .MetricDetails dt {
+        max-width: 300px;
+        text-align:right;
+    }
+        .MetricDetails dd {
+        max-width: 400px;
+        text-align: left;
+    }
+
+</style>
 <br />
 <h2>Metric Maintenance - Select a Metric to Maintain</h2>
 <br /><br />
@@ -10,10 +21,10 @@
 @Html.DropDownList("metric_sel_list", null,"--- Select Metric ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:350px" })
 
 @if (!(Model == null)) { 
-<div>
+<div style="text-align:center;">
     <h4>SELECTED METRIC DETAILS</h4>
     <hr />
-    <dl class="dl-horizontal" id="MetricDetails">
+    <dl class="dl-horizontal MetricDetails" style="width:50%; margin:0 auto">
         <dt>
             @Html.DisplayNameFor(model => model.mtrc_name)
         </dt>
