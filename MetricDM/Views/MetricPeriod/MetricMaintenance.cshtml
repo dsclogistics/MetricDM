@@ -1,7 +1,7 @@
 ﻿@model MetricDM.Models.MTRC_METRIC
 
 @{
-    ViewBag.Title = "Maintenance";    
+    ViewBag.Title = "Maintenance";
 }
 <br />
 <h2>Metric Maintenance - Select a Metric to Maintain</h2>
@@ -108,10 +108,10 @@
 </p>
     
     <div class="row" style="width:80%; border:4px double black">
-        <div class="row" style="border-bottom: 1px solid black">AVAILABLE METRIC PERIODS FOR SEECTED METRIC</div>
+        <div class="row" style="border-bottom: 1px solid black; margin:0">AVAILABLE METRIC PERIODS FOR SEECTED METRIC</div>
         <div>
             <br /><br /><br />
-            Some Details for all the Metric Periods for the selected Metric will be placed here...
+            Some Details for all the Metric Periods for the "<span style="font-weight:bold">@Model.mtrc_name</span>"  Metric will be placed here...
             <br /><br /><br />
             <br /><br /><br />
         </div>
