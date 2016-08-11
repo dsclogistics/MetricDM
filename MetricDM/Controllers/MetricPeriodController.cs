@@ -168,7 +168,18 @@ namespace MetricDM.Controllers
             ////}
             return View();
         }
-        
+
+        public PartialViewResult _metricPeriodInfo() {
+            
+            return PartialView();
+        }
+
+        public string _metricPeriodInfo1()
+        {
+            return "This Space is reserved for a table with the period details";
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
