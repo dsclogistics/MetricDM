@@ -173,17 +173,18 @@
         <div class="row" style="border-bottom: 1px solid black; margin:0">CURRENT AVAILABLE PERIODS FOR "<span style="font-weight:bold">@Model.mtrc_name</span>" METRIC</div>
         <div class="row" style="margin:0">
             <br />
-            @Html.Action("_metricPeriodInfo")
+            @Html.Action("_metricPeriodList")
             @*@Html.Action("Action", "optionalController", new { id = "someid" });*@
             <br /><br />
         </div>
     </div>
     <br /><br />
-    <div class="row" id="divPeriodDetails" style="border:4px double black; display:none">
-        <br />
-        <p>Please wait... Loading Info</p>
-
-        
+    <div class="row" id="divOutput" style="border:4px double black; display:none; text-align:center">
+        <div id="msgLoading">
+            <br /><p>Please wait... Loading Info</p><img src="~/Images/ui-anim_basic_16x16.gif" /><br /><br />
+        </div>
+        <div id="mpDetailsView" style="display:none">            
+        </div>
     </div>
     <br /><br />
 }
@@ -203,38 +204,35 @@ else
             //alert("Valueselected is id: " + selId);
         })
         $(".btnMPDetails").click(function () {
-            alert("Please wait.. Loading Ajax info for Metric Period Id " + $(this).siblings("#MPId").val());
+            var idToDisplay = $(this).siblings("#MPId").val();
+            alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
             $("#divPeriodList").hide();
-            $("#divPeriodDetails").html("Hello!");
+            $("#divOutput").show();        //Show the panel that holds the Metric Period Details Partial View
 
             // ------------ Make the Ajax Call ---------------------------------------------
-            @*$.ajax({
-                url: '@Url.Action("addQuestionAnswerInfo", "Question")',
+            $.ajax({
+                url: '@Url.Action("_metricPeriodDetails", "MetricPeriod")',
                 method: "GET",
                 cache: false,
-                //data: { qat_id: QATid, sel_ans_list: textValues },     //<---- Data Parameters (if not already passed in the Url)
-                //data: JSON.stringify({ 'Options': someData }),           //<--- In case we wanted to post a JSON data object
-                //dataType: "json",                                        //<--- In case we wanted to post a JSON data object
-                //contentType: "application/json; charset=utf-8",          //<--- In case we wanted to post a JSON data object
-                //traditional: true,                                       //<--- In case we wanted to post a JSON data object
-
+                data: { id: idToDisplay },     //<---- Data Parameters (if not already passed in the Url)
                 //--- On error, execute this function ------
-                error: function () {
-                    obsAlert("An Error has Occurred. Unable to Add!!");  //<-- Trap and alert of any errors if they occurred
+                error: function (xhr, status, error) {
+                    //var err = eval("(" + xhr.responseText + ")");
+                    $("#mpDetailsView").html(xhr.responseText);
+                    $("#msgLoading").hide();
+                    $("#mpDetailsView").show();
+                    //alert("An Error has Occurred. Unable to Add!!");  //<-- Trap and alert of any errors if they occurred
                 }
             }).done(function (d) {
                 //Execute this code After the Ajax call completes successfully
-                $("#divNewSA").html(d);
-                $("#fullSelATlist").focus();
-                $('html,body').animate({ scrollTop: document.body.scrollHeight }, "slow");
-                //window.scrollTo(0, 0);   //Scroll to the top of the Screen
-            });*@
-
-            $("#divPeriodDetails").show();
+                //Insert the partial view retrieved into the output 'mpDetailsView' panel
+                $("#mpDetailsView").html(d);
+                $("#msgLoading").hide();
+                $("#mpDetailsView").show();
+            });
         });
-
-
     });
+
 </script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

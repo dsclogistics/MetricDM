@@ -14,6 +14,7 @@ namespace MetricDM.Controllers
     {
         private DSC_MTRC_DEVEntities db = new DSC_MTRC_DEVEntities();
 
+        //============================================================================================================
         // GET: MetricPeriod
         public ActionResult Index(int? id)
         {
@@ -34,7 +35,7 @@ namespace MetricDM.Controllers
                 return View(mTRC_METRIC);
             }
         }
-
+        //============================================================================================================
         // GET: MetricPeriod/Details/5
         public ActionResult Details(int? id)
         {
@@ -50,6 +51,7 @@ namespace MetricDM.Controllers
             return View(mTRC_METRIC);
         }
 
+        //============================================================================================================
         // GET: MetricPeriod/Create
         public ActionResult Create()
         {
@@ -57,6 +59,7 @@ namespace MetricDM.Controllers
             return View();
         }
 
+        //============================================================================================================
         // POST: MetricPeriod/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -75,6 +78,7 @@ namespace MetricDM.Controllers
             return View(mTRC_METRIC);
         }
 
+        //============================================================================================================
         // GET: MetricPeriod/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -91,6 +95,7 @@ namespace MetricDM.Controllers
             return View(mTRC_METRIC);
         }
 
+        //============================================================================================================
         // POST: MetricPeriod/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -108,6 +113,7 @@ namespace MetricDM.Controllers
             return View(mTRC_METRIC);
         }
 
+        //============================================================================================================
         // GET: MetricPeriod/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -123,6 +129,7 @@ namespace MetricDM.Controllers
             return View(mTRC_METRIC);
         }
 
+        //============================================================================================================
         // POST: MetricPeriod/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -134,6 +141,7 @@ namespace MetricDM.Controllers
             return RedirectToAction("Index");
         }
 
+        //============================================================================================================
         // GET: /MetricPeriod/Maintenance/5
         public ActionResult MetricMaintenance(int? id)
         {
@@ -154,6 +162,7 @@ namespace MetricDM.Controllers
             return View(selectedMetric);
         }
 
+        //============================================================================================================
         // GET: /MetricPeriod/Maintenance/5
         public ActionResult MetricPeriodMaintenance(int? id)
         {
@@ -168,28 +177,30 @@ namespace MetricDM.Controllers
             ////}
             return View();
         }
-
-        public PartialViewResult _metricPeriodInfo(int id)
+        //============================================================================================================
+        public PartialViewResult _metricPeriodList(int id)
         {
             List<MTRC_METRIC_PERIOD> metricPeriods = db.MTRC_METRIC_PERIOD.Where(x => x.mtrc_id == id).ToList();
 
             return PartialView(metricPeriods);
         }
-
-        public ActionResult MetricPeriodDetails(int? id)
+        //============================================================================================================
+        // GET: /MetricPeriod/_metricPeriodDetails/5
+        public ActionResult _metricPeriodDetails(int? id)
         {
+            MTRC_METRIC_PERIOD mPeriod;
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                mPeriod = null;
             }
-            MTRC_METRIC mTRC_METRIC = db.MTRC_METRIC.Find(id);
-            if (mTRC_METRIC == null)
-            {
-                return HttpNotFound();
+            else {
+                mPeriod = db.MTRC_METRIC_PERIOD.Find(id);
             }
-            return View(mTRC_METRIC);
+            
+            return View(mPeriod);
         }
-
+        //============================================================================================================
         protected override void Dispose(bool disposing)
         {
             if (disposing)

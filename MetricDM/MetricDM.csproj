@@ -305,11 +305,11 @@
     <Content Include="Views\DSC_BUILDING\Index.cshtml" />
     <Content Include="Views\MetricPeriod\Create.cshtml" />
     <Content Include="Views\MetricPeriod\Delete.cshtml" />
-    <Content Include="Views\MetricPeriod\Details.cshtml" />
     <Content Include="Views\MetricPeriod\Edit.cshtml" />
     <Content Include="Views\MetricPeriod\Index.cshtml" />
     <Content Include="Views\MetricPeriod\MetricMaintenance.cshtml" />
-    <Content Include="Views\MetricPeriod\_metricPeriodInfo.cshtml" />
+    <Content Include="Views\MetricPeriod\_metricPeriodList.cshtml" />
+    <Content Include="Views\MetricPeriod\_metricPeriodDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
