@@ -42,6 +42,41 @@ namespace MetricDM.Models
         //[Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
     }
 
+    [MetadataType(typeof(MTRC_METRIC_PERIODMetaData))]
+    public partial class MTRC_METRIC_PERIOD { }
 
+    public class MTRC_METRIC_PERIODMetaData
+    {
+        [Display(Name = "Metric Period Id")]
+        public int mtrc_period_id { get; set; }
+        [Display(Name = "Metric Id")]
+        public int mtrc_id { get; set; }
+        [Display(Name = "Time Period Id")]
+        public short tpt_id { get; set; }
+        [Display(Name = "Metric Period Name")]
+        public string mtrc_period_name { get; set; }
+        public string mtrc_period_token { get; set; }
+        [Display(Name = "Metric Period Description")]
+        public string mtrc_period_desc { get; set; }
+        public string mtrc_period_calc_yn { get; set; }
+        public Nullable<decimal> mtrc_period_min_val { get; set; }
+        public Nullable<decimal> mtrc_period_max_val { get; set; }
+        public Nullable<short> mtrc_period_max_dec_places { get; set; }
+        public Nullable<short> mtrc_period_max_str_size { get; set; }
+        public string mtrc_period_na_allow_yn { get; set; }
+        public string mtrc_period_can_import_yn { get; set; }
+        public string mtrc_period_is_auto_yn { get; set; }
+    }
+
+    [MetadataType(typeof(MTRC_TIME_PERIOD_TYPEMetaData))]
+    public partial class MTRC_TIME_PERIOD_TYPE { }
+
+    public class MTRC_TIME_PERIOD_TYPEMetaData
+    {
+        [Display(Name = "Time Period Id")]
+        public short tpt_id { get; set; }
+        [Display(Name = "Time Period Name")]
+        public string tpt_name { get; set; }
+    }
 
 }

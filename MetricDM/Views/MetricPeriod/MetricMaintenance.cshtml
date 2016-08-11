@@ -67,8 +67,8 @@
                     @Html.ValidationMessageFor(model => model.mtrc_eff_end_dt, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-sm-6" >
-                <div class="row" style="border:1px solid black; margin: 20px 0px 0px 0px">
+            <div class="col-sm-6">
+                <div class="row" style="border:1px solid black; margin: 20px 0px 0px 0px; padding: 0px 0px 24px 0px">
                     <div style="font-weight:bold; margin-bottom:15px;">METADATA:</div>
                     <table style="width:100%; margin:0 auto">
                         <tr>
@@ -76,7 +76,7 @@
                                 <table style="width:100%">
                                     <tr>
                                         <td style="vertical-align:middle; width:50%">
-                                            @Html.LabelFor(model => model.mtrc_min_val, htmlAttributes: new { @class = "control-label col-md-4", style = "text-align:right; padding:0" })
+                                            @Html.LabelFor(model => model.mtrc_min_val, htmlAttributes: new { @class = "control-label ", style = "text-align:right; padding:0" })
                                         </td>
                                         <td style="width:50%">
                                             <div>
@@ -91,7 +91,9 @@
                             <td style="vertical-align:middle; width:33%">
                                 <table style="width:100%">
                                     <tr>
-                                        @Html.LabelFor(model => model.mtrc_max_val, htmlAttributes: new { @class = "control-label col-md-4", style = "text-align:right; padding:0; vertical-align:middle" })
+                                        <td style="vertical-align:middle; width:50%">
+                                            @Html.LabelFor(model => model.mtrc_max_val, htmlAttributes: new { @class = "control-label ", style = "text-align:right; padding:0; vertical-align:middle" })
+                                        </td>
                                         <td style="width:50%">
                                             <div>
                                                 @Html.EditorFor(model => model.mtrc_max_val, new { htmlAttributes = new { @class = "form-control" } })
@@ -104,7 +106,9 @@
                             <td style="vertical-align:middle; width:33%">
                                 <table style="width:100%">
                                     <tr>
-                                        <td style="vertical-align:middle; width:50%">@Html.LabelFor(model => model.mtrc_max_dec_places, htmlAttributes: new { @class = "control-label ", style = "text-align:right; padding:0; margin:0; vertical-align:middle" })</td>
+                                        <td style="vertical-align:middle; width:50%">
+                                            @Html.LabelFor(model => model.mtrc_max_dec_places, htmlAttributes: new { @class = "control-label ", style = "text-align:right; padding:0; margin:0; vertical-align:middle" })
+                                        </td>
                                         <td style="width:50%">
                                             <div>
                                                 @Html.EditorFor(model => model.mtrc_max_dec_places, new { htmlAttributes = new { @class = "form-control" } })
@@ -182,7 +186,7 @@
     <div class="row" id="divOutput" style="border:4px double black; display:none; text-align:center">
         <div id="msgLoading">
             <br /><p>Please wait... Loading Info</p><img src="~/Images/ui-anim_basic_16x16.gif" /><br /><br />
-        </div>
+    </div>
         <div id="mpDetailsView" style="display:none">            
         </div>
     </div>
@@ -231,7 +235,7 @@ else
                 $("#mpDetailsView").show();
             });
         });
-    });
+        });
 
 </script>
 @section Scripts {
