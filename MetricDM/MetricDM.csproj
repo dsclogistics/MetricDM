@@ -246,7 +246,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\confused-emoticon.jpg" />
     <Content Include="Images\DSCHOME_Logo.png" />
+    <Content Include="Images\ui-anim_basic_16x16.gif" />
     <Content Include="Models\MetricDM_Entity.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MetricDM_Entity.edmx</DependentUpon>
