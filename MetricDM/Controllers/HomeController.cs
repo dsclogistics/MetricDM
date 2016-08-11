@@ -12,7 +12,7 @@ namespace MetricDM.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.AlexMessage = "Alex was here...";
+            //ViewBag.AlexMessage = "Alex was here...";
             return View();
         }
     }

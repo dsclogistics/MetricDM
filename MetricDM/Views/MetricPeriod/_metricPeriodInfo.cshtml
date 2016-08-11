@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MetricDM.Models.MTRC_METRIC_PERIOD>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="row" style="margin:0">
+    <table class="table table-bordered table-condensed table-hover table-striped" style="width:100%; margin:0 auto">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.mtrc_period_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mtrc_period_desc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MTRC_METRIC.mtrc_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MTRC_TIME_PERIOD_TYPE.tpt_name)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mtrc_period_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mtrc_period_desc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MTRC_METRIC.mtrc_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MTRC_TIME_PERIOD_TYPE.tpt_name)
+                </td>
+                <td>
+                    <input type="hidden" id="MPId" value="@item.mtrc_period_id"/>
+                    <input type="button" class="btnMPDetails" value="Details" />
+                    @*@Html.ActionLink("Details", "MetricPeriodDetails", new { id=item.mtrc_period_id })*@
+                </td>
+            </tr>
+}
+
+    </table>
+</div>

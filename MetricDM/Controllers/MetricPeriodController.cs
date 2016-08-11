@@ -169,16 +169,26 @@ namespace MetricDM.Controllers
             return View();
         }
 
-        public PartialViewResult _metricPeriodInfo() {
-            
-            return PartialView();
-        }
-
-        public string _metricPeriodInfo1()
+        public PartialViewResult _metricPeriodInfo(int id)
         {
-            return "This Space is reserved for a table with the period details";
+            List<MTRC_METRIC_PERIOD> metricPeriods = db.MTRC_METRIC_PERIOD.Where(x => x.mtrc_id == id).ToList();
+
+            return PartialView(metricPeriods);
         }
 
+        public ActionResult MetricPeriodDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            MTRC_METRIC mTRC_METRIC = db.MTRC_METRIC.Find(id);
+            if (mTRC_METRIC == null)
+            {
+                return HttpNotFound();
+            }
+            return View(mTRC_METRIC);
+        }
 
         protected override void Dispose(bool disposing)
         {
