@@ -36,7 +36,7 @@
         <input type="hidden" name="@Model.mtrc_id" />    
         <br />
         <div class="row">
-            <div class="col-sm-6" >
+            <div class="col-sm-4" >
                 <div class="form-group">
                     @Html.LabelFor(model => model.mtrc_name, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -45,11 +45,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6" >
+            <div class="col-sm-8" >
                 <div class="form-group">
                     @Html.LabelFor(model => model.mtrc_desc, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.mtrc_desc, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.mtrc_desc, new { htmlAttributes = new { @class = "form-control", style="min-width:600px" } })
                         @Html.ValidationMessageFor(model => model.mtrc_desc, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -160,29 +160,32 @@
 
             </div>
         </div> <!-- THIRD LINE ROW END -->
+        <br />
         <div class="row" style="text-align:center">
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
-            </div>
+            <input type="submit" value="Save" class="btn btn-primary" style="width:100px" />
         </div> <!-- BUTTONS ROW DIV END -->
     <br />
     </div> <!-- FORM HEADER END -->
     }
 
     <br />
-    <div class="row" style="border:4px double black">
+    <div class="row" id="divPeriodList" style="border:4px double black">
         <div class="row" style="border-bottom: 1px solid black; margin:0">CURRENT AVAILABLE PERIODS FOR "<span style="font-weight:bold">@Model.mtrc_name</span>" METRIC</div>
-        <div class="row">
+        <div class="row" style="margin:0">
             <br />
             @Html.Action("_metricPeriodInfo")
             @*@Html.Action("Action", "optionalController", new { id = "someid" });*@
             <br /><br />
         </div>
     </div>
-    <br /><br /><br />
+    <br /><br />
+    <div class="row" id="divPeriodDetails" style="border:4px double black; display:none">
+        <br />
+        <p>Please wait... Loading Info</p>
 
+        
+    </div>
+    <br /><br />
 }
 else
 {
@@ -193,13 +196,44 @@ else
 
 
 <script>
-    $("#metric_sel_list").on("change", function () {
-        var selId = $(this).val();
-        location.href = "/MetricPeriod/MetricMaintenance/" + selId;
-        //alert("Valueselected is id: " + selId);
-    })
-    $(".btnMPDetails").click(function () {
-        alert("You selected id " + $(this).siblings("#MPId").val());
+    $(document).ready(function () {
+        $("#metric_sel_list").on("change", function () {
+            var selId = $(this).val();
+            location.href = "/MetricPeriod/MetricMaintenance/" + selId;
+            //alert("Valueselected is id: " + selId);
+        })
+        $(".btnMPDetails").click(function () {
+            alert("Please wait.. Loading Ajax info for Metric Period Id " + $(this).siblings("#MPId").val());
+            $("#divPeriodList").hide();
+            $("#divPeriodDetails").html("Hello!");
+
+            // ------------ Make the Ajax Call ---------------------------------------------
+            @*$.ajax({
+                url: '@Url.Action("addQuestionAnswerInfo", "Question")',
+                method: "GET",
+                cache: false,
+                //data: { qat_id: QATid, sel_ans_list: textValues },     //<---- Data Parameters (if not already passed in the Url)
+                //data: JSON.stringify({ 'Options': someData }),           //<--- In case we wanted to post a JSON data object
+                //dataType: "json",                                        //<--- In case we wanted to post a JSON data object
+                //contentType: "application/json; charset=utf-8",          //<--- In case we wanted to post a JSON data object
+                //traditional: true,                                       //<--- In case we wanted to post a JSON data object
+
+                //--- On error, execute this function ------
+                error: function () {
+                    obsAlert("An Error has Occurred. Unable to Add!!");  //<-- Trap and alert of any errors if they occurred
+                }
+            }).done(function (d) {
+                //Execute this code After the Ajax call completes successfully
+                $("#divNewSA").html(d);
+                $("#fullSelATlist").focus();
+                $('html,body').animate({ scrollTop: document.body.scrollHeight }, "slow");
+                //window.scrollTo(0, 0);   //Scroll to the top of the Screen
+            });*@
+
+            $("#divPeriodDetails").show();
+        });
+
+
     });
 </script>
 @section Scripts {
