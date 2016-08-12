@@ -197,7 +197,9 @@ namespace MetricDM.Controllers
             else {
                 mPeriod = db.MTRC_METRIC_PERIOD.Find(id);
             }
-            
+
+            System.Threading.Thread.Sleep(3000);
+
             return PartialView(mPeriod);
         }
         //============================================================================================================
