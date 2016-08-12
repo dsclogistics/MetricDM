@@ -195,6 +195,8 @@
             //alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
             //$("#divPeriodList").hide();
             $("#divOutput").show();        //Show the panel that holds the Metric Period Details Partial View
+            $("#msgLoading").show();
+            $("#mpDetailsView").hide();
             $(".btnMPDetails").prop("disabled", true);
 
             // ------------ Make the Ajax Call ---------------------------------------------
