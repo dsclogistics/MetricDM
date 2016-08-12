@@ -56,115 +56,88 @@
             </div>
         </div>
         <div class="row" style="margin-right:7px; border-radius:7px">
-            <div class="col-sm-6">
+            <div class="col-sm-3">
                 <div style="border:1px solid black; text-align:left; margin-left:10px; margin-top:20px; padding-left:8px; border-radius:6px">
                     <span class="form-control" style="margin-top: -10px; width:110px; border:none; background-color:none; margin-left:5px; padding: 0px 0px 0px 5px; ">Effective Dates</span>
-                    <div class="row">
-                        <div class="col-sm-6">From: @Html.EditorFor(model => model.mtrc_eff_start_dt, new { htmlAttributes = new { @class = "form-control" } }) </div>
-                        <div class="col-sm-6">To: @Html.EditorFor(model => model.mtrc_eff_end_dt, new { htmlAttributes = new { @class = "form-control" } })</div>
+                    <div class="row" style="margin:0">
+                        From: @Html.EditorFor(model => model.mtrc_eff_start_dt, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
-                    @Html.ValidationMessageFor(model => model.mtrc_eff_start_dt, "", new { @class = "text-danger" })<br />
-                    @Html.ValidationMessageFor(model => model.mtrc_eff_end_dt, "", new { @class = "text-danger" })
+                    <div class="row" style="margin:0">
+                        To: @Html.EditorFor(model => model.mtrc_eff_end_dt, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                        @Html.ValidationMessageFor(model => model.mtrc_eff_start_dt, "", new { @class = "text-danger" })<br />
+                        @Html.ValidationMessageFor(model => model.mtrc_eff_end_dt, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-9">
                 <div class="row" style="border:1px solid black; margin: 20px 0px 0px 0px; padding: 0px 0px 24px 0px">
                     <div style="font-weight:bold; margin-bottom:15px;">METADATA:</div>
-                    <table style="width:100%; margin:0 auto">
-                        <tr>
-                            <td style="vertical-align:middle; width:33%">
-                                <table style="width:100%">
-                                    <tr>
-                                        <td style="vertical-align:middle; width:50%">
-                                            @Html.LabelFor(model => model.mtrc_min_val, htmlAttributes: new { @class = "control-label ", style = "text-align:right; padding:0" })
-                                        </td>
-                                        <td style="width:50%">
-                                            <div>
-                                                @Html.EditorFor(model => model.mtrc_min_val, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.mtrc_min_val, "", new { @class = "text-danger" })
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                @Html.LabelFor(model => model.mtrc_min_val, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.EditorFor(model => model.mtrc_min_val, new { htmlAttributes = new { @class = "form-control", placeholder = "___" } })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                @Html.LabelFor(model => model.mtrc_max_val, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.EditorFor(model => model.mtrc_max_val, new { htmlAttributes = new { @class = "form-control", placeholder = "___" } })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                @Html.LabelFor(model => model.mtrc_max_dec_places, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.EditorFor(model => model.mtrc_max_dec_places, new { htmlAttributes = new { @class = "form-control", placeholder = "__" } })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                @Html.LabelFor(model => model.data_type_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.DropDownList("data_type_id", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                @Html.LabelFor(model => model.mtrc_token, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.EditorFor(model => model.mtrc_token, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Token" } })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                @Html.LabelFor(model => model.mtrc_max_str_size, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.EditorFor(model => model.mtrc_max_str_size, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter MAx Size" } })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                @Html.LabelFor(model => model.mtrc_na_allow_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.EditorFor(model => model.mtrc_na_allow_yn, new { htmlAttributes = new { @class = "form-control", placeholder = "Y/N?" } })
+                            </div>
+                        </div>
 
-                            </td>
-                            <td style="vertical-align:middle; width:33%">
-                                <table style="width:100%">
-                                    <tr>
-                                        <td style="vertical-align:middle; width:50%">
-                                            @Html.LabelFor(model => model.mtrc_max_val, htmlAttributes: new { @class = "control-label ", style = "text-align:right; padding:0; vertical-align:middle" })
-                                        </td>
-                                        <td style="width:50%">
-                                            <div>
-                                                @Html.EditorFor(model => model.mtrc_max_val, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.mtrc_max_val, "", new { @class = "text-danger" })
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td style="vertical-align:middle; width:33%">
-                                <table style="width:100%">
-                                    <tr>
-                                        <td style="vertical-align:middle; width:50%">
-                                            @Html.LabelFor(model => model.mtrc_max_dec_places, htmlAttributes: new { @class = "control-label ", style = "text-align:right; padding:0; margin:0; vertical-align:middle" })
-                                        </td>
-                                        <td style="width:50%">
-                                            <div>
-                                                @Html.EditorFor(model => model.mtrc_max_dec_places, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.mtrc_max_dec_places, "", new { @class = "text-danger" })
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
+
+                        <div class="col-md-3 col-sm-6">
+                            @*<div class="input-group">
+                @Html.LabelFor(model => model.data_type_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                @Html.DropDownList("data_type_id", null, htmlAttributes: new { @class = "form-control" })
+            </div>*@
+                        </div>
+                    </div> <!-- END OF DIV ROW -->
+
+                    @Html.ValidationMessageFor(model => model.mtrc_min_val, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.mtrc_max_dec_places, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.data_type_id, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.mtrc_token, "", new { @class = "text-danger" })
+
                 </div>                
             </div>  <!-- METADATA ROW DIV END -->
 
         </div> <!-- DATES AND META-DATA ROW SECTION-->
         <br />
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.data_type_id, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("data_type_id", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.data_type_id, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.mtrc_token, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.mtrc_token, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.mtrc_token, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.mtrc_max_str_size, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.mtrc_max_str_size, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.mtrc_max_str_size, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.mtrc_na_allow_yn, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.mtrc_na_allow_yn, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.mtrc_na_allow_yn, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-            </div>
-        </div> <!-- THIRD LINE ROW END -->
-        <br />
+        <hr />
         <div class="row" style="text-align:center">
             <input type="submit" value="Save" class="btn btn-primary" style="width:100px" />
         </div> <!-- BUTTONS ROW DIV END -->
@@ -182,7 +155,7 @@
             <br /><br />
         </div>
     </div>
-    <br /><br />
+    <br />
     <div class="row" id="divOutput" style="border:4px double black; display:none; text-align:center">
         <div id="msgLoading">
             <br /><p>Please wait... Loading Info</p><img src="~/Images/ui-anim_basic_16x16.gif" /><br /><br />
@@ -207,9 +180,10 @@ else
             location.href = "/MetricPeriod/MetricMaintenance/" + selId;
             //alert("Valueselected is id: " + selId);
         })
+
         $(".btnMPDetails").click(function () {
             var idToDisplay = $(this).siblings("#MPId").val();
-            alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
+            //alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
             $("#divPeriodList").hide();
             $("#divOutput").show();        //Show the panel that holds the Metric Period Details Partial View
 
@@ -225,7 +199,7 @@ else
                     $("#mpDetailsView").html(xhr.responseText);
                     $("#msgLoading").hide();
                     $("#mpDetailsView").show();
-                    //alert("An Error has Occurred. Unable to Add!!");  //<-- Trap and alert of any errors if they occurred
+                    //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
                 }
             }).done(function (d) {
                 //Execute this code After the Ajax call completes successfully

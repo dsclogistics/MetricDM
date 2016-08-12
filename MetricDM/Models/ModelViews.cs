@@ -13,7 +13,7 @@ namespace MetricDM.Models
     {
         [Display(Name = "Metric Id")]
         public int mtrc_id { get; set; }
-        [Display(Name = "Metric Data Type")]
+        [Display(Name = "Data Type")]
         public short data_type_id { get; set; }
         [Required(ErrorMessage = "The Metric Name is Mandatory!")][Display(Name = "Metric Name")]
         [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]

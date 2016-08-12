@@ -186,7 +186,7 @@ namespace MetricDM.Controllers
         }
         //============================================================================================================
         // GET: /MetricPeriod/_metricPeriodDetails/5
-        public ActionResult _metricPeriodDetails(int? id)
+        public PartialViewResult _metricPeriodDetails(int? id)
         {
             MTRC_METRIC_PERIOD mPeriod;
             if (id == null)
@@ -198,7 +198,7 @@ namespace MetricDM.Controllers
                 mPeriod = db.MTRC_METRIC_PERIOD.Find(id);
             }
             
-            return View(mPeriod);
+            return PartialView(mPeriod);
         }
         //============================================================================================================
         protected override void Dispose(bool disposing)
