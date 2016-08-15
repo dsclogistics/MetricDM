@@ -6,6 +6,7 @@ using System.Web;
 
 namespace MetricDM.Models
 {
+    //Metadata for MTRC_METRIC
     [MetadataType(typeof(MTRC_METRICMetaData))]
     public partial class MTRC_METRIC { }
 
@@ -36,12 +37,13 @@ namespace MetricDM.Models
         public Nullable<short> mtrc_max_dec_places { get; set; }
         [Display(Name = "Max String Size")]
         public Nullable<short> mtrc_max_str_size { get; set; }
-        [Display(Name = "N/A allowed")]
+        [Display(Name = "N/A Allowed")]
         public string mtrc_na_allow_yn { get; set; }
         //[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         //[Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
     }
 
+    //Metadata for MTRC_METRIC_PERIOD
     [MetadataType(typeof(MTRC_METRIC_PERIODMetaData))]
     public partial class MTRC_METRIC_PERIOD { }
 
@@ -55,19 +57,29 @@ namespace MetricDM.Models
         public short tpt_id { get; set; }
         [Display(Name = "Metric Period Name")]
         public string mtrc_period_name { get; set; }
+        [Display(Name = "Token")]
         public string mtrc_period_token { get; set; }
-        [Display(Name = "Metric Period Description")]
+        [Display(Name = "Description")]
         public string mtrc_period_desc { get; set; }
+        [Display(Name = "Calc Y/N")]
         public string mtrc_period_calc_yn { get; set; }
+        [Display(Name = "Min Val")]
         public Nullable<decimal> mtrc_period_min_val { get; set; }
+        [Display(Name = "Max Val")]
         public Nullable<decimal> mtrc_period_max_val { get; set; }
+        [Display(Name = "Max Dec Places")]
         public Nullable<short> mtrc_period_max_dec_places { get; set; }
+        [Display(Name = "Max String Size")]
         public Nullable<short> mtrc_period_max_str_size { get; set; }
+        [Display(Name = "N/A Allowed")]
         public string mtrc_period_na_allow_yn { get; set; }
+        [Display(Name = "Can Import Y/N")]
         public string mtrc_period_can_import_yn { get; set; }
+        [Display(Name = "Auto Y/N")]
         public string mtrc_period_is_auto_yn { get; set; }
     }
 
+    //Metadata for MTRC_METRIC_PERIOD_TYPE
     [MetadataType(typeof(MTRC_TIME_PERIOD_TYPEMetaData))]
     public partial class MTRC_TIME_PERIOD_TYPE { }
 
