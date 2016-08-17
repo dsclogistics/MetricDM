@@ -162,6 +162,14 @@ namespace MetricDM.Controllers
             return View(selectedMetric);
         }
 
+        // POST: /MetricPeriod/Maintenance/5
+        [HttpPost]
+        public ActionResult MetricMaintenance(MTRC_METRIC selectedMetric)
+        {
+            ViewBag.saveResult = "Data Saved Successfully.";
+            return View(selectedMetric);
+        }
+
         //============================================================================================================
         // GET: /MetricPeriod/Maintenance/5
         public ActionResult MetricPeriodMaintenance(int? id)

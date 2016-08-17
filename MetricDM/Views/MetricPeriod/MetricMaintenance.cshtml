@@ -179,7 +179,11 @@
             var selId = $(this).val();
             location.href = "/MetricPeriod/MetricMaintenance/" + selId;
             //alert("Valueselected is id: " + selId);
-        })
+        });
+
+        $("#divOutput").on("click", "btnSaveMPDetail", function () {
+            alert("Saving Functionality is not Enabled yet");
+        });
 
         $("#divOutput").on('click', '#btnSaveMPDetail', function () {
 
