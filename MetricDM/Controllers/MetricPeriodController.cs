@@ -198,11 +198,20 @@ namespace MetricDM.Controllers
                 mPeriod = db.MTRC_METRIC_PERIOD.Find(id);
             }
 
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(500);
 
             return PartialView(mPeriod);
         }
         //============================================================================================================
+        // POST: /MetricPeriod/_metricPeriodDetails
+        [HttpPost] 
+        //[ValidateAntiForgeryToken]
+        public PartialViewResult _metricPeriodDetails(MTRC_METRIC_PERIOD mPeriod)
+        {
+            return PartialView(mPeriod);
+        }
+        //============================================================================================================
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
