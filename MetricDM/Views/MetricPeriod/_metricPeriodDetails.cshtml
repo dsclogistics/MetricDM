@@ -8,6 +8,8 @@
         @Html.HiddenFor(model => model.mtrc_period_id)
         <input type="hidden" id="mID" value="@Model.mtrc_id" />
     </div>
+    <span font-size:large; font-weight:bold"> </span>
+    <span id="saveMessage" class="alert-success" style="display:none; font-size:large; font-weight:bold"> </span>
     <br />
     <div class="row" style="margin-top:5px">
         <div class="col-md-4 col-sm-3" >
@@ -137,11 +139,3 @@
         @ViewBag.saveResult
     </div>
 }
-
-<script>
-    $(document).ready(function () {
-        $("#btnSaveMPDetail").click(function () {
-            alert("Saving Functionality is not Enabled yet");
-        });
-    });
-</script>
