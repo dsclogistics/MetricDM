@@ -29,26 +29,26 @@
     <div class="row" style="margin-top:5px">
         <div class="col-md-3 col-sm-6">
             <div class="input-group">
-                @Html.LabelFor(model => model.tpt_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
-                @Html.EditorFor(model => model.tpt_id, new { htmlAttributes = new { @class = "form-control", placeholder = "___" } })
-                @*@Html.DropDownList("tpt_id", null, htmlAttributes: new { @class = "form-control" })*@
+                @Html.LabelFor(model => model.tpt_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:130px" })
+                @*@Html.EditorFor(model => model.tpt_id, new { htmlAttributes = new { @class = "form-control", placeholder = "___" } })*@
+                @Html.DropDownList("tpt_id", null, htmlAttributes: new { @class = "form-control" })
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="input-group">
-                @Html.LabelFor(model => model.mtrc_period_max_dec_places, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
-                @Html.EditorFor(model => model.mtrc_period_max_dec_places, new { htmlAttributes = new { @class = "form-control", placeholder = "__" } })
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="input-group">
-                @Html.LabelFor(model => model.mtrc_period_token, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                @Html.LabelFor(model => model.mtrc_period_token, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })
                 @Html.EditorFor(model => model.mtrc_period_token, new { htmlAttributes = new { @class = "form-control", placeholder = "__" } })
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="input-group">
-                @Html.LabelFor(model => model.mtrc_period_calc_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                @Html.LabelFor(model => model.mtrc_period_max_dec_places, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:133px" })
+                @Html.EditorFor(model => model.mtrc_period_max_dec_places, new { htmlAttributes = new { @class = "form-control", placeholder = "__" } })
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group">
+                @Html.LabelFor(model => model.mtrc_period_calc_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:133px" })
                 @Html.EditorFor(model => model.mtrc_period_calc_yn, new { htmlAttributes = new { @class = "form-control", placeholder = "__" } })
 
             </div>
@@ -65,25 +65,25 @@
     <div class="row" style="margin-top:5px">
         <div class="col-md-3 col-sm-6">
             <div class="input-group">
-                @Html.LabelFor(model => model.mtrc_period_min_val, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                @Html.LabelFor(model => model.mtrc_period_min_val, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:130px" })
                 @Html.EditorFor(model => model.mtrc_period_min_val, new { htmlAttributes = new { @class = "form-control", placeholder = "___" } })
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="input-group">
-                @Html.LabelFor(model => model.mtrc_period_max_val, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                @Html.LabelFor(model => model.mtrc_period_max_val, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })
                 @Html.EditorFor(model => model.mtrc_period_max_val, new { htmlAttributes = new { @class = "form-control", placeholder = "___" } })
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="input-group">
-                @Html.LabelFor(model => model.mtrc_period_na_allow_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                @Html.LabelFor(model => model.mtrc_period_na_allow_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:133px" })
                 @Html.EditorFor(model => model.mtrc_period_na_allow_yn, new { htmlAttributes = new { @class = "form-control", placeholder = "___" } })
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="input-group">
-                @Html.LabelFor(model => model.mtrc_period_max_str_size, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                @Html.LabelFor(model => model.mtrc_period_max_str_size, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:133px" })
                 @Html.EditorFor(model => model.mtrc_period_max_str_size, new { htmlAttributes = new { @class = "form-control", placeholder = "__" } })
 
             </div>
@@ -100,13 +100,13 @@
     <div class="row" style="margin-top:5px">
         <div class="col-md-3 col-sm-6">
             <div class="input-group">
-                @Html.LabelFor(model => model.mtrc_period_can_import_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                @Html.LabelFor(model => model.mtrc_period_can_import_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:130px" })
                 @Html.EditorFor(model => model.mtrc_period_can_import_yn, new { htmlAttributes = new { @class = "form-control", placeholder = "___" } })
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="input-group">
-                @Html.LabelFor(model => model.mtrc_period_is_auto_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                @Html.LabelFor(model => model.mtrc_period_is_auto_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })
                 @Html.EditorFor(model => model.mtrc_period_is_auto_yn, new { htmlAttributes = new { @class = "form-control", placeholder = "__" } })
             </div>
         </div>

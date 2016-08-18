@@ -171,6 +171,13 @@ namespace MetricDM.Controllers
         }
 
         //============================================================================================================
+        // GET: /MetricPeriod/AddMetricPeriod
+        public ActionResult AddMetricPeriod()
+        {
+            return View();
+        }
+
+        //============================================================================================================
         // GET: /MetricPeriod/Maintenance/5
         public ActionResult MetricPeriodMaintenance(int? id)
         {
@@ -206,7 +213,15 @@ namespace MetricDM.Controllers
                 mPeriod = db.MTRC_METRIC_PERIOD.Find(id);
             }
 
-            System.Threading.Thread.Sleep(500);
+            //
+            //MTRC_TIME_PERIOD_TYPE selectedTpt;
+            //if (mPeriod.tpt_id == 0) { selectedTpt = null; }
+            //else {
+            //    selectedTpt = db.MTRC_TIME_PERIOD_TYPE.Find(mPeriod.tpt_id);
+            //    ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name", selectedTpt.tpt_id);
+            //}
+
+            ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name", mPeriod.tpt_id);
 
             return PartialView(mPeriod);
         }

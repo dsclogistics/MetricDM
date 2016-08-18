@@ -42,7 +42,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.mtrc_name, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.mtrc_name, new { htmlAttributes = new { @class = "form-control", style = "min-width:100%" } })
+                                    @Html.EditorFor(model => model.mtrc_name, new { htmlAttributes = new { @class = "form-control mtrc-metric", style = "min-width:100%" } })
                                     @Html.ValidationMessageFor(model => model.mtrc_name, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.mtrc_desc, htmlAttributes: new { @class = "control-label col-md-2", style="margin-top:5px"})
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.mtrc_desc, new { htmlAttributes = new { @class = "form-control", style = "min-width:99%" } })
+                                    @Html.EditorFor(model => model.mtrc_desc, new { htmlAttributes = new { @class = "form-control mtrc-metric", style = "min-width:99%" } })
                                     @Html.ValidationMessageFor(model => model.mtrc_desc, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -61,11 +61,11 @@
                         <div class="col-sm-3">
                             <div style="border:1px solid black; text-align:left; margin-left:22px; margin-top:20px; padding-left:8px; border-radius:6px">
                                 <span class="form-control" style="margin-top: -10px; width:110px; border:none; background-color:none; margin-left:5px; padding: 0px 0px 0px 5px; ">Effective Dates</span>
-                                <div class="row" style="margin:0">
-                                    From: @Html.EditorFor(model => model.mtrc_eff_start_dt, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="row" style="margin:0; margin-right:5px">
+                                    From: @Html.EditorFor(model => model.mtrc_eff_start_dt, new { htmlAttributes = new { @class = "form-control mtrc-metric" } })
                                 </div>
-                                <div class="row" style="margin:0">
-                                    To: @Html.EditorFor(model => model.mtrc_eff_end_dt, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="row" style="margin:0; margin-right:5px">
+                                    To: @Html.EditorFor(model => model.mtrc_eff_end_dt, new { htmlAttributes = new { @class = "form-control mtrc-metric" } })
                                 </div>
                                 @Html.ValidationMessageFor(model => model.mtrc_eff_start_dt, "", new { @class = "text-danger" })<br />
                                 @Html.ValidationMessageFor(model => model.mtrc_eff_end_dt, "", new { @class = "text-danger" })
@@ -78,25 +78,25 @@
                                     <div class="col-md-3 col-sm-6">
                                         <div class="input-group" style="padding-left:5px">
                                             @Html.LabelFor(model => model.mtrc_min_val, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })
-                                            @Html.EditorFor(model => model.mtrc_min_val, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Min Value" } })
+                                            @Html.EditorFor(model => model.mtrc_min_val, new { htmlAttributes = new { @class = "form-control mtrc-metric", placeholder = "Enter Min Value" } })
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6">
                                         <div class="input-group">
                                             @Html.LabelFor(model => model.mtrc_max_val, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:105px" })
-                                            @Html.EditorFor(model => model.mtrc_max_val, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Max Value" } })
+                                            @Html.EditorFor(model => model.mtrc_max_val, new { htmlAttributes = new { @class = "form-control mtrc-metric", placeholder = "Enter Max Value" } })
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6">
                                         <div class="input-group">
                                             @Html.LabelFor(model => model.mtrc_max_dec_places, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:150px" })
-                                            @Html.EditorFor(model => model.mtrc_max_dec_places, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Max Decimals" } })
+                                            @Html.EditorFor(model => model.mtrc_max_dec_places, new { htmlAttributes = new { @class = "form-control mtrc-metric", placeholder = "Enter Max Decimals" } })
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6">
                                         <div class="input-group" style="padding-right:5px">
                                             @Html.LabelFor(model => model.data_type_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })
-                                            @Html.DropDownList("data_type_id", null, htmlAttributes: new { @class = "form-control" })
+                                            @Html.DropDownList("data_type_id", null, htmlAttributes: new { @class = "form-control mtrc-metric" })
                                         </div>
                                     </div>
                                 </div>
@@ -104,19 +104,19 @@
                                     <div class="col-md-3 col-sm-6">
                                         <div class="input-group" style="padding-left:5px">
                                             @Html.LabelFor(model => model.mtrc_token, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })
-                                            @Html.EditorFor(model => model.mtrc_token, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Token" } })
+                                            @Html.EditorFor(model => model.mtrc_token, new { htmlAttributes = new { @class = "form-control mtrc-metric", placeholder = "Enter Token" } })
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6">
                                         <div class="input-group">
                                             @Html.LabelFor(model => model.mtrc_na_allow_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:105px" })
-                                            @Html.EditorFor(model => model.mtrc_na_allow_yn, new { htmlAttributes = new { @class = "form-control", placeholder = "Y/N?" } })
+                                            @Html.EditorFor(model => model.mtrc_na_allow_yn, new { htmlAttributes = new { @class = "form-control mtrc-metric", placeholder = "Y/N?" } })
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6">
                                         <div class="input-group">
                                             @Html.LabelFor(model => model.mtrc_max_str_size, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:150px" })
-                                            @Html.EditorFor(model => model.mtrc_max_str_size, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Max Size" } })
+                                            @Html.EditorFor(model => model.mtrc_max_str_size, new { htmlAttributes = new { @class = "form-control mtrc-metric", placeholder = "Enter Max Size" } })
                                         </div>
                                     </div>
 
@@ -232,6 +232,10 @@
 
         });
 
+        $("#divOutput").on('click', '#btnAddMP', function () {
+
+        });
+
         $(".btnMPDetails").click(function () {
             var idToDisplay = $(this).siblings("#MPId").val();
             //alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
@@ -266,6 +270,7 @@
             });
         });
 
+        $(".mtrc-metric").prop("disabled", true);
     });
 
 </script>
