@@ -235,6 +235,8 @@ namespace MetricDM.Controllers
         //[ValidateAntiForgeryToken]
         public PartialViewResult _metricPeriodDetails(MTRC_METRIC_PERIOD mPeriod)
         {
+            ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name", mPeriod.tpt_id);
+
             return PartialView(mPeriod);
         }
         //============================================================================================================
