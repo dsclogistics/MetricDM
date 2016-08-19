@@ -1,16 +1,16 @@
 ﻿@model MetricDM.Models.MTRC_METRIC_PERIOD
 
 @{
-    ViewBag.Title = "AddMetricPeriod";
+    ViewBag.Title = "AddMetricPeriodTemp";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>AddMetricPeriodTemp</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="form-horizontal">
         <h4>MTRC_METRIC_PERIOD</h4>
         <hr />
@@ -18,7 +18,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.mtrc_id, "mtrc_id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("mtrc_id", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                @Html.DropDownList("mtrc_id", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.mtrc_id, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -128,5 +128,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "MetricMaintenance", "MetricPeriod", new { id = ViewBag.return_id }, null)
+    @Html.ActionLink("Back to List", "Index")
 </div>

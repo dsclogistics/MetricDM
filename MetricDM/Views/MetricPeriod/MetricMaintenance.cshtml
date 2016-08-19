@@ -145,6 +145,7 @@
                 </div> <!-- FORM HEADER END -->
             }
 
+            <input type="hidden" id="MtrcId" value="@Model.mtrc_id" />
             <div class="row" id="divPeriodList" style="border:4px double black; margin: 0px 5px">
                 <div class="row" style="border-bottom: 1px solid black; margin:0; background-color: #f3f3f3">CURRENT AVAILABLE PERIODS FOR "<span style="font-weight:bold">@Model.mtrc_name</span>" METRIC</div>
                 <div class="row" style="margin:0; margin-bottom:10px">
@@ -175,12 +176,14 @@
 
 <script>
     $(document).ready(function () {
+        //Metric Dropdown
         $("#metric_sel_list").on("change", function () {
             var selId = $(this).val();
             location.href = "/MetricPeriod/MetricMaintenance/" + selId;
             //alert("Valueselected is id: " + selId);
         });
 
+        //Save Metric Period Data Button
         $("#divOutput").on('click', '#btnSaveMPDetail', function () {
             $("#divOutput").show();        //Show the panel that holds the Metric Period Details Partial View
             $("#msgLoading").show();
@@ -232,10 +235,13 @@
 
         });
 
-        $("#divOutput").on('click', '#btnAddMP', function () {
-
+        //Add New Metric Period Button
+        $("#divPeriodList").on('click', '#btnAddMP', function () {
+            var mtrcIdToDisplay = $("#MtrcId").val();
+            location.href = "/MetricPeriod/AddMetricPeriod/" + mtrcIdToDisplay;
         });
 
+        //Details Class of Button
         $(".btnMPDetails").click(function () {
             var idToDisplay = $(this).siblings("#MPId").val();
             //alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
@@ -270,6 +276,7 @@
             });
         });
 
+        //MTRC_METRIC attributes are set to read-only
         $(".mtrc-metric").prop("disabled", true);
     });
 

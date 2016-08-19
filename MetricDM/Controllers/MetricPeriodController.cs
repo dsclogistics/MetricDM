@@ -146,7 +146,7 @@ namespace MetricDM.Controllers
         public ActionResult MetricMaintenance(int? id)
         {
             id = (id==null)?0:id;    //Assign a Zero value to Id if it's null
-            ViewBag.metric_sel_list = new SelectList(db.MTRC_METRIC, "mtrc_id", "mtrc_name", id);            
+            ViewBag.metric_sel_list = new SelectList(db.MTRC_METRIC, "mtrc_id", "mtrc_name", id);
 
             //Load all the Metrics into a Drop down List for Selection
             MTRC_METRIC selectedMetric;
@@ -172,8 +172,12 @@ namespace MetricDM.Controllers
 
         //============================================================================================================
         // GET: /MetricPeriod/AddMetricPeriod
-        public ActionResult AddMetricPeriod()
+        public ActionResult AddMetricPeriod(int? id)
         {
+            ViewBag.mtrc_id = new SelectList(db.MTRC_METRIC, "mtrc_id", "mtrc_name", id);
+            ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name");
+            ViewBag.return_id = id;
+
             return View();
         }
 
