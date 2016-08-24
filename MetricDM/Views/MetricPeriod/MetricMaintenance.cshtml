@@ -21,7 +21,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <div class="row" style="margin:0; margin-bottom:20px;">
+        <div class="row" style="margin:0; margin-bottom:20px">
             <div class="col-sm-5" style="text-align:right; padding:0px 0px"><span class="form-control" style="font-weight:bold; max-width:140px; float:right; background-color: lightgray; border-top-right-radius:0px; border-bottom-right-radius:0px">Select a Metric: </span></div>
             <div class="col-sm-5" style="text-align: left; padding-left: 0px">@Html.DropDownList("metric_sel_list", null, "--- Select Metric ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:350px; border-bottom-left-radius:0px; border-top-left-radius:0px;" })</div>
         </div>
@@ -164,8 +164,8 @@
 
 
             <input type="hidden" id="MtrcId" value="@Model.mtrc_id" />
-            <div class="row" id="divPeriodList" style="border:4px double black; margin: 0px 5px">
-                <div class="row" style="border-bottom: 1px solid black; margin:0; background-color: #f3f3f3">CURRENT AVAILABLE PERIODS FOR "<span style="font-weight:bold">@Model.mtrc_name</span>" METRIC</div>
+            <div class="row" id="divPeriodList" style="border:0px double black; margin: 0px 0px">
+                <div class="row" style="border-bottom: 1px solid black; margin:0; "><h3><span style="font-weight:normal">@Model.mtrc_name</span> Metric Periods</h3></div>
                 <div class="row" style="margin:0; margin-bottom:10px">
                     <br />
                     @Html.Action("_metricPeriodList")
@@ -174,7 +174,8 @@
             </div>
             <br />
             @*<div id="saveMessage" class="alert-success" style="display:none; font-size:large; font-weight:bold"> </div>*@
-            <div class="row" id="divOutput" style="border:4px double black; display:none; text-align:center; margin: 0px 5px">
+            <div class="row" id="divOutput" style="border:0px double black; display:none; text-align:center; margin: 0px 0px">
+                <div class="row" style="border-bottom: 1px solid black; margin:0; "><h3>Metric Period Details</h3></div>
                 <div id="msgLoading">
                     <br /><p>Please wait... Loading Info</p><img src="~/Images/ui-anim_basic_16x16.gif" /><br /><br />
                 </div>

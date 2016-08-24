@@ -61,6 +61,7 @@ namespace MetricDM.Models
         [Display(Name = "Token")]
         public string mtrc_period_token { get; set; }
         [Display(Name = "Description")]
+        [DataType(DataType.MultilineText)]
         public string mtrc_period_desc { get; set; }
         [Display(Name = "Calc Y/N")]
         public string mtrc_period_calc_yn { get; set; }
