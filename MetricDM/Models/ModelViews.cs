@@ -50,11 +50,11 @@ namespace MetricDM.Models
 
     public class MTRC_METRIC_PERIODMetaData
     {
-        [Display(Name = "Metric Period Id")]
+        [Display(Name = "Metric Period")]
         public int mtrc_period_id { get; set; }
         [Display(Name = "Metric Id")]
         public int mtrc_id { get; set; }
-        [Display(Name = "Time Period Id")]
+        [Display(Name = "Time Period")]
         public short tpt_id { get; set; }
         [Display(Name = "Metric Period Name")]
         public string mtrc_period_name { get; set; }

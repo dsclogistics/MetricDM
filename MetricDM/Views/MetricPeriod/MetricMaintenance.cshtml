@@ -293,8 +293,8 @@
 
         //Hides asterisk from Metric Period Detail fields with default values after those values have been changed.
         $("#mpDetailsView").on('change', ".form-control", function () {
-            $(this).siblings(".indicate-defaulted-value").toggleClass('changed');
-            $(this).siblings(".indicate-defaulted-value").toggleClass('indicate-defaulted-value');
+            $(this).siblings(".indicate-defaulted-value").removeClass('indicate-defaulted-value');
+            $(this).removeClass('color-defaulted-value');
         });
 
         //Details Class of Button
