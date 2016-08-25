@@ -193,6 +193,27 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div id="newMetricPeriodForm" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add New Metric Period</h4>
+            </div>
+            <div class="modal-body" id="new-metric-period-body">
+                asdfkj
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Add Metric Period</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <script>
     $(document).ready(function () {
@@ -263,9 +284,9 @@
             var mtrcIdToDisplay = $("#MtrcId").val();
             //alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
             //$("#divPeriodList").hide();
-            $("#divOutput").show();        //Show the panel that holds the Metric Period Details Partial View
-            $("#msgLoading").show();
-            $("#mpDetailsView").hide();
+            //$("#divOutput").show();        //Show the panel that holds the Metric Period Details Partial View
+            //$("#msgLoading").show();
+            //$("#mpDetailsView").hide();
 
             // ------------ Make the Ajax Call ---------------------------------------------
             $.ajax({
@@ -278,17 +299,20 @@
                 error: function (xhr, status, error) {
                     //var err = eval("(" + xhr.responseText + ")");
                     $("#mpDetailsView").html(xhr.responseText);
-                    $("#msgLoading").hide();
-                    $("#mpDetailsView").show();
+                    //$("#msgLoading").hide();
+                    //$("#mpDetailsView").show();
                     //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
                 }
             }).done(function (d) {
                 //Execute this code After the Ajax call completes successfully
                 //Insert the partial view retrieved into the output 'mpDetailsView' panel
-                $("#mpDetailsView").html(d);
-                $("#msgLoading").hide();
-                $("#mpDetailsView").show();
+                //$("#mpDetailsView").html(d);
+                $('#newMetricPeriodForm').html(d);
+                //$("#msgLoading").hide();
+                //$("#mpDetailsView").show();
             });
+
+            $('#newMetricPeriodForm').show();
         });
 
         //Hides asterisk from Metric Period Detail fields with default values after those values have been changed.
