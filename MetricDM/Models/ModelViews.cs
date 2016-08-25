@@ -22,6 +22,7 @@ namespace MetricDM.Models
         [Display(Name = "Token")]
         public string mtrc_token { get; set; }
         [Display(Name = "Description")]
+        [DataType(DataType.MultilineText)]
         public string mtrc_desc { get; set; }
         [Display(Name = "Effective Start Date")]
         [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}", ApplyFormatInEditMode = true)]
@@ -29,15 +30,15 @@ namespace MetricDM.Models
         [Display(Name = "Effective End Date")]
         [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime mtrc_eff_end_dt { get; set; }
-        [Display(Name = "Min Val")]
+        [Display(Name = "Minimum Value")]
         public Nullable<decimal> mtrc_min_val { get; set; }
-        [Display(Name = "Max Val")]
+        [Display(Name = "Maximum Value")]
         public Nullable<decimal> mtrc_max_val { get; set; }
-        [Display(Name = "Max Dec Places")]
+        [Display(Name = "Maximum Decimal Places")]
         public Nullable<short> mtrc_max_dec_places { get; set; }
-        [Display(Name = "Max String Size")]
+        [Display(Name = "Maximum String Size")]
         public Nullable<short> mtrc_max_str_size { get; set; }
-        [Display(Name = "N/A Allowed")]
+        [Display(Name = "N/A Allowed (Y/N)")]
         public string mtrc_na_allow_yn { get; set; }
         //[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         //[Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
@@ -49,19 +50,20 @@ namespace MetricDM.Models
 
     public class MTRC_METRIC_PERIODMetaData
     {
-        [Display(Name = "Metric Period Id")]
+        [Display(Name = "Metric Period")]
         public int mtrc_period_id { get; set; }
         [Display(Name = "Metric Id")]
         public int mtrc_id { get; set; }
-        [Display(Name = "Time Period Id")]
+        [Display(Name = "Time Period")]
         public short tpt_id { get; set; }
         [Display(Name = "Metric Period Name")]
         public string mtrc_period_name { get; set; }
         [Display(Name = "Token")]
         public string mtrc_period_token { get; set; }
         [Display(Name = "Description")]
+        [DataType(DataType.MultilineText)]
         public string mtrc_period_desc { get; set; }
-        [Display(Name = "Calc Y/N")]
+        [Display(Name = "Calc (Y/N)")]
         public string mtrc_period_calc_yn { get; set; }
         [Display(Name = "Min Val")]
         public Nullable<decimal> mtrc_period_min_val { get; set; }

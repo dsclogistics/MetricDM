@@ -311,6 +311,7 @@
     <Content Include="Views\MetricPeriod\MetricMaintenance.cshtml" />
     <Content Include="Views\MetricPeriod\_metricPeriodList.cshtml" />
     <Content Include="Views\MetricPeriod\_metricPeriodDetails.cshtml" />
+    <Content Include="Views\MetricPeriod\AddMetricPeriod.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

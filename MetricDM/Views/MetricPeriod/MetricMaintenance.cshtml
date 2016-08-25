@@ -8,7 +8,7 @@
         max-width: 300px;
         text-align:right;
     }
-        .MetricDetails dd {
+    .MetricDetails dd {
         max-width: 400px;
         text-align: left;
     }
@@ -19,14 +19,13 @@
 </div>
 
 
-<div class="panel panel-info">
+<div class="panel panel-default">
     <div class="panel-heading">
-        <div class="row" style="margin:0; ">
-            <div class="col-sm-5" style="text-align:right; padding:0px 0px"><span class="form-control" style="font-weight:bold; max-width:220px; float:right; background-color: lightgray; border-top-right-radius:0px; border-bottom-right-radius:0px">Select a Metric to Maintain: </span></div>
+        <div class="row" style="margin:0; margin-bottom:20px">
+            <div class="col-sm-5" style="text-align:right; padding:0px 0px"><span class="form-control" style="font-weight:bold; max-width:140px; float:right; background-color: lightgray; border-top-right-radius:0px; border-bottom-right-radius:0px">Select a Metric: </span></div>
             <div class="col-sm-5" style="text-align: left; padding-left: 0px">@Html.DropDownList("metric_sel_list", null, "--- Select Metric ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:350px; border-bottom-left-radius:0px; border-top-left-radius:0px;" })</div>
         </div>
-    </div>
-    <div class="panel-body ">
+
         @if (!(Model == null))
         {
             using (Html.BeginForm())
@@ -42,16 +41,16 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.mtrc_name, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.mtrc_name, new { htmlAttributes = new { @class = "form-control", style = "min-width:100%" } })
+                                    @Html.EditorFor(model => model.mtrc_name, new { htmlAttributes = new { @class = "form-control mtrc-metric", style = "min-width:100%" } })
                                     @Html.ValidationMessageFor(model => model.mtrc_name, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="form-group">
-                                @Html.LabelFor(model => model.mtrc_desc, htmlAttributes: new { @class = "control-label col-md-2", style="margin-top:5px"})
+                                @Html.LabelFor(model => model.mtrc_desc, htmlAttributes: new { @class = "control-label col-md-2", style = "margin-top:5px" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.mtrc_desc, new { htmlAttributes = new { @class = "form-control", style = "min-width:99%" } })
+                                    @Html.EditorFor(model => model.mtrc_desc, new { htmlAttributes = new { @class = "form-control mtrc-metric", style = "min-width:99%;" } })
                                     @Html.ValidationMessageFor(model => model.mtrc_desc, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -60,63 +59,76 @@
                     <div class="row" style="margin-right:7px; margin-bottom:10px; border-radius:7px">
                         <div class="col-sm-3">
                             <div style="border:1px solid black; text-align:left; margin-left:22px; margin-top:20px; padding-left:8px; border-radius:6px">
-                                <span class="form-control" style="margin-top: -10px; width:110px; border:none; background-color:none; margin-left:5px; padding: 0px 0px 0px 5px; ">Effective Dates</span>
-                                <div class="row" style="margin:0">
-                                    From: @Html.EditorFor(model => model.mtrc_eff_start_dt, new { htmlAttributes = new { @class = "form-control" } })
+                                <span class="form-control" style="margin-top: -10px; width:110px; border:none; background-color:none; margin-left:5px; padding: 0px 0px 0px 5px; font-weight:bold; background-color:#f5f5f5; ">Effective Dates</span>
+                                <div class="row" style="margin:0; margin-right:5px; margin-bottom:5px">
+                                    @Html.DisplayNameFor(model => model.mtrc_eff_start_dt)
+                                    @*From:*@
+                                    @Html.EditorFor(model => model.mtrc_eff_start_dt, new { htmlAttributes = new { @class = "form-control mtrc-metric" } })
                                 </div>
-                                <div class="row" style="margin:0">
-                                    To: @Html.EditorFor(model => model.mtrc_eff_end_dt, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="row" style="margin:0; margin-right:5px; margin-bottom:5px">
+                                    @Html.DisplayNameFor(model => model.mtrc_eff_end_dt)
+                                    @*To:*@
+                                    @Html.EditorFor(model => model.mtrc_eff_end_dt, new { htmlAttributes = new { @class = "form-control mtrc-metric" } })
                                 </div>
                                 @Html.ValidationMessageFor(model => model.mtrc_eff_start_dt, "", new { @class = "text-danger" })<br />
                                 @Html.ValidationMessageFor(model => model.mtrc_eff_end_dt, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-sm-9">
-                            <div class="row" style="border:1px solid black; margin: 20px 0px 0px 0px; padding: 0px 0px 24px 0px">
-                                <div style="font-weight:bold; margin-bottom:15px;">METADATA:</div>
-                                <div class="row" style="margin-bottom: 20px">
+                            <div style="border:1px solid black; text-align:left; margin-left:22px; margin-top:20px; padding-left:8px; border-radius:6px">
+                                @*<div class="row" style="border:1px solid black; margin: 20px 0px 0px 0px; padding: 0px 0px 24px 0px">*@
+                                @*<div style="font-weight:bold; margin-bottom:15px;">METADATA:</div>*@
+                                <span class="form-control" style="margin-top: -10px; width:70px; border:none; background-color:none; margin-left:5px; padding: 0px 0px 0px 5px; font-weight:bold; background-color:#f5f5f5;">Metadata</span>
+                                <div class="row" style="margin-bottom: 5px">
                                     <div class="col-md-3 col-sm-6">
-                                        <div class="input-group" style="padding-left:5px">
-                                            @Html.LabelFor(model => model.mtrc_min_val, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })
-                                            @Html.EditorFor(model => model.mtrc_min_val, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Min Value" } })
+                                        <div>
+                                            @Html.DisplayNameFor(model => model.mtrc_min_val)
+                                            @*@Html.LabelFor(model => model.mtrc_min_val, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })*@
+                                            @Html.EditorFor(model => model.mtrc_min_val, new { htmlAttributes = new { @class = "form-control mtrc-metric", placeholder = "Enter Min Value" } })
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6">
-                                        <div class="input-group">
-                                            @Html.LabelFor(model => model.mtrc_max_val, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:105px" })
-                                            @Html.EditorFor(model => model.mtrc_max_val, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Max Value" } })
+                                        <div>
+                                            @Html.DisplayNameFor(model => model.mtrc_max_val)
+                                            @*@Html.LabelFor(model => model.mtrc_max_val, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:105px" })*@
+                                            @Html.EditorFor(model => model.mtrc_max_val, new { htmlAttributes = new { @class = "form-control mtrc-metric", placeholder = "Enter Max Value" } })
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6">
-                                        <div class="input-group">
-                                            @Html.LabelFor(model => model.mtrc_max_dec_places, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:150px" })
-                                            @Html.EditorFor(model => model.mtrc_max_dec_places, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Max Decimals" } })
+                                        <div>
+                                            @Html.DisplayNameFor(model => model.mtrc_max_dec_places)
+                                            @*@Html.LabelFor(model => model.mtrc_max_dec_places, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:150px" })*@
+                                            @Html.EditorFor(model => model.mtrc_max_dec_places, new { htmlAttributes = new { @class = "form-control mtrc-metric", placeholder = "Enter Max Decimals" } })
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6">
-                                        <div class="input-group" style="padding-right:5px">
-                                            @Html.LabelFor(model => model.data_type_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })
-                                            @Html.DropDownList("data_type_id", null, htmlAttributes: new { @class = "form-control" })
+                                        <div style="padding-right:10px">
+                                            @Html.DisplayNameFor(model => model.data_type_id)
+                                            @*@Html.LabelFor(model => model.data_type_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })*@
+                                            @Html.DropDownList("data_type_id", null, htmlAttributes: new { @class = "form-control mtrc-metric" })
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row" style="margin-bottom: 20px">
                                     <div class="col-md-3 col-sm-6">
-                                        <div class="input-group" style="padding-left:5px">
-                                            @Html.LabelFor(model => model.mtrc_token, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })
-                                            @Html.EditorFor(model => model.mtrc_token, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Token" } })
+                                        <div style="margin-bottom:5px">
+                                            @Html.DisplayNameFor(model => model.mtrc_token)
+                                            @*@Html.LabelFor(model => model.mtrc_token, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })*@
+                                            @Html.EditorFor(model => model.mtrc_token, new { htmlAttributes = new { @class = "form-control mtrc-metric", placeholder = "Enter Token" } })
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6">
-                                        <div class="input-group">
-                                            @Html.LabelFor(model => model.mtrc_na_allow_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:105px" })
-                                            @Html.EditorFor(model => model.mtrc_na_allow_yn, new { htmlAttributes = new { @class = "form-control", placeholder = "Y/N?" } })
+                                        <div>
+                                            @Html.DisplayNameFor(model => model.mtrc_na_allow_yn)
+                                            @*@Html.LabelFor(model => model.mtrc_na_allow_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:105px" })*@
+                                            @Html.EditorFor(model => model.mtrc_na_allow_yn, new { htmlAttributes = new { @class = "form-control mtrc-metric", placeholder = "Y/N?" } })
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6">
-                                        <div class="input-group">
-                                            @Html.LabelFor(model => model.mtrc_max_str_size, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:150px" })
-                                            @Html.EditorFor(model => model.mtrc_max_str_size, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Max Size" } })
+                                        <div>
+                                            @Html.DisplayNameFor(model => model.mtrc_max_str_size)
+                                            @*@Html.LabelFor(model => model.mtrc_max_str_size, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:150px" })*@
+                                            @Html.EditorFor(model => model.mtrc_max_str_size, new { htmlAttributes = new { @class = "form-control mtrc-metric", placeholder = "Enter Max String Size" } })
                                         </div>
                                     </div>
 
@@ -124,9 +136,9 @@
 
                                     <div class="col-md-3 col-sm-6">
                                         @*<div class="input-group">
-                                                @Html.LabelFor(model => model.data_type_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
-                                                @Html.DropDownList("data_type_id", null, htmlAttributes: new { @class = "form-control" })
-                                            </div>*@
+                                            @Html.LabelFor(model => model.data_type_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                            @Html.DropDownList("data_type_id", null, htmlAttributes: new { @class = "form-control" })
+                                        </div>*@
                                     </div>
                                 </div> <!-- END OF DIV ROW -->
 
@@ -144,9 +156,15 @@
                     </div>*@ <!-- BUTTONS ROW DIV END -->
                 </div> <!-- FORM HEADER END -->
             }
-
-            <div class="row" id="divPeriodList" style="border:4px double black; margin: 0px 5px">
-                <div class="row" style="border-bottom: 1px solid black; margin:0; background-color: #f3f3f3">CURRENT AVAILABLE PERIODS FOR "<span style="font-weight:bold">@Model.mtrc_name</span>" METRIC</div>
+        }
+    </div>
+    <div class="panel-body ">
+        @if (!(Model == null))
+        {
+            //DIV PERIOD LIST
+            <input type="hidden" id="MtrcId" value="@Model.mtrc_id" />
+            <div class="row" id="divPeriodList" style="border:0px double black; margin: 0px 0px">
+                <div class="row" style="border-bottom: 1px solid black; margin:0; "><h3><span style="font-weight:normal">@Model.mtrc_name</span> Metric Periods</h3></div>
                 <div class="row" style="margin:0; margin-bottom:10px">
                     <br />
                     @Html.Action("_metricPeriodList")
@@ -155,7 +173,10 @@
             </div>
             <br />
             @*<div id="saveMessage" class="alert-success" style="display:none; font-size:large; font-weight:bold"> </div>*@
-            <div class="row" id="divOutput" style="border:4px double black; display:none; text-align:center; margin: 0px 5px">
+            
+            //DIV OUTPUT
+            <div class="row" id="divOutput" style="border:0px double black; display:none; text-align:center; margin: 0px 0px">
+                <div class="row" style="border-bottom: 1px solid black; margin:0; "><h3>Metric Period Details</h3></div>
                 <div id="msgLoading">
                     <br /><p>Please wait... Loading Info</p><img src="~/Images/ui-anim_basic_16x16.gif" /><br /><br />
                 </div>
@@ -175,12 +196,14 @@
 
 <script>
     $(document).ready(function () {
+        //Metric Dropdown
         $("#metric_sel_list").on("change", function () {
             var selId = $(this).val();
             location.href = "/MetricPeriod/MetricMaintenance/" + selId;
             //alert("Valueselected is id: " + selId);
         });
 
+        //Save Metric Period Data Button
         $("#divOutput").on('click', '#btnSaveMPDetail', function () {
             $("#divOutput").show();        //Show the panel that holds the Metric Period Details Partial View
             $("#msgLoading").show();
@@ -232,6 +255,49 @@
 
         });
 
+        //Add New Metric Period Button
+        $("#divPeriodList").on('click', '#btnAddMP', function (e) {
+            //var mtrcIdToDisplay = $("#MtrcId").val();
+            //location.href = "/MetricPeriod/AddMetricPeriod/" + mtrcIdToDisplay;
+
+            var mtrcIdToDisplay = $("#MtrcId").val();
+            //alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
+            //$("#divPeriodList").hide();
+            $("#divOutput").show();        //Show the panel that holds the Metric Period Details Partial View
+            $("#msgLoading").show();
+            $("#mpDetailsView").hide();
+
+            // ------------ Make the Ajax Call ---------------------------------------------
+            $.ajax({
+                @*url: '@Url.Action("_metricPeriodDetails", "MetricPeriod")',*@
+                url: '/MetricPeriod/_metricPeriodDetails',     // the url where we want to direct our Ajax Call
+                method: "GET",
+                cache: false,
+                data: { mtrcId: mtrcIdToDisplay },     //<---- Data Parameters (if not already passed in the Url)
+                //--- On error, execute this function ------
+                error: function (xhr, status, error) {
+                    //var err = eval("(" + xhr.responseText + ")");
+                    $("#mpDetailsView").html(xhr.responseText);
+                    $("#msgLoading").hide();
+                    $("#mpDetailsView").show();
+                    //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
+                }
+            }).done(function (d) {
+                //Execute this code After the Ajax call completes successfully
+                //Insert the partial view retrieved into the output 'mpDetailsView' panel
+                $("#mpDetailsView").html(d);
+                $("#msgLoading").hide();
+                $("#mpDetailsView").show();
+            });
+        });
+
+        //Hides asterisk from Metric Period Detail fields with default values after those values have been changed.
+        $("#mpDetailsView").on('change', ".form-control", function () {
+            $(this).siblings(".indicate-defaulted-value").removeClass('indicate-defaulted-value');
+            $(this).removeClass('color-defaulted-value');
+        });
+
+        //Details Class of Button
         $(".btnMPDetails").click(function () {
             var idToDisplay = $(this).siblings("#MPId").val();
             //alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
@@ -266,6 +332,8 @@
             });
         });
 
+        //MTRC_METRIC attributes are set to read-only
+        $(".mtrc-metric").prop("disabled", true);
     });
 
 </script>
