@@ -205,16 +205,36 @@ namespace MetricDM.Controllers
         }
         //============================================================================================================
         // GET: /MetricPeriod/_metricPeriodDetails/5
-        public PartialViewResult _metricPeriodDetails(int? id)
+        public PartialViewResult _metricPeriodDetails(int? id, int? mtrcId)
         {
             MTRC_METRIC_PERIOD mPeriod;
+            MTRC_METRIC mMetric;
             if (id == null)
             {
+                if(mtrcId == null)
+                {
+                    mPeriod = null;
+                }
+                else
+                {
+                    //If creating a new metric period, use values from the upper level metric to populate some of the fields.
+                    mPeriod = new MTRC_METRIC_PERIOD();
+                    mMetric = db.MTRC_METRIC.Find(mtrcId);
+                    mPeriod.mtrc_period_max_dec_places = mMetric.mtrc_max_dec_places;
+                    mPeriod.mtrc_period_min_val = mMetric.mtrc_min_val;
+                    mPeriod.mtrc_period_max_val = mMetric.mtrc_max_val;
+                    mPeriod.mtrc_period_na_allow_yn = mMetric.mtrc_na_allow_yn;
+                    mPeriod.mtrc_period_max_str_size = mMetric.mtrc_max_str_size;
+                }
+
                 //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                mPeriod = null;
+                ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name");
+                ViewBag.indicateDefaults = true;
             }
             else {
                 mPeriod = db.MTRC_METRIC_PERIOD.Find(id);
+                ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name", mPeriod.tpt_id);
+                ViewBag.indicateDefaults = false;
             }
 
             //
@@ -224,8 +244,6 @@ namespace MetricDM.Controllers
             //    selectedTpt = db.MTRC_TIME_PERIOD_TYPE.Find(mPeriod.tpt_id);
             //    ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name", selectedTpt.tpt_id);
             //}
-
-            ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name", mPeriod.tpt_id);
 
             return PartialView(mPeriod);
         }

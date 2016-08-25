@@ -63,7 +63,7 @@ namespace MetricDM.Models
         [Display(Name = "Description")]
         [DataType(DataType.MultilineText)]
         public string mtrc_period_desc { get; set; }
-        [Display(Name = "Calc Y/N")]
+        [Display(Name = "Calc (Y/N)")]
         public string mtrc_period_calc_yn { get; set; }
         [Display(Name = "Min Val")]
         public Nullable<decimal> mtrc_period_min_val { get; set; }

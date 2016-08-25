@@ -8,7 +8,7 @@
         max-width: 300px;
         text-align:right;
     }
-        .MetricDetails dd {
+    .MetricDetails dd {
         max-width: 400px;
         text-align: left;
     }
@@ -128,7 +128,7 @@
                                         <div>
                                             @Html.DisplayNameFor(model => model.mtrc_max_str_size)
                                             @*@Html.LabelFor(model => model.mtrc_max_str_size, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:150px" })*@
-                                            @Html.EditorFor(model => model.mtrc_max_str_size, new { htmlAttributes = new { @class = "form-control mtrc-metric", placeholder = "Enter Max Size" } })
+                                            @Html.EditorFor(model => model.mtrc_max_str_size, new { htmlAttributes = new { @class = "form-control mtrc-metric", placeholder = "Enter Max String Size" } })
                                         </div>
                                     </div>
 
@@ -161,8 +161,7 @@
     <div class="panel-body ">
         @if (!(Model == null))
         {
-
-
+            //DIV PERIOD LIST
             <input type="hidden" id="MtrcId" value="@Model.mtrc_id" />
             <div class="row" id="divPeriodList" style="border:0px double black; margin: 0px 0px">
                 <div class="row" style="border-bottom: 1px solid black; margin:0; "><h3><span style="font-weight:normal">@Model.mtrc_name</span> Metric Periods</h3></div>
@@ -174,6 +173,8 @@
             </div>
             <br />
             @*<div id="saveMessage" class="alert-success" style="display:none; font-size:large; font-weight:bold"> </div>*@
+            
+            //DIV OUTPUT
             <div class="row" id="divOutput" style="border:0px double black; display:none; text-align:center; margin: 0px 0px">
                 <div class="row" style="border-bottom: 1px solid black; margin:0; "><h3>Metric Period Details</h3></div>
                 <div id="msgLoading">
@@ -255,9 +256,45 @@
         });
 
         //Add New Metric Period Button
-        $("#divPeriodList").on('click', '#btnAddMP', function () {
+        $("#divPeriodList").on('click', '#btnAddMP', function (e) {
+            //var mtrcIdToDisplay = $("#MtrcId").val();
+            //location.href = "/MetricPeriod/AddMetricPeriod/" + mtrcIdToDisplay;
+
             var mtrcIdToDisplay = $("#MtrcId").val();
-            location.href = "/MetricPeriod/AddMetricPeriod/" + mtrcIdToDisplay;
+            //alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
+            //$("#divPeriodList").hide();
+            $("#divOutput").show();        //Show the panel that holds the Metric Period Details Partial View
+            $("#msgLoading").show();
+            $("#mpDetailsView").hide();
+
+            // ------------ Make the Ajax Call ---------------------------------------------
+            $.ajax({
+                @*url: '@Url.Action("_metricPeriodDetails", "MetricPeriod")',*@
+                url: '/MetricPeriod/_metricPeriodDetails',     // the url where we want to direct our Ajax Call
+                method: "GET",
+                cache: false,
+                data: { mtrcId: mtrcIdToDisplay },     //<---- Data Parameters (if not already passed in the Url)
+                //--- On error, execute this function ------
+                error: function (xhr, status, error) {
+                    //var err = eval("(" + xhr.responseText + ")");
+                    $("#mpDetailsView").html(xhr.responseText);
+                    $("#msgLoading").hide();
+                    $("#mpDetailsView").show();
+                    //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
+                }
+            }).done(function (d) {
+                //Execute this code After the Ajax call completes successfully
+                //Insert the partial view retrieved into the output 'mpDetailsView' panel
+                $("#mpDetailsView").html(d);
+                $("#msgLoading").hide();
+                $("#mpDetailsView").show();
+            });
+        });
+
+        //Hides asterisk from Metric Period Detail fields with default values after those values have been changed.
+        $("#mpDetailsView").on('change', ".form-control", function () {
+            $(this).siblings(".indicate-defaulted-value").toggleClass('changed');
+            $(this).siblings(".indicate-defaulted-value").toggleClass('indicate-defaulted-value');
         });
 
         //Details Class of Button
