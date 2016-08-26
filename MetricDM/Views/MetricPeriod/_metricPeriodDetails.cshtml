@@ -11,7 +11,7 @@ Else if editing an existing Metric Period, hide all asterisks.*@
     }
 </style>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("AddMetricPeriod","MetricPeriod",FormMethod.Post, new { enctype = "multipart/form-data", id = "frmAddMP"}))
 {
     @Html.AntiForgeryToken()
     <div class="row">

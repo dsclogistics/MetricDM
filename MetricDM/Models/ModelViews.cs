@@ -53,10 +53,13 @@ namespace MetricDM.Models
         [Display(Name = "Metric Period")]
         public int mtrc_period_id { get; set; }
         [Display(Name = "Metric Id")]
+        [Required]
         public int mtrc_id { get; set; }
         [Display(Name = "Time Period")]
+        [Required]
         public short tpt_id { get; set; }
         [Display(Name = "Metric Period Name")]
+        [Required]
         public string mtrc_period_name { get; set; }
         [Display(Name = "Token")]
         public string mtrc_period_token { get; set; }
@@ -64,6 +67,7 @@ namespace MetricDM.Models
         [DataType(DataType.MultilineText)]
         public string mtrc_period_desc { get; set; }
         [Display(Name = "Calc (Y/N)")]
+        [Required]
         public string mtrc_period_calc_yn { get; set; }
         [Display(Name = "Min Val")]
         public Nullable<decimal> mtrc_period_min_val { get; set; }
@@ -74,10 +78,16 @@ namespace MetricDM.Models
         [Display(Name = "Max String Size")]
         public Nullable<short> mtrc_period_max_str_size { get; set; }
         [Display(Name = "N/A Allowed")]
+        [Required(ErrorMessage = "The field is mandatory!")]
+        [StringLength(1, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
         public string mtrc_period_na_allow_yn { get; set; }
         [Display(Name = "Can Import Y/N")]
+        [Required(ErrorMessage = "The field is mandatory!")]
+        [StringLength(1, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
         public string mtrc_period_can_import_yn { get; set; }
         [Display(Name = "Auto Y/N")]
+        [Required(ErrorMessage = "The field is mandatory!")]
+        [StringLength(1, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
         public string mtrc_period_is_auto_yn { get; set; }
     }
 
