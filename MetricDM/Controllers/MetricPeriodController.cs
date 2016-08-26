@@ -182,6 +182,30 @@ namespace MetricDM.Controllers
         }
 
         //============================================================================================================
+        // POST: /MetricPeriod/AddMetricPeriod
+        [HttpPost]
+        public string AddMetricPeriod(MTRC_METRIC_PERIOD newMetricPeriod)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //db.MTRC_METRIC_PERIOD.Add(newMetricPeriod);
+                    //db.SaveChanges();
+                }
+                catch(Exception e)
+                {
+                    return "Error: " + e.Message; 
+                }
+
+                return "Data saved successfully!";
+            }
+
+            return "Validation errors found. Please review your input.";
+
+        }
+
+        //============================================================================================================
         // GET: /MetricPeriod/Maintenance/5
         public ActionResult MetricPeriodMaintenance(int? id)
         {

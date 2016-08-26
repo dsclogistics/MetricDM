@@ -15,6 +15,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.MTRC_DATA_SRC.data_src_name)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.bmp_is_editable_yn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.bmp_is_manual_yn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.bmp_na_allow_yn)
+            </th>
             <th></th>
         </tr>
 
@@ -29,6 +38,15 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.MTRC_DATA_SRC.data_src_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bmp_is_editable_yn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bmp_is_manual_yn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bmp_na_allow_yn)
                 </td>
                 <td>
                     <input type="hidden" id="BMPId" value="@item.bmp_id" />
