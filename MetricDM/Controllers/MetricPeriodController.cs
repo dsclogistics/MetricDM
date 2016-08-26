@@ -184,7 +184,7 @@ namespace MetricDM.Controllers
         //============================================================================================================
         // POST: /MetricPeriod/AddMetricPeriod
         [HttpPost]
-        public string AddMetricPeriod(MTRC_METRIC_PERIOD newMetricPeriod)
+        public string AddMetricPeriod(MTRC_METRIC_PERIOD newMetricPeriod, string mtrc_id)
         {
             if (ModelState.IsValid)
             {
