@@ -205,7 +205,7 @@ namespace MetricDM.Controllers
         }
         //============================================================================================================
         // GET: /MetricPeriod/_metricPeriodDetails/5
-        [ChildActionOnly]
+
         public PartialViewResult _metricPeriodDetails(int? id, int? mtrcId)
         {
             MTRC_METRIC_PERIOD mPeriod;
