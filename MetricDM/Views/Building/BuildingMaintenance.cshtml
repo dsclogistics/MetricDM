@@ -1,0 +1,171 @@
+﻿@model MetricDM.Models.DSC_MTRC_LC_BLDG
+
+@{
+    ViewBag.Title = "BuildingMaintenance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Building Maintenance</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row" style="margin:0; margin-bottom:20px">
+            <div class="col-sm-5" style="text-align:right; padding:0px 0px"><span class="form-control" style="font-weight:bold; max-width:140px; float:right; background-color: lightgray; border-top-right-radius:0px; border-bottom-right-radius:0px">Select a Metric: </span></div>
+            <div class="col-sm-5" style="text-align: left; padding-left: 0px">@Html.DropDownList("building_sel_list", null, "--- Select Building ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:350px; border-bottom-left-radius:0px; border-top-left-radius:0px;" })</div>
+        </div>
+
+        @if (!(Model == null))
+        {
+            using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                //Draw a section where the Form Edit Fields will be displayed for the selected Metric
+                <div class="row">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.dsc_mtrc_lc_bldg_id)
+                    <input type="hidden" name="@Model.dsc_mtrc_lc_bldg_id" />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.dsc_mtrc_lc_bldg_name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.dsc_mtrc_lc_bldg_name, new { htmlAttributes = new { @class = "form-control mtrc-building", style = "min-width:100%" } })
+                                    @Html.ValidationMessageFor(model => model.dsc_mtrc_lc_bldg_name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.dsc_mtrc_lc_bldg_code, htmlAttributes: new { @class = "control-label col-md-2", style = "margin-top:5px" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.dsc_mtrc_lc_bldg_code, new { htmlAttributes = new { @class = "form-control mtrc-building", style = "min-width:99%;" } })
+                                    @Html.ValidationMessageFor(model => model.dsc_mtrc_lc_bldg_code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-right:7px; margin-bottom:10px; border-radius:7px">
+                        <div class="col-sm-3">
+                            <div style="border:1px solid black; text-align:left; margin-left:22px; margin-top:20px; padding-left:8px; border-radius:6px">
+                                <span class="form-control" style="margin-top: -10px; width:110px; border:none; background-color:none; margin-left:5px; padding: 0px 0px 0px 5px; font-weight:bold; background-color:#f5f5f5; ">Effective Dates</span>
+                                <div class="row" style="margin:0; margin-right:5px; margin-bottom:5px">
+                                    @Html.DisplayNameFor(model => model.dsc_mtrc_lc_bldg_eff_start_dt)
+                                    @*From:*@
+                                    @Html.EditorFor(model => model.dsc_mtrc_lc_bldg_eff_start_dt, new { htmlAttributes = new { @class = "form-control mtrc-building" } })
+                                </div>
+                                <div class="row" style="margin:0; margin-right:5px; margin-bottom:5px">
+                                    @Html.DisplayNameFor(model => model.dsc_mtrc_lc_bldg_eff_end_dt)
+                                    @*To:*@
+                                    @Html.EditorFor(model => model.dsc_mtrc_lc_bldg_eff_end_dt, new { htmlAttributes = new { @class = "form-control mtrc-building" } })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.dsc_mtrc_lc_bldg_eff_start_dt, "", new { @class = "text-danger" })<br />
+                                @Html.ValidationMessageFor(model => model.dsc_mtrc_lc_bldg_eff_end_dt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-9">
+                            <div style="border:1px solid black; text-align:left; margin-left:22px; margin-top:20px; padding-left:8px; border-radius:6px">
+                                @*<div class="row" style="border:1px solid black; margin: 20px 0px 0px 0px; padding: 0px 0px 24px 0px">*@
+                                @*<div style="font-weight:bold; margin-bottom:15px;">METADATA:</div>*@
+                                <span class="form-control" style="margin-top: -10px; width:70px; border:none; background-color:none; margin-left:5px; padding: 0px 0px 0px 5px; font-weight:bold; background-color:#f5f5f5;">Metadata</span>
+                                <div class="row" style="margin-bottom: 5px">
+                                    <div class="col-md-3 col-sm-6">
+                                        <div>
+                                            @Html.DisplayNameFor(model => model.dsc_lc_id)
+                                            @Html.DropDownList("dsc_lc_id", null, htmlAttributes: new { @class = "form-control mtrc-building" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div style="padding-right:10px">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom: 20px">
+                                    <div class="col-md-3 col-sm-6">
+                                        <div style="margin-bottom:5px">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-md-3 col-sm-6">
+                                        @*<div class="input-group">
+                                                @Html.LabelFor(model => model.data_type_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                                @Html.DropDownList("data_type_id", null, htmlAttributes: new { @class = "form-control" })
+                                            </div>*@
+                                    </div>
+                                </div> <!-- END OF DIV ROW -->
+
+                                @Html.ValidationMessageFor(model => model.dsc_lc_id, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>  <!-- METADATA ROW DIV END -->
+
+                    </div> <!-- DATES AND META-DATA ROW SECTION-->
+                    @*<div class="row" style="text-align:center">
+                            <input type="submit" value="Save" class="btn btn-primary" style="width:100px" disabled/>
+                        </div>*@ <!-- BUTTONS ROW DIV END -->
+                </div> <!-- FORM HEADER END -->
+            }
+        }
+    </div>
+    <div class="panel-body ">
+        @if (!(Model == null))
+        {
+            //DIV PERIOD LIST
+            <input type="hidden" id="BldgId" value="@Model.dsc_mtrc_lc_bldg_id" />
+            <div class="row" id="divBuildingMPList" style="border:0px double black; margin: 0px 0px">
+                <div class="row" style="border-bottom: 1px solid black; margin:0; "><h3><span style="font-weight:normal">@Model.dsc_mtrc_lc_bldg_name</span> Metric Periods</h3></div>
+                <div class="row" style="margin:0; margin-bottom:10px">
+                    <br />
+                    @Html.Action("_buildingMetricPeriodList")
+                    @*@Html.Action("Action", "optionalController", new { id = "someid" });*@
+                </div>
+            </div>
+            <br />
+            @*<div id="saveMessage" class="alert-success" style="display:none; font-size:large; font-weight:bold"> </div>*@
+        }
+        else
+        {
+            <div style="color: red">
+                There are no Details to Display. Select a value from the dropdown.
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        //Metric Dropdown
+        $("#building_sel_list").on("change", function () {
+            var selId = $(this).val();
+            location.href = "/Building/BuildingMaintenance/" + selId;
+            //alert("Valueselected is id: " + selId);
+        });
+
+        //MTRC_METRIC attributes are set to read-only
+        $(".mtrc-building").prop("disabled", true);
+    });
+
+</script>

@@ -10,7 +10,7 @@ using MetricDM.Models;
 
 namespace MetricDM.Controllers
 {
-    public class DSC_BUILDINGController : Controller
+    public class BuildingController : Controller
     {
         private DSC_MTRC_DEVEntities db = new DSC_MTRC_DEVEntities();
 
@@ -118,6 +118,36 @@ namespace MetricDM.Controllers
             db.DSC_MTRC_LC_BLDG.Remove(dSC_MTRC_LC_BLDG);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        //============================================================================================================
+        // GET: /Building/BuildingMaintenance/5
+        public ActionResult BuildingMaintenance(int? id)
+        {
+            id = (id == null) ? 0 : id;    //Assign a Zero value to Id if it's null
+            ViewBag.building_sel_list = new SelectList(db.DSC_MTRC_LC_BLDG, "dsc_mtrc_lc_bldg_id", "dsc_mtrc_lc_bldg_name", id);
+
+            //Load all the Metrics into a Drop down List for Selection
+            DSC_MTRC_LC_BLDG selectedBuilding;
+            if (id == 0) { selectedBuilding = null; }
+            else
+            {
+                selectedBuilding = db.DSC_MTRC_LC_BLDG.Find(id);
+                ViewBag.dsc_lc_id = new SelectList(db.DSC_LC, "dsc_lc_id", "dsc_lc_name", selectedBuilding.dsc_lc_id);
+            }
+            //if (selectedMetric == null)
+            //{
+            //    throw new Exception("The selected Metric does not exist");
+            //}
+            return View(selectedBuilding);
+        }
+
+        //============================================================================================================
+        public PartialViewResult _buildingMetricPeriodList(int id)
+        {
+            List<MTRC_BLDG_MTRC_PERIOD> buildingMetricPeriods = db.MTRC_BLDG_MTRC_PERIOD.Where(x => x.dsc_mtrc_lc_bldg_id == id).ToList();
+
+            return PartialView(buildingMetricPeriods);
         }
 
         protected override void Dispose(bool disposing)

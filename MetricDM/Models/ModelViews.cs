@@ -93,4 +93,28 @@ namespace MetricDM.Models
         public string tpt_name { get; set; }
     }
 
+    //Metadata for DSC_MTRC_LC_BLDG
+    [MetadataType(typeof(DSC_MTRC_LC_BLDGMetaData))]
+    public partial class DSC_MTRC_LC_BLDG { }
+
+    public class DSC_MTRC_LC_BLDGMetaData
+    {
+        [Display(Name = "Building Id")]
+        public short dsc_mtrc_lc_bldg_id { get; set; }
+        [Display(Name = "Logistics Center")]
+        public int dsc_lc_id { get; set; }
+        [Required(ErrorMessage = "The Building Name is Mandatory!")]
+        [Display(Name = "Building Name")]
+        [StringLength(20, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
+        public string dsc_mtrc_lc_bldg_name { get; set; }
+        [Display(Name = "Building Code")]
+        public string dsc_mtrc_lc_bldg_code { get; set; }
+        [Display(Name = "Effective Start Date")]
+        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}", ApplyFormatInEditMode = true)]
+        public System.DateTime dsc_mtrc_lc_bldg_eff_start_dt { get; set; }
+        [Display(Name = "Effective End Date")]
+        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}", ApplyFormatInEditMode = true)]
+        public System.DateTime dsc_mtrc_lc_bldg_eff_end_dt { get; set; }
+    }
+
 }

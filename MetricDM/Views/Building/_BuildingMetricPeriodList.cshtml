@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MetricDM.Models.MTRC_BLDG_MTRC_PERIOD>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<div class="row" style="margin:0 auto">
+    <table class="table table-bordered table-condensed table-hover table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MTRC_METRIC_PERIOD.mtrc_period_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DSC_MTRC_LC_BLDG.dsc_mtrc_lc_bldg_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MTRC_DATA_SRC.data_src_name)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MTRC_METRIC_PERIOD.mtrc_period_name)
+                </td>
+                <td style="text-align:left">
+                    @Html.DisplayFor(modelItem => item.DSC_MTRC_LC_BLDG.dsc_mtrc_lc_bldg_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MTRC_DATA_SRC.data_src_name)
+                </td>
+                <td>
+                    <input type="hidden" id="BMPId" value="@item.bmp_id" />
+                    <input type="button" class="btnBMPDetails" value="Details" />
+                    @*@Html.ActionLink("Details", "_metricPeriodDetails", new { id=item.mtrc_period_id })*@
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <hr />
+    <div class="row" style="text-align:center">
+        @*<a href="/MetricPeriod/AddMetricPeriod">*@
+        <input type="button" class="btn btn-primary" id="btnAddBMP" value="Add New Building Metric Period" />
+        @*</a>*@
+    </div>
+    <br />
+</div>
