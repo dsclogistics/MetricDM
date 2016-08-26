@@ -277,9 +277,7 @@
         });
 
         $("#btnAddMPPopup").click(function () {
-            alert("Saving Data");
             var formData = $('#frmAddMP').serialize();
-            alert("Form Data collected");
             // ------------ Make the Ajax Call ---------------------------------------------
             $.ajax({
                 @*url: '@Url.Action("_metricPeriodDetails", "MetricPeriod")',*@

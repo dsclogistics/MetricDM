@@ -190,8 +190,8 @@ namespace MetricDM.Controllers
             {
                 try
                 {
-                    //db.MTRC_METRIC_PERIOD.Add(newMetricPeriod);
-                    //db.SaveChanges();
+                    db.MTRC_METRIC_PERIOD.Add(newMetricPeriod);
+                    db.SaveChanges();
                 }
                 catch(Exception e)
                 {
@@ -245,6 +245,7 @@ namespace MetricDM.Controllers
                     //If creating a new metric period, use values from the upper level metric to populate some of the fields.
                     mPeriod = new MTRC_METRIC_PERIOD();
                     mMetric = db.MTRC_METRIC.Find(mtrcId);
+                    mPeriod.mtrc_id = mMetric.mtrc_id;
                     mPeriod.mtrc_period_max_dec_places = mMetric.mtrc_max_dec_places;
                     mPeriod.mtrc_period_min_val = mMetric.mtrc_min_val;
                     mPeriod.mtrc_period_max_val = mMetric.mtrc_max_val;
