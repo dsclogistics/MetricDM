@@ -195,14 +195,15 @@
 
 <!-- Modal -->
 <div id="newMetricPeriodForm" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog" style="width:85%">
+
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Add New Metric Period</h4>
             </div>
-            <div class="modal-body" id="new-metric-period-body">
+            <div class="modal-body" id="newMetricPeriodBody">
                 asdfkj
             </div>
             <div class="modal-footer">
@@ -276,16 +277,9 @@
         });
 
         //Add New Metric Period Button
-        $("#divPeriodList").on('click', '#btnAddMP', function (e) {
-            //var mtrcIdToDisplay = $("#MtrcId").val();
-            //location.href = "/MetricPeriod/AddMetricPeriod/" + mtrcIdToDisplay;
-
+        $("#divPeriodList").on('click', '#btnAddMP', function () {
             var mtrcIdToDisplay = $("#MtrcId").val();
             //alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
-            //$("#divPeriodList").hide();
-            //$("#divOutput").show();        //Show the panel that holds the Metric Period Details Partial View
-            //$("#msgLoading").show();
-            //$("#mpDetailsView").hide();
 
             // ------------ Make the Ajax Call ---------------------------------------------
             $.ajax({
@@ -296,29 +290,31 @@
                 data: { mtrcId: mtrcIdToDisplay },     //<---- Data Parameters (if not already passed in the Url)
                 //--- On error, execute this function ------
                 error: function (xhr, status, error) {
-                    alert("Error: " + error);
                     //var err = eval("(" + xhr.responseText + ")");
-                    $("#new-metric-period-body").html(xhr.responseText);
+                    $("#mpDetailsView").html(xhr.responseText);
                     //$("#msgLoading").hide();
                     //$("#mpDetailsView").show();
                     //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
-                    $('#newMetricPeriodForm').modal('show');
                 }
             }).done(function (d) {
                 //Execute this code After the Ajax call completes successfully
-                //Insert the partial view retrieved into the output 'mpDetailsView' panel
-                //$("#mpDetailsView").html(d);
-                $('#new-metric-period-body').html(d);
-                //$("#msgLoading").hide();
-                //$("#mpDetailsView").show();
+                //Insert the partial view retrieved into the output 'newMetricPeriodBody' panel
+                $('#newMetricPeriodBody').html(d);
+                $("#divOutput").hide();
                 $('#newMetricPeriodForm').modal('show');
-            });            
+
+                //Change CSS attributes for several elements
+                $(".indicate-defaulted-value").addClass("asterisk");
+                $(".color-defaulted-value").css("background-color", "antiquewhite");
+                $(".save-metric-period").css("visibility", "hidden");
+                $(".default-message").css("visibility", "visible")
+            });
         });
 
         //Hides asterisk from Metric Period Detail fields with default values after those values have been changed.
-        $("#mpDetailsView").on('change', ".form-control", function () {
-            $(this).siblings(".indicate-defaulted-value").removeClass('indicate-defaulted-value');
-            $(this).removeClass('color-defaulted-value');
+        $("#newMetricPeriodBody").on('change', ".form-control", function () {
+            $(this).siblings(".indicate-defaulted-value").removeClass("asterisk");
+            $(this).css("background-color", "white");
         });
 
         //Details Class of Button
@@ -353,6 +349,12 @@
                 $("#msgLoading").hide();
                 $("#mpDetailsView").show();
                 $(".btnMPDetails").prop("disabled", false);
+
+                //Change CSS attributes for several elements
+                $(".indicate-defaulted-value").removeClass("asterisk");
+                $(".color-defaulted-value").css("background-color", "white");
+                $(".save-metric-period").css("visibility", "visible");
+                $(".default-message").css("visibility", "hidden")
             });
         });
 

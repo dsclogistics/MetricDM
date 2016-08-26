@@ -205,7 +205,7 @@ namespace MetricDM.Controllers
         }
         //============================================================================================================
         // GET: /MetricPeriod/_metricPeriodDetails/5
-
+        //[ChildActionOnly]
         public PartialViewResult _metricPeriodDetails(int? id, int? mtrcId)
         {
             MTRC_METRIC_PERIOD mPeriod;
@@ -230,12 +230,12 @@ namespace MetricDM.Controllers
 
                 //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name");
-                ViewBag.indicateDefaults = true;
+                ViewBag.createNewMetricPeriod = true;
             }
             else {
                 mPeriod = db.MTRC_METRIC_PERIOD.Find(id);
                 ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name", mPeriod.tpt_id);
-                ViewBag.indicateDefaults = false;
+                ViewBag.createNewMetricPeriod = false;
             }
 
             //
