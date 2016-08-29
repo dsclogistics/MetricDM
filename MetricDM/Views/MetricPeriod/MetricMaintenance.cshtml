@@ -224,7 +224,9 @@
         });
 
         //Save Metric Period Data Button
-        $("#divOutput").on('click', '#btnSaveMPDetail', function () {
+        $("#divOutput").on('click', '#btnSaveMPDetail', function (e) {
+            var tempScrollTop = $(window).scrollTop();
+
             $("#divOutput").show();        //Show the panel that holds the Metric Period Details Partial View
             $("#msgLoading").show();
             $("#mpDetailsView").hide();
@@ -271,8 +273,8 @@
                 $("#btnSaveMPDetail").prop("disabled", false);
                 $("#saveMessage").html("Data Saved Successfully!");
                 $("#saveMessage").show().fadeOut(3000);
+                $(window).scrollTop(tempScrollTop);
             });
-
         });
         
         //POSTing data using the Add Metric Period Button in the Add New Metric Period popup
@@ -381,8 +383,6 @@
                 $(".save-metric-period").css("visibility", "visible");
                 $(".default-message").css("visibility", "hidden")
             });
-
-            e.preventDefault();
         });
 
         //MTRC_METRIC attributes are set to read-only
