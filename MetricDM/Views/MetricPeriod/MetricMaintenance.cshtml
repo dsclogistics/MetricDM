@@ -165,8 +165,7 @@
             <input type="hidden" id="MtrcId" value="@Model.mtrc_id" />
             <div class="row" id="divPeriodList" style="border:0px double black; margin: 0px 0px">
                 <div class="row" style="border-bottom: 1px solid black; margin:0; "><h3><span style="font-weight:normal">@Model.mtrc_name</span> Metric Periods</h3></div>
-                <div class="row" style="margin:0; margin-bottom:10px">
-                    <br />
+                <div class="row" id="divPeriodListView" style="margin:0; margin-bottom:10px">
                     @Html.Action("_metricPeriodList")
                     @*@Html.Action("Action", "optionalController", new { id = "someid" });*@
                 </div>
@@ -231,7 +230,7 @@
             $("#mpDetailsView").hide();
             $("#btnSaveMPDetail").prop("disabled", true);
 
-            var formData = $("form").serialize();
+            var formData = $('#frmViewMP').serialize();
 
             //alert("Saving Data:\n" + formData);
 
@@ -275,8 +274,10 @@
             });
 
         });
-
+        
+        //POSTing data using the Add Metric Period Button in the Add New Metric Period popup
         $("#btnAddMPPopup").click(function () {
+            var mtrcId = document.getElementById('mtrc_id').value;
             var formData = $('#frmAddMP').serialize();
             // ------------ Make the Ajax Call ---------------------------------------------
             $.ajax({
@@ -292,12 +293,15 @@
             }).done(function (d) {
                 //Execute this code After the Ajax call completes successfully
                 //Insert the partial view retrieved into the output 'newMetricPeriodBody' panel
+                $('#newMetricPeriodForm').modal('hide');
                 alert(d);
+                //$('#divPeriodListView').load('@Url.Action("_metricPeriodList","MetricPeriod")/'+mtrcId);
+                location.reload();
             });
         });
 
 
-        //Add New Metric Period Button
+        //Add New Metric Period Button -> initiate popup
         $("#divPeriodList").on('click', '#btnAddMP', function () {
             var mtrcIdToDisplay = $("#MtrcId").val();
             //alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
@@ -339,7 +343,7 @@
         });
 
         //Details Class of Button
-        $(".btnMPDetails").click(function () {
+        $(".btnMPDetails").click(function (e) {
             var idToDisplay = $(this).siblings("#MPId").val();
             //alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
             //$("#divPeriodList").hide();
@@ -377,6 +381,8 @@
                 $(".save-metric-period").css("visibility", "visible");
                 $(".default-message").css("visibility", "hidden")
             });
+
+            e.preventDefault();
         });
 
         //MTRC_METRIC attributes are set to read-only
