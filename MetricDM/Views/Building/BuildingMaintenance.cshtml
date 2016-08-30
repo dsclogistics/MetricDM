@@ -63,9 +63,8 @@
                             </div>
                         </div>
                         <div class="col-sm-9">
+                            @*METADATA SECTION*@
                             <div style="border:1px solid black; text-align:left; margin-left:22px; margin-top:20px; padding-left:8px; border-radius:6px">
-                                @*<div class="row" style="border:1px solid black; margin: 20px 0px 0px 0px; padding: 0px 0px 24px 0px">*@
-                                @*<div style="font-weight:bold; margin-bottom:15px;">METADATA:</div>*@
                                 <span class="form-control" style="margin-top: -10px; width:70px; border:none; background-color:none; margin-left:5px; padding: 0px 0px 0px 5px; font-weight:bold; background-color:#f5f5f5;">Metadata</span>
                                 <div class="row" style="margin-bottom: 5px">
                                     <div class="col-md-3 col-sm-6">
@@ -133,7 +132,7 @@
     <div class="panel-body ">
         @if (!(Model == null))
         {
-            //DIV PERIOD LIST
+            //DIV BUILDING METRIC PERIOD LIST
             <input type="hidden" id="BldgId" value="@Model.dsc_mtrc_lc_bldg_id" />
             <div class="row" id="divBuildingMPList" style="border:0px double black; margin: 0px 0px">
                 <div class="row" style="border-bottom: 1px solid black; margin:0; "><h3><span style="font-weight:normal">@Model.dsc_mtrc_lc_bldg_name</span> Metric Periods</h3></div>
@@ -145,6 +144,16 @@
             </div>
             <br />
             @*<div id="saveMessage" class="alert-success" style="display:none; font-size:large; font-weight:bold"> </div>*@
+
+            //DIV OUTPUT
+            <div class="row" id="divOutput" style="border:0px double black; display:none; text-align:center; margin: 0px 0px">
+                <div class="row" style="border-bottom: 1px solid black; margin:0; "><h3>Building Metric Period Details</h3></div>
+                <div id="msgLoading">
+                    <br /><p>Please wait... Loading Info</p><img src="~/Images/ui-anim_basic_16x16.gif" /><br /><br />
+                </div>
+                <div id="bmpDetailsView" style="display:none">
+                </div>
+            </div>
         }
         else
         {
@@ -161,8 +170,51 @@
         $("#building_sel_list").on("change", function () {
             var selId = $(this).val();
             location.href = "/Building/BuildingMaintenance/" + selId;
-            //alert("Valueselected is id: " + selId);
         });
+
+        //Details Class of Button
+        $(".btnBMPDetails").click(function (e) {
+            var idToDisplay = $(this).siblings("#BMPId").val();
+            //alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
+            //$("#divPeriodList").hide();
+            $("#divOutput").show();        //Show the panel that holds the Metric Period Details Partial View
+            $("#msgLoading").show();
+            $("#bmpDetailsView").hide();
+            $(".btnBMPDetails").prop("disabled", true);
+
+            // ------------ Make the Ajax Call ---------------------------------------------
+            $.ajax({
+                @*url: '@Url.Action("_metricPeriodDetails", "MetricPeriod")',*@
+                url: '/Building/_buildingMetricPeriodDetails',     // the url where we want to direct our Ajax Call
+                method: "GET",
+                cache: false,
+                data: { id: idToDisplay },     //<---- Data Parameters (if not already passed in the Url)
+                //--- On error, execute this function ------
+                error: function (xhr, status, error) {
+                    //var err = eval("(" + xhr.responseText + ")");
+                    $("#bmpDetailsView").html(xhr.responseText);
+                    $("#msgLoading").hide();
+                    $("#bmpDetailsView").show();
+                    //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
+                }
+            }).done(function (d) {
+                //Execute this code After the Ajax call completes successfully
+                //Insert the partial view retrieved into the output 'mpDetailsView' panel
+                $("#bmpDetailsView").html(d);
+                $("#msgLoading").hide();
+                $("#bmpDetailsView").show();
+                $(".btnBMPDetails").prop("disabled", false);
+
+                //Change CSS attributes for several elements
+                $(".indicate-defaulted-value").removeClass("asterisk");
+                $(".color-defaulted-value").css("background-color", "white");
+                $(".save-metric-period").css("visibility", "visible");
+                $(".default-message").css("visibility", "hidden")
+            });
+        });
+
+
+
 
         //MTRC_METRIC attributes are set to read-only
         $(".mtrc-building").prop("disabled", true);

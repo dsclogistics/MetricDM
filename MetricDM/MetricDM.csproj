@@ -314,7 +314,7 @@
     <Content Include="Views\MetricPeriod\AddMetricPeriod.cshtml" />
     <Content Include="Views\Building\BuildingMaintenance.cshtml" />
     <Content Include="Views\Building\_buildingMetricPeriodList.cshtml" />
-    <Content Include="Views\Building\_buildingMetricPeriodDetail.cshtml" />
+    <Content Include="Views\Building\_buildingMetricPeriodDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
