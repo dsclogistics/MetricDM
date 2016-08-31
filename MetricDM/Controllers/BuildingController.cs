@@ -182,10 +182,33 @@ namespace MetricDM.Controllers
 
                 ViewBag.data_src_id = new SelectList(db.MTRC_DATA_SRC, "data_src_id", "data_src_name", bldgMetricPeriod.data_src_id);
                 ViewBag.mtrc_period_id = new SelectList(db.MTRC_METRIC_PERIOD, "mtrc_period_id", "mtrc_period_name", bldgMetricPeriod.mtrc_period_id);
-
                 ViewBag.createNewBuildingMetricPeriod = false;
             }
 
+            ViewBag.dsc_mtrc_lc_bldg_id = new SelectList(db.DSC_MTRC_LC_BLDG, "dsc_mtrc_lc_bldg_id", "dsc_mtrc_lc_bldg_name", bldgMetricPeriod.dsc_mtrc_lc_bldg_id);
+
+            return PartialView(bldgMetricPeriod);
+        }
+        //============================================================================================================
+        // POST: /Building/_buildingMetricPeriodDetails
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public PartialViewResult _buildingMetricPeriodDetails(MTRC_BLDG_MTRC_PERIOD bldgMetricPeriod)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(bldgMetricPeriod).State = EntityState.Modified;
+                db.SaveChanges();
+
+                //ViewBag.data_src_id = new SelectList(db.MTRC_DATA_SRC, "data_src_id", "data_src_name", bldgMetricPeriod.data_src_id);
+                //ViewBag.mtrc_period_id = new SelectList(db.MTRC_METRIC_PERIOD, "mtrc_period_id", "mtrc_period_name", bldgMetricPeriod.mtrc_period_id);
+                //ViewBag.createNewMetricPeriod = false;
+                //return PartialView(bldgMetricPeriod);
+            }
+            ViewBag.data_src_id = new SelectList(db.MTRC_DATA_SRC, "data_src_id", "data_src_name", bldgMetricPeriod.data_src_id);
+            ViewBag.mtrc_period_id = new SelectList(db.MTRC_METRIC_PERIOD, "mtrc_period_id", "mtrc_period_name", bldgMetricPeriod.mtrc_period_id);
+            ViewBag.dsc_mtrc_lc_bldg_id = new SelectList(db.DSC_MTRC_LC_BLDG, "dsc_mtrc_lc_bldg_id", "dsc_mtrc_lc_bldg_name", bldgMetricPeriod.dsc_mtrc_lc_bldg_id);
+            ViewBag.createNewMetricPeriod = false;
             return PartialView(bldgMetricPeriod);
         }
 

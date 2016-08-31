@@ -10,7 +10,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="row" style="margin:0; margin-bottom:20px">
-            <div class="col-sm-5" style="text-align:right; padding:0px 0px"><span class="form-control" style="font-weight:bold; max-width:140px; float:right; background-color: lightgray; border-top-right-radius:0px; border-bottom-right-radius:0px">Select a Metric: </span></div>
+            <div class="col-sm-5" style="text-align:right; padding:0px 0px"><span class="form-control" style="font-weight:bold; max-width:150px; float:right; background-color: lightgray; border-top-right-radius:0px; border-bottom-right-radius:0px">Select a Building: </span></div>
             <div class="col-sm-5" style="text-align: left; padding-left: 0px">@Html.DropDownList("building_sel_list", null, "--- Select Building ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:350px; border-bottom-left-radius:0px; border-top-left-radius:0px;" })</div>
         </div>
 
@@ -133,7 +133,7 @@
         @if (!(Model == null))
         {
             //DIV BUILDING METRIC PERIOD LIST
-            <input type="hidden" id="BldgId" value="@Model.dsc_mtrc_lc_bldg_id" />
+            <input type="hidden" id="bldgId" value="@Model.dsc_mtrc_lc_bldg_id" />
             <div class="row" id="divBuildingMPList" style="border:0px double black; margin: 0px 0px">
                 <div class="row" style="border-bottom: 1px solid black; margin:0; "><h3><span style="font-weight:normal">@Model.dsc_mtrc_lc_bldg_name</span> Metric Periods</h3></div>
                 <div class="row" style="margin:0; margin-bottom:10px">
@@ -164,6 +164,28 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div id="newBldgMetricPeriodForm" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width:85%">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add New Building Metric Period</h4>
+            </div>
+            <div class="modal-body" id="newBldgMetricPeriodBody">
+                asdfkj
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnAddBMPPopup">Add Metric Period</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
         //Metric Dropdown
@@ -172,6 +194,7 @@
             location.href = "/Building/BuildingMaintenance/" + selId;
         });
 
+        //--------------------------------------------------------------------------------------------------------
         //Details Class of Button
         $(".btnBMPDetails").click(function (e) {
             var idToDisplay = $(this).siblings("#BMPId").val();
@@ -199,22 +222,102 @@
                 }
             }).done(function (d) {
                 //Execute this code After the Ajax call completes successfully
-                //Insert the partial view retrieved into the output 'mpDetailsView' panel
+                //Insert the partial view retrieved into the output 'bmpDetailsView' panel
                 $("#bmpDetailsView").html(d);
                 $("#msgLoading").hide();
                 $("#bmpDetailsView").show();
                 $(".btnBMPDetails").prop("disabled", false);
 
                 //Change CSS attributes for several elements
-                $(".indicate-defaulted-value").removeClass("asterisk");
-                $(".color-defaulted-value").css("background-color", "white");
                 $(".save-metric-period").css("visibility", "visible");
-                $(".default-message").css("visibility", "hidden")
             });
         });
 
+        //--------------------------------------------------------------------------------------------------------
+        //Add New Building Metric Period Button -> initiate popup
+        $("#divBuildingMPList").on('click', '#btnAddBMP', function () {
+            var mtrcIdToDisplay = $("#bldgId").val();
 
+            // ------------ Make the Ajax Call ---------------------------------------------
+            $.ajax({
+                @*url: '@Url.Action("_metricPeriodDetails", "MetricPeriod")',*@
+                url: '/Building/_buildingMetricPeriodDetails',     // the url where we want to direct our Ajax Call
+                method: "GET",
+                cache: false,
+                data: { bldgId: mtrcIdToDisplay },     //<---- Data Parameters (if not already passed in the Url)
+                //--- On error, execute this function ------
+                error: function (xhr, status, error) {
+                    //var err = eval("(" + xhr.responseText + ")");
+                    $("#bmpDetailsView").html(xhr.responseText);
+                    $("#msgLoading").hide();
+                    $("#bmpDetailsView").show();
+                    //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
+                }
+            }).done(function (d) {
+                //Execute this code After the Ajax call completes successfully
+                //Insert the partial view retrieved into the output 'newBldgMetricPeriodBody' panel
+                $('#newBldgMetricPeriodBody').html(d);
+                $("#divOutput").hide();
+                $('#newBldgMetricPeriodForm').modal('show');
 
+                //Change CSS attributes for several elements
+                $(".save-bldg-metric-period").css("visibility", "hidden");
+            });
+        });
+
+        //--------------------------------------------------------------------------------------------------------
+        //Save Building Metric Period Button
+        $("#divOutput").on('click', '#btnSaveBMPDetail', function (e) {
+            var tempScrollTop = $(window).scrollTop();
+
+            $("#divOutput").show();        //Show the panel that holds the Metric Period Details Partial View
+            $("#msgLoading").show();
+            $("#bmpDetailsView").hide();
+            $("#btnSaveBMPDetail").prop("disabled", true);
+
+            var formData = $('#frmViewBMP').serialize();
+            //alert("Saving Data:\n" + formData);
+
+            // ------------ Make the Ajax Call to Save the Data ------------------------------------
+            // get the form data. Use the easiest one
+            //var formData = {
+            //    'name'            : $('#controlID1').val(),       //or: $('input[name=name]').val(),
+            //    'email'           : $('#controlID2').val(),
+            //    'superheroAlias'  : $('#controlID3').val()          //etc
+            //};
+
+            $.ajax({
+                type      : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                //method    : 'POST',
+                @*url     : '@Url.Action("_metricPeriodDetails", "MetricPeriod")',*@
+                url: '/Building/_buildingMetricPeriodDetails', // the url where we want to POST
+                //data    : { id: idToDisplay },     //<---- Data Parameters (if not already passed in the Url)
+                data      : formData, // our data object created earlier
+                //dataType  : 'json', // what type of data do we expect back from the server (Remove line if expecting html [partial or full]view result)
+                //encode    : true,
+                cache: false,
+                //--- On error, execute this function ------
+                error: function (xhr, status, error) {
+                    //var err = eval("(" + xhr.responseText + ")");
+                    $("#bmpDetailsView").html(xhr.responseText);
+                    $("#msgLoading").hide();
+                    $("#bmpDetailsView").show();
+                    $("#saveMessage").html("Error Saving Data :(");
+                    $("#saveMessage").show().fadeOut(3000);
+                    //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
+                }
+            }).done(function (d) {
+                //This code Executes After the Ajax call completes successfully
+                //Insert the partial view retrieved into the output 'mpDetailsView' panel
+                $("#bmpDetailsView").html(d);
+                $("#msgLoading").hide();
+                $("#bmpDetailsView").show();
+                $("#btnSaveBMPDetail").prop("disabled", false);
+                $("#saveMessage").html("Data Saved Successfully!");
+                $("#saveMessage").show().fadeOut(3000);
+                $(window).scrollTop(tempScrollTop);
+            });
+        });
 
         //MTRC_METRIC attributes are set to read-only
         $(".mtrc-building").prop("disabled", true);
