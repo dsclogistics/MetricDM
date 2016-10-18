@@ -44,5 +44,17 @@ namespace MetricDM.Models
         public virtual DbSet<MTRC_TM_PERIODS> MTRC_TM_PERIODS { get; set; }
         public virtual DbSet<RZ_MTRC_PERIOD_STATUS> RZ_MTRC_PERIOD_STATUS { get; set; }
         public virtual DbSet<RZ_MTRC_PERIOD_VAL_GOAL> RZ_MTRC_PERIOD_VAL_GOAL { get; set; }
+        public virtual DbSet<DSC_APP_USER> DSC_APP_USER { get; set; }
+        public virtual DbSet<DSC_EMPLOYEE> DSC_EMPLOYEE { get; set; }
+        public virtual DbSet<MTRC_APP_ROLE> MTRC_APP_ROLE { get; set; }
+        public virtual DbSet<MTRC_MGMT_AUTH_NEW> MTRC_MGMT_AUTH_NEW { get; set; }
+        public virtual DbSet<MTRC_MP_REASON> MTRC_MP_REASON { get; set; }
+        public virtual DbSet<MTRC_MPV_REASONS> MTRC_MPV_REASONS { get; set; }
+        public virtual DbSet<MTRC_USER_APP_ROLES> MTRC_USER_APP_ROLES { get; set; }
+        public virtual DbSet<RZ_ACTION_PLAN_DTL> RZ_ACTION_PLAN_DTL { get; set; }
+        public virtual DbSet<RZ_BAP_METRICS> RZ_BAP_METRICS { get; set; }
+        public virtual DbSet<RZ_BLDG_ACTION_PLAN> RZ_BLDG_ACTION_PLAN { get; set; }
+        public virtual DbSet<RZ_BLDG_AUTHORIZATION> RZ_BLDG_AUTHORIZATION { get; set; }
+        public virtual DbSet<MTRC_WMS_BLDG_XREF> MTRC_WMS_BLDG_XREF { get; set; }
     }
 }

@@ -164,7 +164,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DSC_APP_USER.cs">
+      <DependentUpon>MetricDM_Entity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DSC_CUST_ACCT.cs">
+      <DependentUpon>MetricDM_Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DSC_EMPLOYEE.cs">
       <DependentUpon>MetricDM_Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DSC_LC.cs">
@@ -189,6 +195,9 @@
       <DependentUpon>MetricDM_Entity.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ModelViews.cs" />
+    <Compile Include="Models\MTRC_APP_ROLE.cs">
+      <DependentUpon>MetricDM_Entity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MTRC_BLDG_MTRC_PERIOD.cs">
       <DependentUpon>MetricDM_Entity.tt</DependentUpon>
     </Compile>
@@ -216,10 +225,19 @@
     <Compile Include="Models\MTRC_MGMT_AUTH.cs">
       <DependentUpon>MetricDM_Entity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MTRC_MGMT_AUTH_NEW.cs">
+      <DependentUpon>MetricDM_Entity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MTRC_MPBG.cs">
       <DependentUpon>MetricDM_Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MTRC_MPG.cs">
+      <DependentUpon>MetricDM_Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MTRC_MPV_REASONS.cs">
+      <DependentUpon>MetricDM_Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MTRC_MP_REASON.cs">
       <DependentUpon>MetricDM_Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MTRC_PRODUCT.cs">
@@ -229,6 +247,24 @@
       <DependentUpon>MetricDM_Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MTRC_TM_PERIODS.cs">
+      <DependentUpon>MetricDM_Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MTRC_USER_APP_ROLES.cs">
+      <DependentUpon>MetricDM_Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MTRC_WMS_BLDG_XREF.cs">
+      <DependentUpon>MetricDM_Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RZ_ACTION_PLAN_DTL.cs">
+      <DependentUpon>MetricDM_Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RZ_BAP_METRICS.cs">
+      <DependentUpon>MetricDM_Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RZ_BLDG_ACTION_PLAN.cs">
+      <DependentUpon>MetricDM_Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RZ_BLDG_AUTHORIZATION.cs">
       <DependentUpon>MetricDM_Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RZ_MTRC_PERIOD_STATUS.cs">

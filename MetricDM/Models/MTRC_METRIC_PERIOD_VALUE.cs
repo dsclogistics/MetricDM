@@ -18,6 +18,8 @@ namespace MetricDM.Models
         public MTRC_METRIC_PERIOD_VALUE()
         {
             this.RZ_MTRC_PERIOD_VAL_GOAL = new HashSet<RZ_MTRC_PERIOD_VAL_GOAL>();
+            this.RZ_BAP_METRICS = new HashSet<RZ_BAP_METRICS>();
+            this.MTRC_MPV_REASONS = new HashSet<MTRC_MPV_REASONS>();
         }
     
         public long mtrc_period_val_id { get; set; }
@@ -36,5 +38,9 @@ namespace MetricDM.Models
         public virtual MTRC_TM_PERIODS MTRC_TM_PERIODS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RZ_MTRC_PERIOD_VAL_GOAL> RZ_MTRC_PERIOD_VAL_GOAL { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RZ_BAP_METRICS> RZ_BAP_METRICS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MTRC_MPV_REASONS> MTRC_MPV_REASONS { get; set; }
     }
 }
