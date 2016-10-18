@@ -1,0 +1,75 @@
+﻿@model MetricDM.Models.DSC_APP_USER
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DSC_APP_USER</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.app_user_sso_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.app_user_sso_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.app_user_sso_system)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.app_user_sso_system)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.app_user_email_addr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.app_user_email_addr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.app_user_full_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.app_user_full_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.app_user_disabled_yn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.app_user_disabled_yn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.app_user_disabled_on_dtm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.app_user_disabled_on_dtm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DSC_EMPLOYEE.dsc_emp_perm_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DSC_EMPLOYEE.dsc_emp_perm_id)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.app_user_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

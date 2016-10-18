@@ -161,6 +161,7 @@
     <Compile Include="Controllers\BuildingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MetricPeriodController.cs" />
+    <Compile Include="Controllers\UserMgmtController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -351,6 +352,11 @@
     <Content Include="Views\Building\BuildingMaintenance.cshtml" />
     <Content Include="Views\Building\_buildingMetricPeriodList.cshtml" />
     <Content Include="Views\Building\_buildingMetricPeriodDetails.cshtml" />
+    <Content Include="Views\UserMgmt\Create.cshtml" />
+    <Content Include="Views\UserMgmt\Delete.cshtml" />
+    <Content Include="Views\UserMgmt\Details.cshtml" />
+    <Content Include="Views\UserMgmt\Edit.cshtml" />
+    <Content Include="Views\UserMgmt\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
