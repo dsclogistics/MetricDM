@@ -1,0 +1,70 @@
+﻿@model IEnumerable<MetricDM.Models.DSC_APP_USER>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.app_user_sso_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.app_user_sso_system)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.app_user_email_addr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.app_user_full_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.app_user_disabled_yn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.app_user_disabled_on_dtm)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DSC_EMPLOYEE.dsc_emp_perm_id)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.app_user_sso_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.app_user_sso_system)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.app_user_email_addr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.app_user_full_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.app_user_disabled_yn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.app_user_disabled_on_dtm)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DSC_EMPLOYEE.dsc_emp_perm_id)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.app_user_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.app_user_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.app_user_id })
+        </td>
+    </tr>
+}
+
+</table>

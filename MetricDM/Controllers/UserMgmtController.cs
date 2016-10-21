@@ -15,7 +15,188 @@ namespace MetricDM.Controllers
         private DSC_MTRC_DEVEntities db = new DSC_MTRC_DEVEntities();
 
         // GET: UserMgmt
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult Index(string search)
+        {
+            var dSC_APP_USER = db.DSC_APP_USER.Include(d => d.DSC_EMPLOYEE);
+
+            if (!String.IsNullOrWhiteSpace(search))
+            {
+                //Filters list where search string is contained in the full name, email address, or sso_id
+                dSC_APP_USER = dSC_APP_USER.Where(x => x.app_user_full_name.Contains(search) 
+                                                        || x.app_user_email_addr.Contains(search)
+                                                        || x.app_user_sso_id.Contains(search));
+            }
+            
+            return View(dSC_APP_USER.ToList());
+        }
+
+        // GET: UserMaintenance
+        public ActionResult UserMaintenance(int? id)
+        {
+            UserMgmtViewModel userMgmtViewModel = new UserMgmtViewModel();
+
+            if (id == null || id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                DSC_APP_USER dSC_APP_USER = db.DSC_APP_USER.Find(id);
+                if (dSC_APP_USER == null)
+                {
+                    return HttpNotFound();
+                }
+                else
+                {
+                    userMgmtViewModel.appUserDetails = dSC_APP_USER;
+                }
+
+                //Add assigned user building list to view model
+                userMgmtViewModel.userBldgList = getUserBuildingList(id);
+
+                //Add assigned user roles to view model
+                List<UserAppProduct> userProductList = getUserProductRoleList(id);
+                userMgmtViewModel.userProductRoleList = userProductList;
+
+                return View(userMgmtViewModel);
+            }
+
+        }
+
+
+
+
+
+
+        //------
+        //"API"s
+        //------
+        //Return a list of buildings associated with a particular app user id
+        private List<DSC_MTRC_LC_BLDG> getUserBuildingList(int? appUserId)
+        {
+            List<DSC_MTRC_LC_BLDG> bldgList = new List<DSC_MTRC_LC_BLDG>();
+            if(appUserId == null || appUserId == 0)
+            {
+                
+            }
+            else
+            {
+                ////Query Style 1 - SQL notation
+                //var query1 =
+                //    from a in db.DSC_MTRC_LC_BLDG
+                //    join b in db.RZ_BLDG_AUTHORIZATION on a.dsc_mtrc_lc_bldg_id equals b.dsc_mtrc_lc_bldg_id
+                //    join c in db.DSC_APP_USER on b.app_user_id equals c.app_user_id
+                //    where c.app_user_id == appUserId
+                //    select a;
+
+                //Query Style 2 - Dot notation
+                var query2 =
+                    from child in db.RZ_BLDG_AUTHORIZATION
+                    where child.DSC_APP_USER.app_user_id == appUserId
+                    select child.DSC_MTRC_LC_BLDG;
+
+                bldgList = query2.ToList();
+            }
+
+            return bldgList;
+        }
+
+
+        //Return a nested list of roles (Product > Role > Metric) associated with a particular app user id
+        private List<UserAppProduct> getUserProductRoleList(int? appUserId)
+        {
+            List<UserAppProduct> productList = new List<UserAppProduct>();
+            if (appUserId == null || appUserId == 0)
+            {
+
+            }
+            else
+            {
+                //Query for products and roles
+                var query =
+                    from a in db.MTRC_USER_APP_ROLES
+                    join b in db.DSC_APP_USER on a.app_user_id equals b.app_user_id
+                    join c in db.MTRC_APP_ROLE on a.mar_id equals c.mar_id
+                    join d in db.MTRC_PRODUCT on c.prod_id equals d.prod_id
+
+                    where b.app_user_id == appUserId
+                    orderby d.prod_name, c.mar_name
+                    select new
+                    {
+                        prodName = d.prod_name,
+                        prodId = d.prod_id,
+                        userAppRoleId = a.muar_id,
+                        appRoleId = c.mar_id,
+                        appRoleName = c.mar_name,
+                        appRoleDesc = c.mar_desc,
+                        reqBldgAuth = c.mar_req_bldg_auth,
+                        reqMtrcAuth = c.mar_req_mtrc_mgmt_auth
+                    };
+
+                productList = (
+                    from a in query
+                    group a by new { a.prodId, a.prodName } into grouped
+                    select new UserAppProduct
+                    {
+                        productId = grouped.Key.prodId.ToString(),
+                        productName = grouped.Key.prodName,
+                        userRoles = (from b in grouped
+                                select new UserAppRole
+                                {
+                                    userAppRoleId = b.userAppRoleId.ToString(),
+                                    appRoleId = b.appRoleId.ToString(),
+                                    appRoleName = b.appRoleName,
+                                    appRoleDesc = b.appRoleDesc == null ? "" : b.appRoleDesc,
+                                    reqBldgAuth = b.reqBldgAuth,
+                                    reqMtrcAuth = b.reqMtrcAuth
+                                }).ToList()
+                    }).ToList();
+
+                //Query for metric assignments
+                var query2 =
+                    from a in db.MTRC_USER_APP_ROLES
+                    join b in db.DSC_APP_USER on a.app_user_id equals b.app_user_id
+                    join c in db.MTRC_MGMT_AUTH_NEW on a.muar_id equals c.muar_id
+                    join d in db.MTRC_METRIC_PERIOD on c.mtrc_period_id equals d.mtrc_period_id
+                    where b.app_user_id == appUserId
+                    select new RoleMetricAuthority
+                    {
+                        userAppRoleId = a.muar_id.ToString(),
+                        mtrcPeriodId = d.mtrc_period_id.ToString(),
+                        mtrcPeriodName = d.mtrc_period_name
+                    };
+
+                List<RoleMetricAuthority> metricList = query2.ToList();
+
+                //Check roles for metric mgmt flag = 'Y'
+                foreach(RoleMetricAuthority metric in metricList)
+                {
+                    List<UserAppRole> roleList = productList.SelectMany(x => x.userRoles)
+                                                            .Where(x => x.userAppRoleId == metric.userAppRoleId 
+                                                                     && x.reqMtrcAuth == "Y").ToList();
+                    
+                    foreach(UserAppRole role in roleList)
+                    {
+                        role.roleMetrics.Add(metric);
+                    }    
+
+                }
+                    
+
+
+            }
+
+            return productList;
+        }
+
+
+        //--------------
+        //Auto generated
+        //--------------
+
+        // GET: UserMgmt/List
+        public ActionResult List()
         {
             var dSC_APP_USER = db.DSC_APP_USER.Include(d => d.DSC_EMPLOYEE);
             return View(dSC_APP_USER.ToList());
