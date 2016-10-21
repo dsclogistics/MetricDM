@@ -38,12 +38,15 @@ namespace MetricDM.Models
     {
         public DSC_APP_USER appUserDetails { get; set; }
         public List<DSC_MTRC_LC_BLDG> userBldgList { get; set; }
+        public List<DSC_MTRC_LC_BLDG> unassignedBldgList { get; set; }
         public List<UserAppProduct> userProductRoleList { get; set; }
 
         public UserMgmtViewModel()
         {
             appUserDetails = new DSC_APP_USER();
             userBldgList = new List<DSC_MTRC_LC_BLDG>();
+            unassignedBldgList = new List<DSC_MTRC_LC_BLDG>();
+            userProductRoleList = new List<UserAppProduct>();
         }
 
     }

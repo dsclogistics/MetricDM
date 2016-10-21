@@ -55,6 +55,9 @@ namespace MetricDM.Controllers
                 //Add assigned user building list to view model
                 userMgmtViewModel.userBldgList = getUserBuildingList(id);
 
+                //Add unassigned building list to view model
+                userMgmtViewModel.unassignedBldgList = getAllBuildingList().Except(userMgmtViewModel.userBldgList).ToList();
+
                 //Add assigned user roles to view model
                 List<UserAppProduct> userProductList = getUserProductRoleList(id);
                 userMgmtViewModel.userProductRoleList = userProductList;
@@ -72,6 +75,21 @@ namespace MetricDM.Controllers
         //------
         //"API"s
         //------
+        //Return a list of buildings associated with a particular app user id
+        private List<DSC_MTRC_LC_BLDG> getAllBuildingList()
+        {
+            List<DSC_MTRC_LC_BLDG> bldgList = new List<DSC_MTRC_LC_BLDG>();
+
+            //Query Style 1 - SQL notation
+            var query1 =
+                from a in db.DSC_MTRC_LC_BLDG
+                select a;
+
+            bldgList = query1.ToList();
+
+            return bldgList;
+        }
+
         //Return a list of buildings associated with a particular app user id
         private List<DSC_MTRC_LC_BLDG> getUserBuildingList(int? appUserId)
         {
@@ -151,7 +169,7 @@ namespace MetricDM.Controllers
                                     reqBldgAuth = b.reqBldgAuth,
                                     reqMtrcAuth = b.reqMtrcAuth
                                 }).ToList()
-                    }).ToList();
+                    }).ToList().OrderBy(x=>x.productName).ToList();
 
                 //Query for metric assignments
                 var query2 =
@@ -169,7 +187,8 @@ namespace MetricDM.Controllers
 
                 List<RoleMetricAuthority> metricList = query2.ToList();
 
-                //Check roles for metric mgmt flag = 'Y'
+                //Check roles for metric mgmt flag = 'Y', then assign metric authorities to their 
+                //corresponding metric user app roles.
                 foreach(RoleMetricAuthority metric in metricList)
                 {
                     List<UserAppRole> roleList = productList.SelectMany(x => x.userRoles)
@@ -182,13 +201,15 @@ namespace MetricDM.Controllers
                     }    
 
                 }
-                    
-
 
             }
 
             return productList;
         }
+
+
+
+
 
 
         //--------------
