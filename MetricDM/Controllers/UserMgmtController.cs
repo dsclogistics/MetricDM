@@ -31,6 +31,7 @@ namespace MetricDM.Controllers
             return View(dSC_APP_USER.ToList());
         }
 
+        //-------------------------------------------------------------------------------------------------------------------
         // GET: UserMaintenance
         public ActionResult UserMaintenance(int? id)
         {
@@ -42,6 +43,7 @@ namespace MetricDM.Controllers
             }
             else
             {
+                ViewBag.appUserId = id;
                 DSC_APP_USER dSC_APP_USER = db.DSC_APP_USER.Find(id);
                 if (dSC_APP_USER == null)
                 {
@@ -67,11 +69,45 @@ namespace MetricDM.Controllers
 
         }
 
+        // GET: _UserBldgAssign
+        public ActionResult _UserBldgAssign(int? app_user_id)
+        {
+            BldgAsgnViewModel bldgAsgnViewModel = new BldgAsgnViewModel();
+
+            if (app_user_id == null || app_user_id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                bldgAsgnViewModel.userBldgList = getUserBuildingList(app_user_id);
+                bldgAsgnViewModel.unassignedBldgList = getAllBuildingList().Except(bldgAsgnViewModel.userBldgList).ToList();
+            }
+
+            return PartialView(bldgAsgnViewModel);
+        }
+
+        //Get: _UserRoleMtrcAssign
+        public ActionResult _UserRoleMtrcAssign(int? app_user_role_id)
+        {
+            MtrcAsgnViewModel mtrcAsgnViewModel = new MtrcAsgnViewModel();
+
+            if (app_user_role_id == null || app_user_role_id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                mtrcAsgnViewModel.userRoleMtrcList = getUserRoleMtrcList(app_user_role_id);
+                mtrcAsgnViewModel.unassignedMtrcList = getAllMetricList().Except(mtrcAsgnViewModel.userRoleMtrcList).ToList();
+            }
+
+            return PartialView(mtrcAsgnViewModel);
+        }
 
 
 
-
-
+        //-------------------------------------------------------------------------------------------------------------------
         //------
         //"API"s
         //------
@@ -120,6 +156,41 @@ namespace MetricDM.Controllers
             return bldgList;
         }
 
+        private List<MTRC_METRIC_PERIOD> getAllMetricList()
+        {
+            List<MTRC_METRIC_PERIOD> mtrcList = new List<MTRC_METRIC_PERIOD>();
+
+            //Query Style 1 - SQL notation
+            var query1 =
+                from a in db.MTRC_METRIC_PERIOD
+                select a;
+
+            mtrcList = query1.ToList();
+
+            return mtrcList;
+        }
+
+        private List<MTRC_METRIC_PERIOD> getUserRoleMtrcList(int? appUserRoleId)
+        {
+            List<MTRC_METRIC_PERIOD> mtrcList = new List<MTRC_METRIC_PERIOD>();
+
+            if (appUserRoleId == null || appUserRoleId == 0)
+            {
+
+            }
+            else
+            {
+                //Query Style 2 - Dot notation
+                var query2 =
+                    from child in db.MTRC_MGMT_AUTH_NEW
+                    where child.muar_id == appUserRoleId
+                    select child.MTRC_METRIC_PERIOD;
+
+                mtrcList = query2.ToList();
+            }
+
+            return mtrcList;
+        }
 
         //Return a nested list of roles (Product > Role > Metric) associated with a particular app user id
         private List<UserAppProduct> getUserProductRoleList(int? appUserId)
@@ -181,8 +252,7 @@ namespace MetricDM.Controllers
                     select new RoleMetricAuthority
                     {
                         userAppRoleId = a.muar_id.ToString(),
-                        mtrcPeriodId = d.mtrc_period_id.ToString(),
-                        mtrcPeriodName = d.mtrc_period_name
+                        mtrcPeriod = d
                     };
 
                 List<RoleMetricAuthority> metricList = query2.ToList();
@@ -197,7 +267,8 @@ namespace MetricDM.Controllers
                     
                     foreach(UserAppRole role in roleList)
                     {
-                        role.roleMetrics.Add(metric);
+                        role.roleMetrics.Add(metric.mtrcPeriod);
+                        //metric.mtrcPeriod.
                     }    
 
                 }
@@ -211,7 +282,7 @@ namespace MetricDM.Controllers
 
 
 
-
+        //-------------------------------------------------------------------------------------------------------------------
         //--------------
         //Auto generated
         //--------------

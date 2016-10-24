@@ -421,6 +421,8 @@
     <Content Include="Views\UserMgmt\UserMaintenance.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\UserMgmt\_UserBldgAssign.cshtml" />
+    <Content Include="Views\UserMgmt\_UserRoleMtrcAssign.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
