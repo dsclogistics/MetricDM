@@ -105,6 +105,49 @@ namespace MetricDM.Controllers
             return PartialView(mtrcAsgnViewModel);
         }
 
+        //Get: _UserRoleAssign
+        public ActionResult _UserRoleAssign(int? app_user_id, int? prod_id, int? mar_id)
+        {
+            RoleAsgnViewModel roleAsgnViewModel = new RoleAsgnViewModel();
+
+            if (app_user_id == null || app_user_id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                int prodId = prod_id ?? 0;
+                ViewBag.prod_sel_list = new SelectList(db.MTRC_PRODUCT, "prod_id", "prod_name", prodId);
+
+                if(prodId == 0)
+                {
+                    ViewBag.role_sel_list_display = false;
+                }
+                else
+                {
+                    int marId = mar_id ?? 0;
+                    ViewBag.role_sel_list_display = true;
+                    ViewBag.role_sel_list = new SelectList(db.MTRC_APP_ROLE.Where(x => x.prod_id == prod_id), "mar_id", "mar_name", marId);
+
+                    if(marId == 0)
+                    {
+                        ViewBag.role_display = false;
+                    }
+                    else
+                    {
+                        ViewBag.role_display = true;
+                        roleAsgnViewModel.appRole = db.MTRC_APP_ROLE.Find(marId);
+
+                        roleAsgnViewModel.userBldgList = getUserBuildingList(app_user_id);
+                        roleAsgnViewModel.unassignedBldgList = getAllBuildingList().Except(roleAsgnViewModel.userBldgList).ToList();
+                        roleAsgnViewModel.mtrcList = getAllMetricList();
+                    }
+                }
+                
+            }
+
+            return PartialView(roleAsgnViewModel);
+        }
 
 
         //-------------------------------------------------------------------------------------------------------------------

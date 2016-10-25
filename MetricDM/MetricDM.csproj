@@ -423,6 +423,7 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\UserMgmt\_UserBldgAssign.cshtml" />
     <Content Include="Views\UserMgmt\_UserRoleMtrcAssign.cshtml" />
+    <Content Include="Views\UserMgmt\_UserRoleAssign.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -77,6 +77,22 @@ namespace MetricDM.Models
         }
     }
 
+    public class RoleAsgnViewModel
+    {
+        public MTRC_APP_ROLE appRole { get; set; }
+        public List<DSC_MTRC_LC_BLDG> userBldgList { get; set; }
+        public List<DSC_MTRC_LC_BLDG> unassignedBldgList { get; set; }
+        public List<MTRC_METRIC_PERIOD> mtrcList { get; set; }
+
+        public RoleAsgnViewModel()
+        {
+            appRole = new MTRC_APP_ROLE();
+            userBldgList = new List<DSC_MTRC_LC_BLDG>();
+            unassignedBldgList = new List<DSC_MTRC_LC_BLDG>();
+            mtrcList = new List<MTRC_METRIC_PERIOD>();
+        }
+    }
+
 
 
     public class UserAppProduct
