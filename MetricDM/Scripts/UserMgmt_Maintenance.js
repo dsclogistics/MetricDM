@@ -55,7 +55,7 @@
 
     $("#divRoleBtns").on('click', '#btnManageUserRoles', function () {
         var userId = $("#hdnAppUserId").val();
-        alert(userId);
+
         // ------------ Make the Ajax Call --------------------------------------------------------------
         $.ajax({
             url: '/UserMgmt/_UserRoleAssign',     // the url where we want to direct our Ajax Call

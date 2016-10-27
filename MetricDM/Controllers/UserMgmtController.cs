@@ -199,6 +199,38 @@ namespace MetricDM.Controllers
             return bldgList;
         }
 
+        //WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP
+        //WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP
+        private string updateUserBuildingList(int? appUserId, List<int> newBldgIdList)
+        {
+            List<DSC_MTRC_LC_BLDG> bldgList = new List<DSC_MTRC_LC_BLDG>();
+            List<int> bldgIdsToAdd = new List<int>();
+            List<int> bldgIdsToRemove = new List<int>();
+
+            if (appUserId == null || appUserId == 0)
+            {
+
+            }
+            else
+            {
+                var query2 =
+                    from child in db.RZ_BLDG_AUTHORIZATION
+                    where child.DSC_APP_USER.app_user_id == appUserId
+                    select child.DSC_MTRC_LC_BLDG;
+
+                bldgList = query2.ToList();
+
+                foreach(DSC_MTRC_LC_BLDG bldg in bldgList)
+                {
+                    if (!newBldgIdList.Contains(bldg.dsc_mtrc_lc_bldg_id))
+                    {
+                        bldgIdsToRemove.Add(bldg.dsc_mtrc_lc_bldg_id);
+                    }
+                }
+            }
+            return "";
+        }
+
         private List<MTRC_METRIC_PERIOD> getAllMetricList()
         {
             List<MTRC_METRIC_PERIOD> mtrcList = new List<MTRC_METRIC_PERIOD>();
