@@ -1,4 +1,6 @@
-﻿@model IEnumerable<MetricDM.Models.DSC_APP_USER>
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<MetricDM.Models.DSC_APP_USER>
 
 @{
     ViewBag.Title = "Index";
@@ -10,7 +12,7 @@
     //var activeChkd = String.IsNullOrEmpty(Request.QueryString["includeActiveOnly"])?"":"checked";
 }
 
-<h2>User Management</h2>
+<h2>User Lookup</h2>
         
 @using (Html.BeginForm("Index", "UserMgmt", FormMethod.Get))
 {
@@ -38,19 +40,19 @@
         <tr style="background-color:gainsboro">
             <th style="width:5%"></th>
             <th style="text-align:center;width:20%">
-                @Html.DisplayNameFor(model => model.app_user_sso_id)
+                @Html.DisplayNameFor(model => model.First().app_user_sso_id)
             </th>
             <th style="text-align:center;width:20%">
-                @Html.DisplayNameFor(model => model.app_user_sso_system)
+                @Html.DisplayNameFor(model => model.First().app_user_sso_system)
             </th>
             <th style="text-align:center;width:25%">
-                @Html.DisplayNameFor(model => model.app_user_email_addr)
+                @Html.DisplayNameFor(model => model.First().app_user_email_addr)
             </th>
             <th style="text-align:center;width:25%">
-                @Html.DisplayNameFor(model => model.app_user_full_name)
+                @Html.DisplayNameFor(model => model.First().app_user_full_name)
             </th>
             <th style="text-align:center;width:5%">
-                @Html.DisplayNameFor(model => model.app_user_disabled_yn)
+                @Html.DisplayNameFor(model => model.First().app_user_disabled_yn)
             </th>
         </tr>
 
@@ -89,5 +91,6 @@
 
     </table>
 </div>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = ViewBag.CurrentItemsPerPage, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
 
 

@@ -9,7 +9,7 @@
 
     $("#divBldgBtns").on('click', '#btnManageUserBuildings', function () {
         var userId = $("#hdnAppUserId").val();
-
+        
         // ------------ Make the Ajax Call --------------------------------------------------------------
         $.ajax({
             url: '/UserMgmt/_UserBldgAssign',     // the url where we want to direct our Ajax Call

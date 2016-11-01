@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PagedList;
+using PagedList.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -16,19 +18,44 @@ namespace MetricDM.Controllers
 
         // GET: UserMgmt
         [HttpGet]
-        public ActionResult Index(string search)
+        public ActionResult Index(string search, int? page, int? pageSize)
         {
-            var dSC_APP_USER = db.DSC_APP_USER.Include(d => d.DSC_EMPLOYEE);
+            ViewBag.CurrentItemsPerPage = pageSize ?? 10;
 
             if (!String.IsNullOrWhiteSpace(search))
             {
+                var appUserList = db.DSC_APP_USER.Include(d => d.DSC_EMPLOYEE);
+
                 //Filters list where search string is contained in the full name, email address, or sso_id
-                dSC_APP_USER = dSC_APP_USER.Where(x => x.app_user_full_name.Contains(search) 
+                var tempAppUserList = appUserList.Where(x => x.app_user_full_name.Contains(search)
                                                         || x.app_user_email_addr.Contains(search)
-                                                        || x.app_user_sso_id.Contains(search));
+                                                        || x.app_user_sso_id.Contains(search)).ToList();
+                if (tempAppUserList.Count != 0)
+                {
+                    return View(tempAppUserList.OrderBy(x => x.app_user_sso_id).ThenBy(x => x.app_user_full_name).ToList().ToPagedList(page ?? 1, pageSize ?? 10));
+                }
+                else
+                {
+                    try
+                    {
+                        string[] words = search.Split(' ');
+                        string word0 = words[0];
+                        string word1 = words[1];
+                    }
+                    catch
+                    {
+
+                    }
+                }
+
+                return View(appUserList.ToList());
+            }
+            else
+            {
+                var dSC_APP_USER = db.DSC_APP_USER.Include(d => d.DSC_EMPLOYEE);
+                return View(dSC_APP_USER.ToList().ToPagedList(page ?? 1, pageSize ?? 10));
             }
             
-            return View(dSC_APP_USER.ToList());
         }
 
         //-------------------------------------------------------------------------------------------------------------------
@@ -201,35 +228,35 @@ namespace MetricDM.Controllers
 
         //WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP
         //WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP
-        private string updateUserBuildingList(int? appUserId, List<int> newBldgIdList)
-        {
-            List<DSC_MTRC_LC_BLDG> bldgList = new List<DSC_MTRC_LC_BLDG>();
-            List<int> bldgIdsToAdd = new List<int>();
-            List<int> bldgIdsToRemove = new List<int>();
+        //private string updateUserBuildingList(int? appUserId, List<int> newBldgIdList)
+        //{
+        //    List<DSC_MTRC_LC_BLDG> bldgList = new List<DSC_MTRC_LC_BLDG>();
+        //    List<int> bldgIdsToAdd = new List<int>();
+        //    List<int> bldgIdsToRemove = new List<int>();
 
-            if (appUserId == null || appUserId == 0)
-            {
+        //    if (appUserId == null || appUserId == 0)
+        //    {
 
-            }
-            else
-            {
-                var query2 =
-                    from child in db.RZ_BLDG_AUTHORIZATION
-                    where child.DSC_APP_USER.app_user_id == appUserId
-                    select child.DSC_MTRC_LC_BLDG;
+        //    }
+        //    else
+        //    {
+        //        var query2 =
+        //            from child in db.RZ_BLDG_AUTHORIZATION
+        //            where child.DSC_APP_USER.app_user_id == appUserId
+        //            select child.DSC_MTRC_LC_BLDG;
 
-                bldgList = query2.ToList();
+        //        bldgList = query2.ToList();
 
-                foreach(DSC_MTRC_LC_BLDG bldg in bldgList)
-                {
-                    if (!newBldgIdList.Contains(bldg.dsc_mtrc_lc_bldg_id))
-                    {
-                        bldgIdsToRemove.Add(bldg.dsc_mtrc_lc_bldg_id);
-                    }
-                }
-            }
-            return "";
-        }
+        //        foreach(DSC_MTRC_LC_BLDG bldg in bldgList)
+        //        {
+        //            if (!newBldgIdList.Contains(bldg.dsc_mtrc_lc_bldg_id))
+        //            {
+        //                bldgIdsToRemove.Add(bldg.dsc_mtrc_lc_bldg_id);
+        //            }
+        //        }
+        //    }
+        //    return "";
+        //}
 
         private List<MTRC_METRIC_PERIOD> getAllMetricList()
         {
