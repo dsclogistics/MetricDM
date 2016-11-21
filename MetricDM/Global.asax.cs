@@ -18,6 +18,7 @@ namespace MetricDM
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            ViewEngines.Engines.Add(new RazorViewEngine());
             //GlobalFilters.Filters.Add(new System.Web.Mvc.AuthorizeAttribute());
         }
 
