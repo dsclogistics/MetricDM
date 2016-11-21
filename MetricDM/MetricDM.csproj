@@ -230,6 +230,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppCode\AESEncrytDecry.cs" />
+    <Compile Include="AppCode\DataRetrieval.cs" />
+    <Compile Include="AppCode\Util.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -243,6 +246,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\dscUser.cs" />
     <Compile Include="Models\DSC_APP_USER.cs">
       <DependentUpon>MetricDM_Entity.tt</DependentUpon>
     </Compile>
@@ -421,6 +426,10 @@
       <DependentUpon>MetricDM_Entity.edmx</DependentUpon>
       <LastGenOutput>MetricDM_Entity.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\Account.js" />
+    <Content Include="Scripts\aes-ctr.js" />
+    <Content Include="Scripts\aes.js" />
+    <Content Include="Scripts\aes_Security.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />

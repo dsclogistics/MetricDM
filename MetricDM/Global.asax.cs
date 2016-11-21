@@ -19,6 +19,9 @@ namespace MetricDM
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             ViewEngines.Engines.Add(new RazorViewEngine());
+
+            //Globally apply [Authorize] attribute to every controller action.
+            //[AllowAnonymous] for pages that do not require authentication.
             GlobalFilters.Filters.Add(new System.Web.Mvc.AuthorizeAttribute());
         }
 
