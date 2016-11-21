@@ -9,6 +9,7 @@ namespace MetricDM.Controllers
     public class AccountController : Controller
     {
         // GET: Account
+        [HttpGet]
         public ActionResult Login()
         {
             return View();
