@@ -10,6 +10,7 @@ namespace MetricDM.Controllers
     //This is another test
     public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
             //ViewBag.AlexMessage = "Alex was here...";

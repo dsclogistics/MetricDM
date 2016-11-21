@@ -19,7 +19,7 @@ namespace MetricDM
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             ViewEngines.Engines.Add(new RazorViewEngine());
-            //GlobalFilters.Filters.Add(new System.Web.Mvc.AuthorizeAttribute());
+            GlobalFilters.Filters.Add(new System.Web.Mvc.AuthorizeAttribute());
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
