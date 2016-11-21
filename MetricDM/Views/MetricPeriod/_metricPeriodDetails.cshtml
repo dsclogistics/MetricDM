@@ -11,7 +11,20 @@ Else if editing an existing Metric Period, hide all asterisks.*@
     }
 </style>
 
-@using (Html.BeginForm("AddMetricPeriod","MetricPeriod",FormMethod.Post, new { enctype = "multipart/form-data", id = "frmAddMP"}))
+@if(ViewBag.createNewMetricPeriod == true)
+{
+    ViewBag.formId = "frmAddMP";
+    ViewBag.newMetricClasses1 = "indicate-defaulted-value asterisk";
+    ViewBag.newMetricClasses2 = "color-defaulted-value";
+}
+else
+{
+    ViewBag.formId = "frmViewMP";
+    ViewBag.newMetricClasses1 = "";
+    ViewBag.newMetricClasses2 = "";
+}
+
+@using (Html.BeginForm("AddMetricPeriod","MetricPeriod",FormMethod.Post, new { enctype = "multipart/form-data", id = ViewBag.formId}))
 {
     @Html.AntiForgeryToken()
     <div class="row">
@@ -53,8 +66,8 @@ Else if editing an existing Metric Period, hide all asterisks.*@
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="input-group metric-period">
-                @Html.LabelFor(model => model.mtrc_period_max_dec_places, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:133px" })
-                @Html.EditorFor(model => model.mtrc_period_max_dec_places, new { htmlAttributes = new { @class = "form-control color-defaulted-value asterisk", placeholder = "Enter Max Decimals" } })
+                @Html.LabelFor(model => model.mtrc_period_max_dec_places, htmlAttributes: new { @class = "input-group-addon " + ViewBag.newMetricClasses1, style = "font-weight:bold; min-width:133px" })
+                @Html.EditorFor(model => model.mtrc_period_max_dec_places, new { htmlAttributes = new { @class = "form-control " + ViewBag.newMetricClasses2, placeholder = "Enter Max Decimals" } })
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
@@ -75,26 +88,26 @@ Else if editing an existing Metric Period, hide all asterisks.*@
     <div class="row" style="margin-top:5px">
         <div class="col-md-3 col-sm-6">
             <div class="input-group metric-period">
-                @Html.LabelFor(model => model.mtrc_period_min_val, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value", style = "font-weight:bold; min-width:130px" })
-                @Html.EditorFor(model => model.mtrc_period_min_val, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Enter Min Value" } })
+                @Html.LabelFor(model => model.mtrc_period_min_val, htmlAttributes: new { @class = "input-group-addon " + ViewBag.newMetricClasses1, style = "font-weight:bold; min-width:130px" })
+                @Html.EditorFor(model => model.mtrc_period_min_val, new { htmlAttributes = new { @class = "form-control " + ViewBag.newMetricClasses2, placeholder = "Enter Min Value" } })
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="input-group metric-period">
-                @Html.LabelFor(model => model.mtrc_period_max_val, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value", style = "font-weight:bold; min-width:90px" })
-                @Html.EditorFor(model => model.mtrc_period_max_val, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Enter Max Value" } })
+                @Html.LabelFor(model => model.mtrc_period_max_val, htmlAttributes: new { @class = "input-group-addon " + ViewBag.newMetricClasses1, style = "font-weight:bold; min-width:90px" })
+                @Html.EditorFor(model => model.mtrc_period_max_val, new { htmlAttributes = new { @class = "form-control " + ViewBag.newMetricClasses2, placeholder = "Enter Max Value" } })
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="input-group metric-period">
-                @Html.LabelFor(model => model.mtrc_period_na_allow_yn, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value", style = "font-weight:bold; min-width:133px" })
-                @Html.EditorFor(model => model.mtrc_period_na_allow_yn, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Y/N?" } })
+                @Html.LabelFor(model => model.mtrc_period_na_allow_yn, htmlAttributes: new { @class = "input-group-addon " + ViewBag.newMetricClasses1, style = "font-weight:bold; min-width:133px" })
+                @Html.EditorFor(model => model.mtrc_period_na_allow_yn, new { htmlAttributes = new { @class = "form-control " + ViewBag.newMetricClasses2, placeholder = "Y/N?" } })
             </div>
         </div>
         <div class="col-md-3 col-sm-6 metric-period">
             <div class="input-group">
-                @Html.LabelFor(model => model.mtrc_period_max_str_size, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value", style = "font-weight:bold; min-width:133px" })
-                @Html.EditorFor(model => model.mtrc_period_max_str_size, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Enter Max String Size" } })
+                @Html.LabelFor(model => model.mtrc_period_max_str_size, htmlAttributes: new { @class = "input-group-addon " + ViewBag.newMetricClasses1, style = "font-weight:bold; min-width:133px" })
+                @Html.EditorFor(model => model.mtrc_period_max_str_size, new { htmlAttributes = new { @class = "form-control " + ViewBag.newMetricClasses2, placeholder = "Enter Max String Size" } })
             </div>
         </div>
     </div>

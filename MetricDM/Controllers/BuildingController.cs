@@ -143,11 +143,73 @@ namespace MetricDM.Controllers
         }
 
         //============================================================================================================
+        // GET: /MetricPeriod/_buildingMetricPeriodList/
         public PartialViewResult _buildingMetricPeriodList(int id)
         {
             List<MTRC_BLDG_MTRC_PERIOD> buildingMetricPeriods = db.MTRC_BLDG_MTRC_PERIOD.Where(x => x.dsc_mtrc_lc_bldg_id == id).ToList();
 
             return PartialView(buildingMetricPeriods);
+        }
+        //============================================================================================================
+        // GET: /MetricPeriod/_buildingMetricPeriodDetails/
+        //[ChildActionOnly]
+        public PartialViewResult _buildingMetricPeriodDetails(int? id, int? bldgId)
+        {
+            MTRC_BLDG_MTRC_PERIOD bldgMetricPeriod;
+            DSC_MTRC_LC_BLDG bldg;
+            if (id == null)
+            {
+                if (bldgId == null)
+                {
+                    bldgMetricPeriod = null;
+                }
+                else
+                {
+                    //If creating a new building metric period, populate building id and that's it.
+                    bldgMetricPeriod = new MTRC_BLDG_MTRC_PERIOD();
+                    bldg = db.DSC_MTRC_LC_BLDG.Find(bldgId);
+                    bldgMetricPeriod.dsc_mtrc_lc_bldg_id = bldg.dsc_mtrc_lc_bldg_id;
+                }
+
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ViewBag.data_src_id = new SelectList(db.MTRC_DATA_SRC, "data_src_id", "data_src_name");
+                ViewBag.mtrc_period_id = new SelectList(db.MTRC_METRIC_PERIOD, "mtrc_period_id", "mtrc_period_name");
+                ViewBag.createNewBuildingMetricPeriod = true;
+            }
+            else
+            {
+                bldgMetricPeriod = db.MTRC_BLDG_MTRC_PERIOD.Find(id);
+
+                ViewBag.data_src_id = new SelectList(db.MTRC_DATA_SRC, "data_src_id", "data_src_name", bldgMetricPeriod.data_src_id);
+                ViewBag.mtrc_period_id = new SelectList(db.MTRC_METRIC_PERIOD, "mtrc_period_id", "mtrc_period_name", bldgMetricPeriod.mtrc_period_id);
+                ViewBag.createNewBuildingMetricPeriod = false;
+            }
+
+            ViewBag.dsc_mtrc_lc_bldg_id = new SelectList(db.DSC_MTRC_LC_BLDG, "dsc_mtrc_lc_bldg_id", "dsc_mtrc_lc_bldg_name", bldgMetricPeriod.dsc_mtrc_lc_bldg_id);
+
+            return PartialView(bldgMetricPeriod);
+        }
+        //============================================================================================================
+        // POST: /Building/_buildingMetricPeriodDetails
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public PartialViewResult _buildingMetricPeriodDetails(MTRC_BLDG_MTRC_PERIOD bldgMetricPeriod)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(bldgMetricPeriod).State = EntityState.Modified;
+                db.SaveChanges();
+
+                //ViewBag.data_src_id = new SelectList(db.MTRC_DATA_SRC, "data_src_id", "data_src_name", bldgMetricPeriod.data_src_id);
+                //ViewBag.mtrc_period_id = new SelectList(db.MTRC_METRIC_PERIOD, "mtrc_period_id", "mtrc_period_name", bldgMetricPeriod.mtrc_period_id);
+                //ViewBag.createNewMetricPeriod = false;
+                //return PartialView(bldgMetricPeriod);
+            }
+            ViewBag.data_src_id = new SelectList(db.MTRC_DATA_SRC, "data_src_id", "data_src_name", bldgMetricPeriod.data_src_id);
+            ViewBag.mtrc_period_id = new SelectList(db.MTRC_METRIC_PERIOD, "mtrc_period_id", "mtrc_period_name", bldgMetricPeriod.mtrc_period_id);
+            ViewBag.dsc_mtrc_lc_bldg_id = new SelectList(db.DSC_MTRC_LC_BLDG, "dsc_mtrc_lc_bldg_id", "dsc_mtrc_lc_bldg_name", bldgMetricPeriod.dsc_mtrc_lc_bldg_id);
+            ViewBag.createNewMetricPeriod = false;
+            return PartialView(bldgMetricPeriod);
         }
 
         protected override void Dispose(bool disposing)

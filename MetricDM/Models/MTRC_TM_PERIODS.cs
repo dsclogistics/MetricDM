@@ -19,6 +19,7 @@ namespace MetricDM.Models
         {
             this.MTRC_METRIC_PERIOD_VALUE = new HashSet<MTRC_METRIC_PERIOD_VALUE>();
             this.RZ_MTRC_PERIOD_STATUS = new HashSet<RZ_MTRC_PERIOD_STATUS>();
+            this.RZ_BLDG_ACTION_PLAN = new HashSet<RZ_BLDG_ACTION_PLAN>();
         }
     
         public int tm_period_id { get; set; }
@@ -31,5 +32,7 @@ namespace MetricDM.Models
         public virtual MTRC_TIME_PERIOD_TYPE MTRC_TIME_PERIOD_TYPE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RZ_MTRC_PERIOD_STATUS> RZ_MTRC_PERIOD_STATUS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RZ_BLDG_ACTION_PLAN> RZ_BLDG_ACTION_PLAN { get; set; }
     }
 }

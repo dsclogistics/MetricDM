@@ -1,0 +1,143 @@
+﻿@model MetricDM.Models.MTRC_BLDG_MTRC_PERIOD
+
+@if (ViewBag.createNewBuildingMetricPeriod == true)
+{
+    ViewBag.formId = "frmAddBMP";
+}
+else
+{
+    ViewBag.formId = "frmViewBMP";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = ViewBag.formId }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.bmp_id)
+        <input type="hidden" id="bldgID" name="dsc_mtrc_lc_bldg_id" value="@Model.dsc_mtrc_lc_bldg_id" />
+        <input type="hidden" id="mPeriodID" name="mtrc_period_id" value="@Model.mtrc_period_id" />
+    </div>
+    <span font-size:large; font-weight:bold"> </span>
+    <span id="saveMessage" class="alert-success" style="display:none; font-size:large; font-weight:bold"> </span>
+    <br />
+    <div class="row" style="margin-top:5px">
+        <div class="col-md-4 col-sm-3">
+            <div class="input-group bldg-metric-period">
+                @Html.LabelFor(model => model.dsc_mtrc_lc_bldg_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                @*@Html.EditorFor(model => model.data_src_id, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Description", style = "min-width:100%" } })*@
+                @Html.DropDownList("dsc_mtrc_lc_bldg_id", null, "--- Select Building ---", htmlAttributes: new { @class = "form-control", style = "min-width:100%", @disabled = false })
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-9">
+            <div class="input-group bldg-metric-period">
+                @Html.LabelFor(model => model.mtrc_period_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                @*@Html.EditorFor(model => model.mtrc_period_id, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name", style = "min-width:100%" } })*@
+                @Html.DropDownList("mtrc_period_id", null, "--- Select Metric Period ---", htmlAttributes: new { @class = "form-control", style = "min-width:100%", @disabled = false })
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:5px">
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group bldg-metric-period">
+                @Html.LabelFor(model => model.data_src_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                @*@Html.EditorFor(model => model.data_src_id, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Description", style = "min-width:100%" } })*@
+                @Html.DropDownList("data_src_id", null, "--- Select Data Source ---", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group bldg-metric-period">
+                @Html.LabelFor(model => model.bmp_is_editable_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:130px" })
+                @Html.EditorFor(model => model.bmp_is_editable_yn, new { htmlAttributes = new { @class = "form-control", placeholder = "Y/N?" } })
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group bldg-metric-period">
+                @Html.LabelFor(model => model.bmp_is_manual_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })
+                @Html.EditorFor(model => model.bmp_is_manual_yn, new { htmlAttributes = new { @class = "form-control", placeholder = "Y/N?" } })
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group bldg-metric-period">
+                @Html.LabelFor(model => model.bmp_na_allow_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:133px" })
+                @Html.EditorFor(model => model.bmp_na_allow_yn, new { htmlAttributes = new { @class = "form-control", placeholder = "Y/N?" } })
+            </div>
+        </div>
+
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.bmp_is_editable_yn, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.bmp_is_manual_yn, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.bmp_na_allow_yn, "", new { @class = "text-danger" })
+
+    </div>
+
+
+    <div class="row" style="margin-top:5px">
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group bldg-metric-period">
+
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group bldg-metric-period">
+
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group bldg-metric-period">
+
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 bldg-metric-period">
+            <div class="input-group">
+
+            </div>
+        </div>
+    </div>
+    <div>
+        @*@Html.ValidationMessageFor(model => model.mtrc_period_min_val, "", new { @class = "text-danger" })*@
+
+    </div>
+
+    <div class="row" style="margin-top:5px">
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group bldg-metric-period">
+
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group bldg-metric-period">
+
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 bldg-metric-period">
+            @*<div class="input-group">
+                    @Html.LabelFor(model => model.mtrc_period_na_allow_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                    @Html.EditorFor(model => model.mtrc_period_na_allow_yn, new { htmlAttributes = new { @class = "form-control", placeholder = "___" } })
+              </div>*@
+        </div>
+
+        <div class="col-md-3 col-sm-6 bldg-metric-period">
+            @*<div class="input-group">
+                    @Html.LabelFor(model => model.mtrc_period_max_str_size, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                        @Html.EditorFor(model => model.mtrc_period_max_str_size, new { htmlAttributes = new { @class = "form-control", placeholder = "__" } })
+              </div>*@
+        </div>
+    </div>
+    <div>
+        @*@Html.ValidationMessageFor(model => model.mtrc_period_na_allow_yn, "", new { @class = "text-danger" })*@
+    </div>
+
+    <hr class="save-bldg-metric-period" />
+    <div class="row save-bldg-metric-period" style="text-align:center">
+        <input type="button" class="btn btn-primary" id="btnSaveBMPDetail" value="Save Building Metric Period" />
+    </div>
+
+    <br />
+    <div>
+        @ViewBag.saveResult
+    </div>
+
+}

@@ -1,0 +1,96 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<MetricDM.Models.DSC_APP_USER>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var searchText = Request.QueryString["search"];
+    //var activeChkd = String.IsNullOrEmpty(Request.QueryString["includeActiveOnly"])?"":"checked";
+}
+
+<h2>User Lookup</h2>
+        
+@using (Html.BeginForm("Index", "UserMgmt", FormMethod.Get))
+{
+    //Search
+    <div class="row" style="margin: 0px 0px 10px 0px;">
+        <div class="col-sm-3" style="margin-left:0px; padding: 0px 0px">
+            <div class="input-group" style="margin-left: 0px; ">
+                <input type="text" id="search" name="search" class="form-control" placeholder="Search for..." value="@searchText" style="min-width:100%">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-sm-6 -->
+        <div class="col-sm-4">
+
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-5" style="height:34px;">
+
+        </div><!-- /.col-sm-5 -->
+    </div><!-- row -->
+}
+
+<div id="divUserSearchGrid">
+    <table class="table table-condensed table-hover" border="1">
+        <tr style="background-color:gainsboro">
+            <th style="width:5%"></th>
+            <th style="text-align:center;width:20%">
+                @Html.DisplayNameFor(model => model.First().app_user_sso_id)
+            </th>
+            <th style="text-align:center;width:20%">
+                @Html.DisplayNameFor(model => model.First().app_user_sso_system)
+            </th>
+            <th style="text-align:center;width:25%">
+                @Html.DisplayNameFor(model => model.First().app_user_email_addr)
+            </th>
+            <th style="text-align:center;width:25%">
+                @Html.DisplayNameFor(model => model.First().app_user_full_name)
+            </th>
+            <th style="text-align:center;width:5%">
+                @Html.DisplayNameFor(model => model.First().app_user_disabled_yn)
+            </th>
+        </tr>
+
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="14"><font color="red">Employee not found</font></td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink("Manage", "UserMaintenance", new { id = item.app_user_id })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.app_user_sso_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.app_user_sso_system)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.app_user_email_addr)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.app_user_full_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.app_user_disabled_yn)
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+</div>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = ViewBag.CurrentItemsPerPage, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+
+

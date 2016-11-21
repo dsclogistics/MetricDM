@@ -48,6 +48,36 @@
         <AssociationConnector Association="DSC_MTRC_DEVModel.relationship30" ManuallyRouted="false" />
         <AssociationConnector Association="DSC_MTRC_DEVModel.relationship21" ManuallyRouted="false" />
         <AssociationConnector Association="DSC_MTRC_DEVModel.relationship22" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.DSC_APP_USER" Width="1.5" PointX="15.625" PointY="5.5" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.DSC_EMPLOYEE" Width="1.5" PointX="13.375" PointY="4.625" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_APP_ROLE" Width="1.5" PointX="15.625" PointY="10" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_MGMT_AUTH_NEW" Width="1.5" PointX="20.125" PointY="12.625" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_MP_REASON" Width="1.5" PointX="5.25" PointY="25" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_MPV_REASONS" Width="1.5" PointX="10.5" PointY="25.25" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_USER_APP_ROLES" Width="1.5" PointX="17.875" PointY="6" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.RZ_ACTION_PLAN_DTL" Width="1.5" PointX="20.875" PointY="5.375" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.RZ_BAP_METRICS" Width="1.5" PointX="18.625" PointY="0.75" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.RZ_BLDG_ACTION_PLAN" Width="1.5" PointX="16.375" PointY="1.625" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.RZ_BLDG_AUTHORIZATION" Width="1.5" PointX="17.875" PointY="9.375" />
+        <EntityTypeShape EntityType="DSC_MTRC_DEVModel.MTRC_WMS_BLDG_XREF" Width="1.5" PointX="5.25" PointY="6.25" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship46" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship47" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship49" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship51" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship56" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship19" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship34" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship55" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship52" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship38" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship44" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship33" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship37" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship53" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship39" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship35" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship40" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship36" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -127,4 +127,25 @@ namespace MetricDM.Models
         public System.DateTime dsc_mtrc_lc_bldg_eff_end_dt { get; set; }
     }
 
+    [MetadataType(typeof(MTRC_BLDG_MTRC_PERIODMetaData))]
+    public partial class MTRC_BLDG_MTRC_PERIOD { }
+
+    public class MTRC_BLDG_MTRC_PERIODMetaData
+    {
+        [Display(Name = "Building Metric Period Id")]
+        public int bmp_id { get; set; }
+        [Display(Name = "Data Source")]
+        public Nullable<short> data_src_id { get; set; }
+        [Display(Name = "Building")]
+        public Nullable<short> dsc_mtrc_lc_bldg_id { get; set; }
+        [Display(Name = "Metric Period")]
+        public int mtrc_period_id { get; set; }
+        [Display(Name = "Is Editable (Y/N)")]
+        public string bmp_is_editable_yn { get; set; }
+        [Display(Name = "Is Manual (Y/N)")]
+        public string bmp_is_manual_yn { get; set; }
+        [Display(Name = "N/A Allowed (Y/N)")]
+        public string bmp_na_allow_yn { get; set; }
+    }
+
 }

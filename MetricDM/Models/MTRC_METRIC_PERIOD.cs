@@ -25,6 +25,8 @@ namespace MetricDM.Models
             this.RZ_MTRC_PERIOD_STATUS = new HashSet<RZ_MTRC_PERIOD_STATUS>();
             this.MTRC_MPG = new HashSet<MTRC_MPG>();
             this.MTRC_MPBG = new HashSet<MTRC_MPBG>();
+            this.MTRC_MP_REASON = new HashSet<MTRC_MP_REASON>();
+            this.MTRC_MGMT_AUTH_NEW = new HashSet<MTRC_MGMT_AUTH_NEW>();
         }
     
         public int mtrc_period_id { get; set; }
@@ -60,5 +62,9 @@ namespace MetricDM.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MTRC_MPBG> MTRC_MPBG { get; set; }
         public virtual MTRC_TIME_PERIOD_TYPE MTRC_TIME_PERIOD_TYPE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MTRC_MP_REASON> MTRC_MP_REASON { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MTRC_MGMT_AUTH_NEW> MTRC_MGMT_AUTH_NEW { get; set; }
     }
 }

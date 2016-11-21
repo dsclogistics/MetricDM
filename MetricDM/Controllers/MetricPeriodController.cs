@@ -184,7 +184,7 @@ namespace MetricDM.Controllers
         //============================================================================================================
         // POST: /MetricPeriod/AddMetricPeriod
         [HttpPost]
-        public string AddMetricPeriod(MTRC_METRIC_PERIOD newMetricPeriod, string mtrc_id)
+        public string AddMetricPeriod(MTRC_METRIC_PERIOD newMetricPeriod)
         {
             if (ModelState.IsValid)
             {
@@ -220,15 +220,18 @@ namespace MetricDM.Controllers
             ////}
             return View();
         }
+
         //============================================================================================================
+        // GET: /MetricPeriod/_metricPeriodList/
         public PartialViewResult _metricPeriodList(int id)
         {
             List<MTRC_METRIC_PERIOD> metricPeriods = db.MTRC_METRIC_PERIOD.Where(x => x.mtrc_id == id).ToList();
 
             return PartialView(metricPeriods);
         }
+        
         //============================================================================================================
-        // GET: /MetricPeriod/_metricPeriodDetails/5
+        // GET: /MetricPeriod/_metricPeriodDetails/
         //[ChildActionOnly]
         public PartialViewResult _metricPeriodDetails(int? id, int? mtrcId)
         {
@@ -279,8 +282,17 @@ namespace MetricDM.Controllers
         //[ValidateAntiForgeryToken]
         public PartialViewResult _metricPeriodDetails(MTRC_METRIC_PERIOD mPeriod)
         {
-            ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name", mPeriod.tpt_id);
+            if (ModelState.IsValid)
+            {
+                db.Entry(mPeriod).State = EntityState.Modified;
+                db.SaveChanges();
 
+                ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name", mPeriod.tpt_id);
+                ViewBag.createNewMetricPeriod = false;
+                return PartialView(mPeriod);
+            }
+            ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name", mPeriod.tpt_id);
+            ViewBag.createNewMetricPeriod = false;
             return PartialView(mPeriod);
         }
         //============================================================================================================
