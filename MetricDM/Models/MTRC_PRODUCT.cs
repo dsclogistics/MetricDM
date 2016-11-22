@@ -24,6 +24,8 @@ namespace MetricDM.Models
     
         public short prod_id { get; set; }
         public string prod_name { get; set; }
+        public string prod_token { get; set; }
+        public string prod_display_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MTRC_METRIC_PRODUCTS> MTRC_METRIC_PRODUCTS { get; set; }

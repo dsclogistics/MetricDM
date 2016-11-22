@@ -1,4 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@{
+    // +++++++++++++++ THIS IS A DEVELOPMENT BRANCH to implement New Feaures for Reason ans reason assigment Management ++++++++++++++++++
+
+    string pageFirstLoad = (Session["firstLoad"] == null) ? "NULL" : Session["firstLoad"].ToString();  //This ensure we have a value and avoid page errors even is Session Variable is lost
+    string userFName = (Session["first_name"] == null) ? "" : Session["first_name"].ToString();
+    string userLName = (Session["last_name"] == null) ? "" : Session["last_name"].ToString();
+    string userSSO = (Session["userSSO"] == null) ? "" : Session["userSSO"].ToString();
+    string userEmail = (Session["email"] == null) ? "" : Session["email"].ToString();
+    string userRole = (Session["userRole"] == null) ? "" : Session["userRole"].ToString();
+    string userBuildings = (Session["userBuildings"] == null) ? "" : Session["userBuildings"].ToString();
+    string empId = (Session["emp_id"] == null) ? "" : Session["emp_id"].ToString();
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -11,7 +23,44 @@
     @Scripts.Render("~/bundles/modernizr")
     @* ---------------------- Load Jquery Libraries (Must be Before Bootstraps is Loaded) -----------------*@
     @Scripts.Render("~/bundles/jquery")
-    <script src="~/Scripts/RedzoneGlobal.js"></script>
+    <script src="~/Scripts/MetricDMGlobal.js"></script>
+    <script>
+        // Verify that the session variables exist and have not been lost. Reset Them on the server via ajax if needed!
+        if ("@pageFirstLoad" == "NULL") {
+
+            //alert("Session Variables were somehow lost. Resetting...");
+            resetUserInfo(localStorage.getItem("first_name"), localStorage.getItem("last_name"), localStorage.getItem("userSSO"), localStorage.getItem("email"), localStorage.getItem("userRole"), localStorage.getItem("userBuildings"), localStorage.getItem("empId"), false);
+            $("#userAvatar").html(localStorage.getItem("first_name") + " " + localStorage.getItem("last_name"));
+        }
+        //------- This code should execute one-time and one-time only after a successful Login --------
+        //------- Or whenever the Local Storage Variables are somehow lost ----------------------------
+        //If this is the first page display after Login, set the localStorage variables accordingly
+        try {
+            if ("@pageFirstLoad" == "True" || (localStorage.getItem("userSSO") == null) || (localStorage.getItem("userSSO") == "")) {
+                // -------- Set all the Local Storage Items --------
+                localStorage.setItem("first_name", "@userFName");
+                localStorage.setItem("last_name", "@userLName");
+                localStorage.setItem("userSSO", "@userSSO");
+                localStorage.setItem("email", "@userEmail");
+                localStorage.setItem("firstLoad", "False");
+                localStorage.setItem("userRole", "@userRole");
+                localStorage.setItem("userBuildings", "@userBuildings");
+                localStorage.setItem("empId", "@empId");
+                resetUserInfo("", "", "", "", "", "", "", true);   //Turn the "first Load" Session Variable flag off at the server side via Ajax
+                //setServerPostback();
+                //alert("This is a first Page load");
+            }
+        }
+        catch(err) {
+            alert("An unhandled error exist: \n" + err);
+        }
+
+
+        $(document).ready(function () {
+
+        });
+    </script>    
+
 
     <style>
         #foot {
@@ -77,6 +126,63 @@
             </tr>
         </table>
     </div>
+
+    <div style="color:red; text-align:center">
+        @{
+            if (Session["globalAppError"] != null)
+            {
+                string erroMessage = Session["globalAppError"].ToString();
+                if (!String.IsNullOrEmpty(erroMessage))
+                {
+                    <text>@Session["globalAppError"]</text>
+                    <br />
+                    <span>Please try again later or contact the Service Desk if the problem Persists</span>
+                }
+            }
+        }
+    </div>
+
+    <div>
+        <div id="msgForm" class="modal fade" role="dialog">
+            <div class="modal-dialog" style="width:35%; min-width:400px">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title msgFormTitle">Red Zone Application Message</h4>
+                    </div>
+                    <div class="modal-body" id="msgFormBody">
+                        <div class="row " id="msgFormBodyData" style="margin-top:40px; margin-bottom:30px; text-align:center">
+                        </div>
+                    </div>
+                    <div class="modal-footer" id="msgFormFooter" style="text-align:center">
+                        <button type="button" class="btn btn-primary" id="btnCancelMsgForm" data-dismiss="modal" style="width:120px">DONE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="popupForm" class="modal fade" role="dialog">
+        <div class="modal-dialog puf" style="width:60%; min-width:1000px">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header bg-Primary-Gradient" style="color:white; ">
+                    @*background-color:#904545*@
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title popupFormTitle" style="text-align:center"></h4>
+                </div>
+                <div class="modal-body" id="popupFormBody">
+                    <div class="row " id="popupFormBodyData" style="margin-top:40px; margin-bottom:30px; ">
+                    </div>
+                </div>
+                <div class="modal-footer" id="popupFormFooter" style="text-align:center">
+                    <button type="button" class="btn btn-primary" id="btnCancelpopupForm" data-dismiss="modal" style="width:120px">DONE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryUI")

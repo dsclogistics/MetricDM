@@ -7,29 +7,6 @@
         $(this).children('.glyphicon').toggleClass('glyphicon-chevron-right glyphicon-chevron-down');
     });
 
-    $("#divBldgBtns").on('click', '#btnManageUserBuildings', function () {
-        var userId = $("#hdnAppUserId").val();
-        
-        // ------------ Make the Ajax Call --------------------------------------------------------------
-        $.ajax({
-            url: '/UserMgmt/_UserBldgAssign',     // the url where we want to direct our Ajax Call
-            method: "GET",
-            cache: false,
-            data: { app_user_id: userId },     //<---- Data Parameters (if not already passed in the Url)
-            //--- On error, execute this function ------
-            error: function (xhr, status, error) {
-                //var err = eval("(" + xhr.responseText + ")");
-                $("#mdlBldgAsgnBody").html(xhr.responseText);
-                //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
-            }
-        }).done(function (d) {
-            //Execute this code After the Ajax call completes successfully
-            //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
-            $('#mdlBldgAsgnBody').html(d);
-            $('#mdlBldgAsgn').modal('show');
-        });
-    });
-
     $(".divMtrcBtns").on('click', '#btnManageRoleMetrics', function () {
         var userRoleId = $(this).siblings('.hdnMuarId').val();
 
@@ -127,6 +104,32 @@
         });
     });
 
+    //--------------
+    //Building Modal
+    //--------------
+    $("#divBldgBtns").on('click', '#btnManageUserBuildings', function () {
+        var userId = $("#hdnAppUserId").val();
+
+        // ------------ Make the Ajax Call --------------------------------------------------------------
+        $.ajax({
+            url: '/UserMgmt/_UserBldgAssign',     // the url where we want to direct our Ajax Call
+            method: "GET",
+            cache: false,
+            data: { app_user_id: userId },     //<---- Data Parameters (if not already passed in the Url)
+            //--- On error, execute this function ------
+            error: function (xhr, status, error) {
+                //var err = eval("(" + xhr.responseText + ")");
+                $("#mdlBldgAsgnBody").html(xhr.responseText);
+                //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
+            }
+        }).done(function (d) {
+            //Execute this code After the Ajax call completes successfully
+            //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
+            $('#mdlBldgAsgnBody').html(d);
+            $('#mdlBldgAsgn').modal('show');
+        });
+    });
+
     $("#mdlBldgAsgnBody").on('click', '#btnAsgnBldg', function () {
         moveSelectListItem('unasgndBldgList', 'asgndBldgList');
     });
@@ -134,6 +137,49 @@
     $("#mdlBldgAsgnBody").on('click', '#btnUnasgnBldg', function () {
         moveSelectListItem('asgndBldgList', 'unasgndBldgList');
     });
+
+    $("#mdlBldgAsgn").on('click', '#btnSaveBldgAsgn', function () {
+        var userId = $("#hdnAppUserId").val();
+
+        var selElem = document.getElementById('asgndBldgList');
+        var tmpArr = [];
+        for (var i = 0; i < selElem.options.length; i++) {
+            tmpArr[i] = parseInt(selElem.options[i].value);
+        }
+
+        if (userId == null) {
+            userId = 0;
+        }
+
+        data = {
+            app_user_id: userId,
+            asgndBldgList: tmpArr
+        }
+
+        // ------------ Make the Ajax Call --------------------------------------------------------------
+        $.ajax({
+            url: '/UserMgmt/_UserBldgAssign',     // the url where we want to direct our Ajax Call
+            method: "POST",
+            cache: false,
+            data: { raw_json: JSON.stringify(data) },     //<---- Data Parameters (if not already passed in the Url)
+            dataType: 'json',
+            //--- On error, execute this function ------
+            error: function (xhr, status, error) {
+                //var err = eval("(" + xhr.responseText + ")");
+                $("#mdlBldgAsgnBody").html(xhr.responseText);
+                //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
+            }
+        }).done(function (d) {
+            //Execute this code After the Ajax call completes successfully
+            //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
+            $('#mdlBldgAsgnBody').html(d);
+            //$('#mdlBldgAsgn').modal('show');
+            alert('Success!');
+        });
+
+    });
+
+
 
     $("#mdlMtrcAsgnBody").on('click', '#btnAsgnMtrc', function () {
         moveSelectListItem('unasgndMtrcList', 'asgndMtrcList');

@@ -143,6 +143,94 @@ namespace MetricDM.Controllers
             return RedirectToAction("Login", new { returnUrl = backUrl });
         }
 
+        //--------------------------------------------------------------------------------------------------------------\\
+        // POST: /Account/LogOff           (Called via ajax from the Client side)
+        [HttpPost]
+        public string resetUserInfo(string uFName, string uLName, string uLoginName, string email, string uRole, string uBuildings, string uId, bool turnOff)
+        {
+            //This function will be trigger via Ajax from the client to reset all the User Info Session Variables if lost 
+            try
+            {
+                if (!turnOff)
+                {   //Only reset the Session Variables if the TurnOff flag is set to "False"
+                    //First check to make sure we have valid values to use, otherwise retrieve them from DB through API call
+                    if (String.IsNullOrEmpty(uId))
+                    {
+                        //All client Local Storage values are null or were erased somehow. Retrieve data from DB
+                        dscUser currentUser = new dscUser(User.Identity.Name);
+                        if (currentUser.isValidUser)
+                        {
+                            uFName = currentUser.FirstName;
+                            uLName = currentUser.LastName;
+                            uLoginName = currentUser.SSO;
+                            email = currentUser.emailAddress;
+                            uRole = currentUser.getUserRoles();
+                            uBuildings = currentUser.getUserBuildings();
+                            uId = currentUser.dbUserId;
+                        }
+                    }
+                    Session["first_name"] = uFName;
+                    Session["last_name"] = uLName;
+                    Session["userSSO"] = uLoginName;
+                    //Session["userSSO"] = User.Identity.Name;
+                    Session["email"] = email;
+                    Session["userRole"] = uRole;
+                    Session["userBuildings"] = uBuildings;
+                    Session["emp_id"] = uId;
+                }
+
+                Session["firstLoad"] = "False";    //Always reset this flag
+                return "True";
+            }
+            catch
+            {
+                return "False";
+            }
+        }
+        //--------------------------------------------------------------------------------------------------------------\\
+
+        //--------------------------------------------------------------------------------------------------------------\\
+        // GET: /Account/UserInfo
+        [HttpGet]
+        public ActionResult userInquire(string userSSO = "")
+        {
+            dscUser appUser;
+            userSSO = userSSO.Trim();
+            if (String.IsNullOrEmpty(userSSO))
+            {
+                //No User was defined. Create Empty User and redirect to the View
+                appUser = new dscUser();
+                return View(appUser);
+            }
+
+            //---------------- TEST SECTION FOR LDAP Signon Validation using encryption ---------------
+            if (userSSO.Contains("^"))
+            {
+                //This is AD Testing Data. Create a AD validation test used and return user to view
+                appUser = new dscUser();
+                string[] temp = userSSO.Split('^');
+                appUser.FirstName = temp[0];
+                appUser.LastName = temp[1];
+                appUser.userStatusMsg = "LDAP Authentication Test Message";
+                appUser.dbUserId = "999";
+                return View(appUser);
+            }
+            //----------- END of LDAP TEST Validation  ---------------
+
+            appUser = new dscUser(userSSO);
+            //string uRoles = appUser.getUserRoles();
+            //List<string> roleList = appUser.getUserRolesList();
+            //ViewBag.rzUserData = String.IsNullOrEmpty(userSSO)? "" : xUser.getUserJsonData();
+            return View(appUser);
+        }
+
+        [HttpGet]
+        public PartialViewResult _UserInfo()
+        { //This controller will display the current Logged On User Credential Information
+            dscUser appUser = new dscUser(User.Identity.Name);
+            return PartialView(appUser);
+        }
+
         #region CustomHelpers
         //============= PRIVATE LOGIN HELPER METHODS ==================
         private bool logonUser(LoginViewModel loginModel)

@@ -283,6 +283,8 @@
           </Key>
           <Property Name="prod_id" Type="smallint" Nullable="false" />
           <Property Name="prod_name" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="prod_token" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="prod_display_name" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="MTRC_TIME_PERIOD_TYPE">
           <Key>
@@ -371,7 +373,7 @@ warning 6002: The table/view 'DSC_MTRC_DEV.dbo.MTRC_WMS_BLDG_XREF' does not have
           <Key>
             <PropertyRef Name="rzba_id" />
           </Key>
-          <Property Name="rzba_id" Type="int" Nullable="false" />
+          <Property Name="rzba_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="dsc_mtrc_lc_bldg_id" Type="smallint" Nullable="false" />
           <Property Name="app_user_id" Type="int" />
         </EntityType>
@@ -1316,6 +1318,8 @@ warning 6002: The table/view 'DSC_MTRC_DEV.dbo.MTRC_WMS_BLDG_XREF' does not have
           <NavigationProperty Name="MTRC_METRIC_PRODUCTS" Relationship="Self.relationship3" FromRole="MTRC_PRODUCT" ToRole="MTRC_METRIC_PRODUCTS" />
           <NavigationProperty Name="MTRC_MPBG" Relationship="Self.relationship31" FromRole="MTRC_PRODUCT" ToRole="MTRC_MPBG" />
           <NavigationProperty Name="MTRC_MPG" Relationship="Self.relationship30" FromRole="MTRC_PRODUCT" ToRole="MTRC_MPG" />
+          <Property Name="prod_token" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="prod_display_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="MTRC_TIME_PERIOD_TYPE">
           <Key>
@@ -2464,6 +2468,8 @@ warning 6002: The table/view 'DSC_MTRC_DEV.dbo.MTRC_WMS_BLDG_XREF' does not have
           <EntitySetMapping Name="MTRC_PRODUCT">
             <EntityTypeMapping TypeName="DSC_MTRC_DEVModel.MTRC_PRODUCT">
               <MappingFragment StoreEntitySet="MTRC_PRODUCT">
+                <ScalarProperty Name="prod_display_name" ColumnName="prod_display_name" />
+                <ScalarProperty Name="prod_token" ColumnName="prod_token" />
                 <ScalarProperty Name="prod_id" ColumnName="prod_id" />
                 <ScalarProperty Name="prod_name" ColumnName="prod_name" />
               </MappingFragment>

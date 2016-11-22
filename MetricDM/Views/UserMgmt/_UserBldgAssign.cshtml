@@ -1,5 +1,9 @@
 ﻿@model MetricDM.Models.BldgAsgnViewModel
 
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
 <br />
 <div class="row">
     <div class="col-md-4">
@@ -28,3 +32,5 @@
         </select>
     </div>
 </div>
+
+}

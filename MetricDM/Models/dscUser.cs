@@ -10,7 +10,7 @@ namespace MetricDM.Models
     public class dscUser
     {
         private const string AUTHORIZATION_END_POINT = "getuserroles";
-        private const string AUTHENTICATION_END_POINT = "loginrzuser";
+        private const string AUTHENTICATION_END_POINT = "loginrzdmuser";
         public string dbUserId { get; set; }
         public bool isValidUser { get; set; }
         public bool isAuthenticated { get; set; }

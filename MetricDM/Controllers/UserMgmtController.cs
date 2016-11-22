@@ -1,5 +1,6 @@
 ﻿using PagedList;
 using PagedList.Mvc;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,7 +18,6 @@ namespace MetricDM.Controllers
         private DSC_MTRC_DEVEntities db = new DSC_MTRC_DEVEntities();
 
         // GET: UserMgmt
-        [HttpGet]
         public ActionResult Index(string search, int? page, int? pageSize)
         {
             ViewBag.CurrentItemsPerPage = pageSize ?? 10;
@@ -58,7 +58,6 @@ namespace MetricDM.Controllers
             
         }
 
-        //-------------------------------------------------------------------------------------------------------------------
         // GET: UserMaintenance
         public ActionResult UserMaintenance(int? id)
         {
@@ -112,6 +111,109 @@ namespace MetricDM.Controllers
             }
 
             return PartialView(bldgAsgnViewModel);
+        }
+
+        // POST: UserMgmt/_UserBldgAssign
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        //[ValidateAntiForgeryToken]
+        //public ActionResult _UserBldgAssign(int? app_user_id, int[] newUserBldgArr)
+        [HttpPost]
+        public string _UserBldgAssign(string raw_json)
+        {
+            updateUserBuildingList(raw_json);
+
+            //return RedirectToAction("UserMgmt/UserMaintenance/" + app_user_id);
+
+            return "";
+
+            //ViewBag.dsc_emp_id = new SelectList(db.DSC_EMPLOYEE, "dsc_emp_id", "dsc_emp_perm_id", dSC_APP_USER.dsc_emp_id);
+            //return View();
+        }
+
+        //Updates the assigned building list for a particular app_user_id
+        //private string updateUserBuildingList(int? appUserId, List<int> newBldgIdList)
+        private string updateUserBuildingList(string raw_json)
+        {
+            string notused = "Success!";
+
+            try
+            {
+                //Parse JSON
+                JObject parsed_result = JObject.Parse(raw_json);
+                int app_user_id = (int)parsed_result["app_user_id"];
+
+                List<int> asgndBldgList = new List<int>();
+                JArray jBldgs = (JArray)parsed_result["asgndBldgList"];
+                foreach (var res in jBldgs)
+                {
+                    int bldgId = (int)res;
+                    asgndBldgList.Add(bldgId);
+                }
+
+                //
+                if (app_user_id == 0)
+                {
+                    notused = "User Id = 0";
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                else
+                {
+                    List<int> userBldgList = new List<int>();
+                    List<int> newUserBldgList = asgndBldgList;
+
+                    userBldgList = getUserBuildingList(app_user_id).Select(x => Convert.ToInt32(x.dsc_mtrc_lc_bldg_id)).ToList();
+
+                    //Begin Add Transaction
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            //Add Rows
+                            foreach (int bldgId in newUserBldgList.Except(userBldgList))
+                            {
+                                var addRow = new RZ_BLDG_AUTHORIZATION
+                                {
+                                    app_user_id = app_user_id,
+                                    dsc_mtrc_lc_bldg_id = Convert.ToInt16(bldgId)
+                                };
+
+                                if (ModelState.IsValid)
+                                {
+                                    db.RZ_BLDG_AUTHORIZATION.Add(addRow);
+                                }
+                            }
+
+                            //Delete Rows
+                            foreach (int bldgId in userBldgList.Except(newUserBldgList))
+                            {
+                                var removeRow = db.RZ_BLDG_AUTHORIZATION.Where(x => x.app_user_id == app_user_id &&
+                                                                    x.dsc_mtrc_lc_bldg_id == bldgId).First();
+
+                                if (ModelState.IsValid)
+                                {
+                                    db.RZ_BLDG_AUTHORIZATION.Remove(removeRow);
+                                }
+                            }
+
+                            db.SaveChanges();
+                            transaction.Commit();
+                        }
+                        catch(Exception e)
+                        {
+                            notused = e.Message;
+                            transaction.Rollback();
+                        }
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                notused = e.Message;
+            }
+
+            return notused;
         }
 
         //Get: _UserRoleMtrcAssign
@@ -178,10 +280,10 @@ namespace MetricDM.Controllers
 
 
         //-------------------------------------------------------------------------------------------------------------------
-        //------
-        //"API"s
-        //------
-        //Return a list of buildings associated with a particular app user id
+        //-------------//
+        //"API" Catalog//
+        //-------------//
+        //Return a list of all buildings
         private List<DSC_MTRC_LC_BLDG> getAllBuildingList()
         {
             List<DSC_MTRC_LC_BLDG> bldgList = new List<DSC_MTRC_LC_BLDG>();
@@ -226,38 +328,7 @@ namespace MetricDM.Controllers
             return bldgList;
         }
 
-        //WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP
-        //WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP
-        //private string updateUserBuildingList(int? appUserId, List<int> newBldgIdList)
-        //{
-        //    List<DSC_MTRC_LC_BLDG> bldgList = new List<DSC_MTRC_LC_BLDG>();
-        //    List<int> bldgIdsToAdd = new List<int>();
-        //    List<int> bldgIdsToRemove = new List<int>();
-
-        //    if (appUserId == null || appUserId == 0)
-        //    {
-
-        //    }
-        //    else
-        //    {
-        //        var query2 =
-        //            from child in db.RZ_BLDG_AUTHORIZATION
-        //            where child.DSC_APP_USER.app_user_id == appUserId
-        //            select child.DSC_MTRC_LC_BLDG;
-
-        //        bldgList = query2.ToList();
-
-        //        foreach(DSC_MTRC_LC_BLDG bldg in bldgList)
-        //        {
-        //            if (!newBldgIdList.Contains(bldg.dsc_mtrc_lc_bldg_id))
-        //            {
-        //                bldgIdsToRemove.Add(bldg.dsc_mtrc_lc_bldg_id);
-        //            }
-        //        }
-        //    }
-        //    return "";
-        //}
-
+        //Return a list of all metric periods
         private List<MTRC_METRIC_PERIOD> getAllMetricList()
         {
             List<MTRC_METRIC_PERIOD> mtrcList = new List<MTRC_METRIC_PERIOD>();
@@ -272,6 +343,7 @@ namespace MetricDM.Controllers
             return mtrcList;
         }
 
+        //Return a list of metric periods associated with a particular app user id
         private List<MTRC_METRIC_PERIOD> getUserRoleMtrcList(int? appUserRoleId)
         {
             List<MTRC_METRIC_PERIOD> mtrcList = new List<MTRC_METRIC_PERIOD>();
@@ -380,14 +452,9 @@ namespace MetricDM.Controllers
             return productList;
         }
 
-
-
-
-
         //-------------------------------------------------------------------------------------------------------------------
-        //--------------
-        //Auto generated
-        //--------------
+        #region Auto generated
+        //-------------------------------------------------------------------------------------------------------------------
 
         // GET: UserMgmt/List
         public ActionResult List()
@@ -503,5 +570,6 @@ namespace MetricDM.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }
