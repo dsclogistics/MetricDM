@@ -67,6 +67,7 @@ namespace MetricDM.Models
     //View Model for User Role Metric Assignment Popup
     public class MtrcAsgnViewModel
     {
+        public int userRoleId { get; set; }
         public List<MTRC_METRIC_PERIOD> userRoleMtrcList { get; set; }
         public List<MTRC_METRIC_PERIOD> unassignedMtrcList { get; set; }
 

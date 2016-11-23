@@ -7,29 +7,6 @@
         $(this).children('.glyphicon').toggleClass('glyphicon-chevron-right glyphicon-chevron-down');
     });
 
-    $(".divMtrcBtns").on('click', '#btnManageRoleMetrics', function () {
-        var userRoleId = $(this).siblings('.hdnMuarId').val();
-
-        // ------------ Make the Ajax Call --------------------------------------------------------------
-        $.ajax({
-            url: '/UserMgmt/_UserRoleMtrcAssign',     // the url where we want to direct our Ajax Call
-            method: "GET",
-            cache: false,
-            data: { app_user_role_id: userRoleId },     //<---- Data Parameters (if not already passed in the Url)
-            //--- On error, execute this function ------
-            error: function (xhr, status, error) {
-                //var err = eval("(" + xhr.responseText + ")");
-                $("#mdlMtrcAsgnBody").html(xhr.responseText);
-                //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
-            }
-        }).done(function (d) {
-            //Execute this code After the Ajax call completes successfully
-            //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
-            $('#mdlMtrcAsgnBody').html(d);
-            $('#mdlMtrcAsgn').modal('show');
-        });
-    });
-
     $("#divRoleBtns").on('click', '#btnManageUserRoles', function () {
         var userId = $("#hdnAppUserId").val();
 
@@ -162,7 +139,6 @@
             method: "POST",
             cache: false,
             data: { raw_json: JSON.stringify(data) },     //<---- Data Parameters (if not already passed in the Url)
-            dataType: 'json',
             //--- On error, execute this function ------
             error: function (xhr, status, error) {
                 //var err = eval("(" + xhr.responseText + ")");
@@ -172,14 +148,38 @@
         }).done(function (d) {
             //Execute this code After the Ajax call completes successfully
             //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
-            $('#mdlBldgAsgnBody').html(d);
+            //$('#mdlBldgAsgnBody').html(d);
             //$('#mdlBldgAsgn').modal('show');
-            alert('Success!');
+            showAlert('Success!', '', 'Y');
         });
 
     });
 
+    //------------
+    //Metric Modal
+    //------------
+    $(".divMtrcBtns").on('click', '#btnManageRoleMetrics', function () {
+        var userRoleId = $(this).siblings('.hdnMuarId').val();
 
+        // ------------ Make the Ajax Call --------------------------------------------------------------
+        $.ajax({
+            url: '/UserMgmt/_UserRoleMtrcAssign',     // the url where we want to direct our Ajax Call
+            method: "GET",
+            cache: false,
+            data: { app_user_role_id: userRoleId },     //<---- Data Parameters (if not already passed in the Url)
+            //--- On error, execute this function ------
+            error: function (xhr, status, error) {
+                //var err = eval("(" + xhr.responseText + ")");
+                $("#mdlMtrcAsgnBody").html(xhr.responseText);
+                //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
+            }
+        }).done(function (d) {
+            //Execute this code After the Ajax call completes successfully
+            //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
+            $('#mdlMtrcAsgnBody').html(d);
+            $('#mdlMtrcAsgn').modal('show');
+        });
+    });
 
     $("#mdlMtrcAsgnBody").on('click', '#btnAsgnMtrc', function () {
         moveSelectListItem('unasgndMtrcList', 'asgndMtrcList');
@@ -188,6 +188,48 @@
     $("#mdlMtrcAsgnBody").on('click', '#btnUnasgnMtrc', function () {
         moveSelectListItem('asgndMtrcList', 'unasgndMtrcList');
     });
+
+    $("#mdlMtrcAsgn").on('click', '#btnSaveMtrcAsgn', function () {
+        var userId = $("#hdnAppUserId").val();
+        var userRoleId = $('#hdnAppUserRoleId').val();
+
+        var selElem = document.getElementById('asgndMtrcList');
+        var tmpArr = [];
+        for (var i = 0; i < selElem.options.length; i++) {
+            tmpArr[i] = parseInt(selElem.options[i].value);
+        }
+
+        if (userId == null) {
+            userId = 0;
+        }
+
+        data = {
+            app_user_id: userId,
+            app_user_role_id: userRoleId, 
+            asgndMtrcList: tmpArr
+        }
+
+        // ------------ Make the Ajax Call --------------------------------------------------------------
+        $.ajax({
+            url: '/UserMgmt/_UserRoleMtrcAssign',     // the url where we want to direct our Ajax Call
+            method: "POST",
+            cache: false,
+            data: { raw_json: JSON.stringify(data) },     //<---- Data Parameters (if not already passed in the Url)
+            //--- On error, execute this function ------
+            error: function (xhr, status, error) {
+                //var err = eval("(" + xhr.responseText + ")");
+                $("#mdlMtrcAsgnBody").html(xhr.responseText);
+                //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
+            }
+        }).done(function (d) {
+            //Execute this code After the Ajax call completes successfully
+            //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
+            showAlert('Success!', '', 'Y');
+        });
+
+    });
+
+
 
     $("#mdlRoleAsgnBody").on('click', '#btnAsgnRoleBldg', function () {
         moveSelectListItem('unasgndRoleBldgList', 'asgndRoleBldgList');
