@@ -112,21 +112,18 @@ namespace MetricDM.Controllers
 
             return PartialView(bldgAsgnViewModel);
         }
-
         // POST: UserMgmt/_UserBldgAssign
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-
         //[ValidateAntiForgeryToken]
-        //public ActionResult _UserBldgAssign(int? app_user_id, int[] newUserBldgArr)
         [HttpPost]
         public string _UserBldgAssign(string raw_json)
         {
-            updateUserBuildingList(raw_json);
+            string msg = updateUserBuildingList(raw_json);
 
             //return RedirectToAction("UserMgmt/UserMaintenance/" + app_user_id);
 
-            return "";
+            return msg;
         }
 
         //Get: _UserRoleMtrcAssign
@@ -147,16 +144,14 @@ namespace MetricDM.Controllers
 
             return PartialView(mtrcAsgnViewModel);
         }
-
         // POST: UserMgmt/_UserRoleMtrcAssign
         //[ValidateAntiForgeryToken]
-        //public ActionResult _UserBldgAssign(int? app_user_id, int[] newUserBldgArr)
         [HttpPost]
         public string _UserRoleMtrcAssign(string raw_json)
         {
-            updateUserRoleMetricList(raw_json);
+            string msg = updateUserRoleMetricList(raw_json);
 
-            return "";
+            return msg;
         }
 
         //Get: _UserRoleAssign
@@ -170,6 +165,7 @@ namespace MetricDM.Controllers
             }
             else
             {
+                //Display products
                 int prodId = prod_id ?? 0;
                 ViewBag.prod_sel_list = new SelectList(db.MTRC_PRODUCT, "prod_id", "prod_name", prodId);
 
@@ -179,6 +175,7 @@ namespace MetricDM.Controllers
                 }
                 else
                 {
+                    //If product selected, display roles
                     int marId = mar_id ?? 0;
                     ViewBag.role_sel_list_display = true;
                     ViewBag.role_sel_list = new SelectList(db.MTRC_APP_ROLE.Where(x => x.prod_id == prod_id), "mar_id", "mar_name", marId);
@@ -189,6 +186,7 @@ namespace MetricDM.Controllers
                     }
                     else
                     {
+                        //If role selected, display building and metric assignment screens if required.
                         ViewBag.role_display = true;
                         roleAsgnViewModel.appRole = db.MTRC_APP_ROLE.Find(marId);
 
@@ -202,7 +200,22 @@ namespace MetricDM.Controllers
 
             return PartialView(roleAsgnViewModel);
         }
+        //POST: _UserRoleAssign
+        [HttpPost]
+        public string _UserRoleAssign(string raw_json)
+        {
+            string msg = addUserRole(raw_json);
 
+            return msg;
+        }
+        //POST: RemoveUserRole
+        [HttpPost]
+        public string _RemoveUserRole(string raw_json)
+        {
+            string msg = removeUserRole(raw_json);
+
+            return msg;
+        }
 
         //-------------------------------------------------------------------------------------------------------------------
         //-------------//
@@ -408,7 +421,7 @@ namespace MetricDM.Controllers
         //private string updateUserBuildingList(int? appUserId, List<int> newBldgIdList)
         private string updateUserBuildingList(string raw_json)
         {
-            string notused = "Success!";
+            string notused = "Success";
 
             try
             {
@@ -487,12 +500,77 @@ namespace MetricDM.Controllers
 
             return notused;
         }
+        private string updateUserBuildingListWithoutCommit(int app_user_id, List<int> asgndBldgList)
+        {
+            string notused = "Success";
+
+            try
+            {
+                if (app_user_id == 0)
+                {
+                    notused = "User Id = 0";
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                else
+                {
+                    List<int> userBldgList = new List<int>();
+                    List<int> newUserBldgList = asgndBldgList;
+
+                    userBldgList = getUserBuildingList(app_user_id).Select(x => Convert.ToInt32(x.dsc_mtrc_lc_bldg_id)).ToList();
+
+                    //Begin Add Transaction
+                    try
+                    {
+                        //Add Rows
+                        foreach (int bldgId in newUserBldgList.Except(userBldgList))
+                        {
+                            var addRow = new RZ_BLDG_AUTHORIZATION
+                            {
+                                app_user_id = app_user_id,
+                                dsc_mtrc_lc_bldg_id = Convert.ToInt16(bldgId)
+                            };
+
+                            if (ModelState.IsValid)
+                            {
+                                db.RZ_BLDG_AUTHORIZATION.Add(addRow);
+                            }
+                        }
+
+                        //Delete Rows
+                        foreach (int bldgId in userBldgList.Except(newUserBldgList))
+                        {
+                            var removeRow = db.RZ_BLDG_AUTHORIZATION.Where(x => x.app_user_id == app_user_id &&
+                                                                x.dsc_mtrc_lc_bldg_id == bldgId).First();
+
+                            if (ModelState.IsValid)
+                            {
+                                db.RZ_BLDG_AUTHORIZATION.Remove(removeRow);
+                            }
+                        }
+
+                        db.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        notused = e.Message;
+                        throw;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                notused = e.Message;
+                throw;
+            }
+
+            return notused;
+        }
 
         //Updates the assigned building list for a particular app_user_id
         //private string updateUserBuildingList(int? appUserId, List<int> newBldgIdList)
         private string updateUserRoleMetricList(string raw_json)
         {
-            string notused = "Success!";
+            string notused = "Success";
 
             try
             {
@@ -548,7 +626,6 @@ namespace MetricDM.Controllers
 
                             }
 
-                            //Effective end date or delete row, depending on effective start date
                             //Delete records that are currently being unassigned and whose effective start date is today.
                             foreach (int mpId in userRoleMtrcListCreatedToday.Except(newUserRoleMtrcList))
                             {
@@ -593,6 +670,259 @@ namespace MetricDM.Controllers
             }
 
             return notused;
+        }
+        private string updateUserRoleMetricListWithoutCommit(int app_user_id, int app_user_role_id, List<int> asgndMtrcList)
+        {
+            string notused = "Success";
+
+            try
+            {
+                //
+                if (app_user_id == 0)
+                {
+                    notused = "User Id cannot be 0.";
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                else
+                {
+                    List<int> userRoleMtrcList = new List<int>();
+                    List<int> userRoleMtrcListCreatedToday = new List<int>();
+                    List<int> newUserRoleMtrcList = asgndMtrcList;
+
+                    userRoleMtrcList = getUserRoleMtrcList(app_user_role_id).Select(x => Convert.ToInt32(x.mtrc_period_id)).ToList();
+                    userRoleMtrcListCreatedToday = getUserRoleMtrcListCreatedToday(app_user_role_id).Select(x => Convert.ToInt32(x.mtrc_period_id)).ToList();
+
+                    //Begin Add Transaction
+                    try
+                    {
+                        //Add Row if no active assignment for mpId (there may be a record from the past that has been effective end dated)
+                        foreach (int mpId in newUserRoleMtrcList.Except(userRoleMtrcList))
+                        {
+
+                            var addRow = new MTRC_MGMT_AUTH_NEW
+                            {
+                                muar_id = app_user_role_id,
+                                mtrc_period_id = Convert.ToInt16(mpId),
+                                mma_eff_start_date = DateTime.Today,
+                                mma_eff_end_date = new DateTime(2060, 12, 31)
+                            };
+
+                            if (ModelState.IsValid)
+                            {
+                                db.MTRC_MGMT_AUTH_NEW.Add(addRow);
+                            }
+
+                        }
+
+                        //Delete records that are currently being unassigned and whose effective start date is today.
+                        foreach (int mpId in userRoleMtrcListCreatedToday.Except(newUserRoleMtrcList))
+                        {
+                            var removeRow = db.MTRC_MGMT_AUTH_NEW.Where(x => x.muar_id == app_user_role_id &&
+                                                                x.mtrc_period_id == mpId).First();
+
+                            if (ModelState.IsValid)
+                            {
+                                db.MTRC_MGMT_AUTH_NEW.Remove(removeRow);
+                            }
+                        }
+
+                        //Update records that are currently being unassigned and whose effective start date is NOT today.
+                        //Set effective end date to yesterday's date
+                        foreach (int mpId in userRoleMtrcList.Except(newUserRoleMtrcList).Except(userRoleMtrcListCreatedToday))
+                        {
+                            var updateRow = db.MTRC_MGMT_AUTH_NEW.Where(x => x.muar_id == app_user_role_id &&
+                                                                x.mtrc_period_id == mpId).First();
+                            updateRow.mma_eff_end_date = DateTime.Today.AddDays(-1);
+
+                            if (ModelState.IsValid)
+                            {
+                                db.Entry(updateRow).State = EntityState.Modified;
+                            }
+                        }
+
+                        db.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        notused = e.Message;
+                        throw;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                notused = e.Message;
+                throw;
+            }
+
+            return notused;
+        }
+
+        //Adds a user role. Adds building assignments to the user if required. Adds metric assignments to the role if required
+        private string addUserRole(string raw_json)
+        {
+            string msg = "Success";
+
+            try
+            {
+                //Parse JSON
+                JObject parsed_result = JObject.Parse(raw_json);
+                int app_user_id = (int)parsed_result["app_user_id"];
+                int mar_id = (int)parsed_result["mar_id"];
+
+                List<int> asgndMtrcList = new List<int>();
+                JArray jMtrcs = (JArray)parsed_result["asgndMtrcList"];
+                foreach (var res in jMtrcs)
+                {
+                    int mpId = (int)res;
+                    asgndMtrcList.Add(mpId);
+                }
+
+                List<int> asgndBldgList = new List<int>();
+                JArray jBldgs = (JArray)parsed_result["asgndBldgList"];
+                foreach (var res in jBldgs)
+                {
+                    int bldgId = (int)res;
+                    asgndBldgList.Add(bldgId);
+                }
+
+                //
+                if (app_user_id == 0)
+                {
+                    msg = "User Id cannot be 0.";
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                else
+                {
+                    //Begin Add Transaction
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            //Create Metric User App Role record. Effective start date = today. Effective end date = 2060-12-31 00:00:00.000
+                            var addRow = new MTRC_USER_APP_ROLES
+                            {
+                                app_user_id = app_user_id,
+                                mar_id = mar_id,
+                                muar_eff_start_dt = DateTime.Today,
+                                muar_eff_end_dt = new DateTime(2060, 12, 31)
+                            };
+
+                            if (ModelState.IsValid)
+                            {
+                                db.MTRC_USER_APP_ROLES.Add(addRow);
+                            }
+
+                            db.SaveChanges();
+
+                            //Check to see if building or metric assignments are necessary.
+                            var query =
+                                from role in db.MTRC_APP_ROLE
+                                where role.mar_id == mar_id
+                                select role;
+
+                            MTRC_APP_ROLE thisRole = query.ToList().First();
+
+                            //Make changes to user building assignments if required.
+                            if(thisRole.mar_req_bldg_auth == "Y")
+                            {
+                                updateUserBuildingListWithoutCommit(app_user_id, asgndBldgList);
+                            }
+
+                            //Add new user role metric assignments if required. Get metric user app id from new Metric User Ap Role record.
+                            if (thisRole.mar_req_mtrc_mgmt_auth == "Y")
+                            {
+                                int muar_id = addRow.muar_id;
+                                updateUserRoleMetricListWithoutCommit(app_user_id, muar_id, asgndMtrcList);
+                            }
+                            
+                            transaction.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            msg = e.Message;
+                            transaction.Rollback();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                msg = e.Message;
+            }
+
+            return msg;
+        }
+
+        //Removes a user role. Removes metric assignments associated with the role if applicable.
+        private string removeUserRole(string raw_json)
+        {
+            string msg = "Success";
+
+            try
+            {
+                //Parse JSON
+                JObject parsed_result = JObject.Parse(raw_json);
+                int app_user_id = (int)parsed_result["app_user_id"];
+                int muar_id = (int)parsed_result["muar_id"];
+
+                //
+                if (app_user_id == 0)
+                {
+                    msg = "User Id cannot be 0.";
+                }
+                else if (muar_id == 0)
+                {
+                    msg = "Metric User App Role Id cannot be 0.";
+                }
+                else
+                {
+                    //Begin Add Transaction
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            var roleRow = db.MTRC_USER_APP_ROLES.Where(x => x.muar_id == muar_id).First();
+
+                            //Delete Muar records that are currently being unassigned and whose effective start date is today.
+                            if (ModelState.IsValid && DateTime.Today == roleRow.muar_eff_start_dt)
+                            {
+                                db.MTRC_USER_APP_ROLES.Remove(roleRow);
+                            }
+                            //Update Muar records that are currently being unassigned and whose effective start date is NOT today.
+                            //Set effective end date to yesterday's date
+                            else if (ModelState.IsValid && DateTime.Today != roleRow.muar_eff_start_dt)
+                            {
+                                roleRow.muar_eff_end_dt = DateTime.Today.AddDays(-1);
+
+                                if (ModelState.IsValid)
+                                {
+                                    db.Entry(roleRow).State = EntityState.Modified;
+                                }
+                            }
+
+                            //Delete/Effective end date metric assignments associated with the Muar record. 
+                            //Check to see if building or metric assignments are necessary.
+                            List<int> emptyList = new List<int>();
+                            updateUserRoleMetricListWithoutCommit(app_user_id, muar_id, emptyList);
+
+                            db.SaveChanges();
+                            transaction.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            msg = e.Message;
+                            transaction.Rollback();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                msg = e.Message;
+            }
+
+            return msg;
         }
 
         //-------------------------------------------------------------------------------------------------------------------
