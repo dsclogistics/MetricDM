@@ -65,7 +65,8 @@ namespace MetricDM.Controllers
 
             if (id == null || id == 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             else
             {
@@ -130,6 +131,7 @@ namespace MetricDM.Controllers
         public ActionResult _UserRoleMtrcAssign(int? app_user_role_id)
         {
             MtrcAsgnViewModel mtrcAsgnViewModel = new MtrcAsgnViewModel();
+            mtrcAsgnViewModel.product = db.MTRC_PRODUCT.Find(db.MTRC_USER_APP_ROLES.Find(app_user_role_id).MTRC_APP_ROLE.prod_id);
 
             if (app_user_role_id == null || app_user_role_id == 0)
             {
@@ -165,9 +167,15 @@ namespace MetricDM.Controllers
             }
             else
             {
-                //Display products
+                //Display products that have roles associated with them
                 int prodId = prod_id ?? 0;
-                ViewBag.prod_sel_list = new SelectList(db.MTRC_PRODUCT, "prod_id", "prod_name", prodId);
+                var query = (
+                    from a in db.MTRC_PRODUCT
+                    join b in db.MTRC_APP_ROLE on a.prod_id equals b.prod_id
+                    select a).Distinct();
+
+                ViewBag.prod_sel_list = new SelectList(query, "prod_id", "prod_name", prodId).OrderBy(x => x.Text);
+                roleAsgnViewModel.product = db.MTRC_PRODUCT.Find(prod_id);
 
                 if(prodId == 0)
                 {
@@ -178,7 +186,7 @@ namespace MetricDM.Controllers
                     //If product selected, display roles
                     int marId = mar_id ?? 0;
                     ViewBag.role_sel_list_display = true;
-                    ViewBag.role_sel_list = new SelectList(db.MTRC_APP_ROLE.Where(x => x.prod_id == prod_id), "mar_id", "mar_name", marId);
+                    ViewBag.role_sel_list = new SelectList(db.MTRC_APP_ROLE.Where(x => x.prod_id == prod_id), "mar_id", "mar_name", marId).OrderBy(x => x.Text);
 
                     if(marId == 0)
                     {

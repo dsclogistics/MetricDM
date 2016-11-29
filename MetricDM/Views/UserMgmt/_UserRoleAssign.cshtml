@@ -67,7 +67,11 @@
             <select name="leftRoleMtrcList" id="unasgndRoleMtrcList" size="10" style="min-width:200px">
                 @foreach (var mtrc in Model.mtrcList)
                 {
-                    <option value="@mtrc.mtrc_period_id">@mtrc.mtrc_period_name</option>
+                    var mtrcProd = mtrc.MTRC_METRIC_PRODUCTS.Where(x => x.prod_id == Model.product.prod_id);
+                    string display_text = (mtrcProd.Count() > 0) ? mtrcProd.First().mtrc_prod_display_text : "";
+                    string mtrc_display_text = (String.IsNullOrEmpty(display_text)) ? mtrc.mtrc_period_name : mtrc.mtrc_period_name + " (" + display_text + ")";
+                    
+                    <option value="@mtrc.mtrc_period_id">@mtrc_display_text</option>
                 }
             </select>
         </div>

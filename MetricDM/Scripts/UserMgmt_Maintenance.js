@@ -35,11 +35,11 @@
     });
 
     $("#mdlBldgAsgnBody").on('click', '#btnAsgnBldg', function () {
-        moveSelectListItem('unasgndBldgList', 'asgndBldgList');
+        moveSelectListItem('unasgndBldgList', 'asgndBldgList', false);
     });
 
     $("#mdlBldgAsgnBody").on('click', '#btnUnasgnBldg', function () {
-        moveSelectListItem('asgndBldgList', 'unasgndBldgList');
+        moveSelectListItem('asgndBldgList', 'unasgndBldgList', false);
     });
 
     $("#mdlBldgAsgn").on('click', '#btnSaveBldgAsgn', function () {
@@ -110,11 +110,11 @@
     });
 
     $("#mdlMtrcAsgnBody").on('click', '#btnAsgnMtrc', function () {
-        moveSelectListItem('unasgndMtrcList', 'asgndMtrcList');
+        moveSelectListItem('unasgndMtrcList', 'asgndMtrcList', true);
     });
 
     $("#mdlMtrcAsgnBody").on('click', '#btnUnasgnMtrc', function () {
-        moveSelectListItem('asgndMtrcList', 'unasgndMtrcList');
+        moveSelectListItem('asgndMtrcList', 'unasgndMtrcList', true);
     });
 
     $("#mdlMtrcAsgn").on('click', '#btnSaveMtrcAsgn', function () {
@@ -236,19 +236,19 @@
     });
 
     $("#mdlRoleAsgnBody").on('click', '#btnAsgnRoleBldg', function () {
-        moveSelectListItem('unasgndRoleBldgList', 'asgndRoleBldgList');
+        moveSelectListItem('unasgndRoleBldgList', 'asgndRoleBldgList', false);
     });
 
     $("#mdlRoleAsgnBody").on('click', '#btnUnasgnRoleBldg', function () {
-        moveSelectListItem('asgndRoleBldgList', 'unasgndRoleBldgList');
+        moveSelectListItem('asgndRoleBldgList', 'unasgndRoleBldgList', false);
     });
 
     $("#mdlRoleAsgnBody").on('click', '#btnAsgnRoleMtrc', function () {
-        moveSelectListItem('unasgndRoleMtrcList', 'asgndRoleMtrcList');
+        moveSelectListItem('unasgndRoleMtrcList', 'asgndRoleMtrcList', true);
     });
 
     $("#mdlRoleAsgnBody").on('click', '#btnUnasgnRoleMtrc', function () {
-        moveSelectListItem('asgndRoleMtrcList', 'unasgndRoleMtrcList');
+        moveSelectListItem('asgndRoleMtrcList', 'unasgndRoleMtrcList', true);
     });
 
     $("#mdlRoleAsgn").on('click', '#btnSaveRoleAsgn', function () {
@@ -340,7 +340,7 @@
 //---------------------------------------------------
 //---------------------Functions---------------------
 //---------------------------------------------------
-function moveSelectListItem(fromListId, toListId) {
+function moveSelectListItem(fromListId, toListId, byId) {
     var fromList = document.getElementById(fromListId);
     var selItem = fromList.selectedIndex;
 
@@ -353,8 +353,14 @@ function moveSelectListItem(fromListId, toListId) {
         fromList.removeChild(fromList[selItem]);
         toList.appendChild(newOption);
 
-        sortSelect(fromList);
-        sortSelect(toList);
+        if (byId == true) {
+            sortSelectById(fromList);
+            sortSelectById(toList);
+        }
+        else {
+            sortSelect(fromList);
+            sortSelect(toList);
+        }
     }
 }
 
@@ -372,6 +378,27 @@ function sortSelect(selElem) {
         selElem.options[0] = null;
     }
     for (var i = 0; i < tmpArr.length; i++){
+        var op = new Option(tmpArr[i][0], tmpArr[i][1]);
+        selElem.options[i] = op;
+    }
+    return;
+}
+
+function sortSelectById(selElem) {
+    var tmpArr = new Array();
+    for (var i = 0; i < selElem.options.length; i++) {
+        tmpArr[i] = new Array();
+        tmpArr[i][0] = selElem.options[i].text;
+        tmpArr[i][1] = parseInt(selElem.options[i].value, 10);
+    }
+    tmpArr.sort(function (a, b) {
+        return a[1] - b[1];
+    });
+
+    while (selElem.options.length > 0) {
+        selElem.options[0] = null;
+    }
+    for (var i = 0; i < tmpArr.length; i++) {
         var op = new Option(tmpArr[i][0], tmpArr[i][1]);
         selElem.options[i] = op;
     }

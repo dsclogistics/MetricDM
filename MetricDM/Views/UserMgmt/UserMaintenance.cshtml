@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "UserMaintenance";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string nameForPopupTitles = (String.IsNullOrEmpty(Model.appUserDetails.app_user_full_name)) ? Model.appUserDetails.app_user_sso_id : Model.appUserDetails.app_user_full_name;
 }
 
 <script src="~/Scripts/UserMgmt_Maintenance.js"></script>
@@ -61,7 +62,7 @@
             </div>
 
             <div class="collapse" style="margin-left:40px">
-                Various Employee Details
+                Employee Details
             </div>
         </div>
         <br />
@@ -240,7 +241,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Assign Buildings</h4>
+                <h4 class="modal-title">Assign Buildings to @nameForPopupTitles</h4>
             </div>
 
             <div class="modal-body" id="mdlBldgAsgnBody">
@@ -266,7 +267,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Assign Metrics</h4>
+                <h4 class="modal-title">Assign Metrics to @nameForPopupTitles</h4>
             </div>
 
             <div class="modal-body" id="mdlMtrcAsgnBody">
@@ -292,7 +293,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Assign Role</h4>
+                <h4 class="modal-title">Assign Role to @nameForPopupTitles</h4>
             </div>
 
             <div class="modal-body" id="mdlRoleAsgnBody">

@@ -14,7 +14,6 @@ namespace MetricDM.AppCode
         //Parse Javascript Data
         public string parseUserBldgs(string raw_json)
         {
-
             return "";
         }
     }
