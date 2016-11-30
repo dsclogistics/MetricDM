@@ -80,6 +80,7 @@ namespace MetricDM.Models
     public class UserMgmtViewModel
     {
         public DSC_APP_USER appUserDetails { get; set; }
+        public DSC_EMPLOYEE employeeDetails { get; set; }
         public List<DSC_MTRC_LC_BLDG> userBldgList { get; set; }
         public List<DSC_MTRC_LC_BLDG> unassignedBldgList { get; set; }
         public List<UserAppProduct> userProductRoleList { get; set; }
@@ -87,6 +88,7 @@ namespace MetricDM.Models
         public UserMgmtViewModel()
         {
             appUserDetails = new DSC_APP_USER();
+            employeeDetails = new DSC_EMPLOYEE();
             userBldgList = new List<DSC_MTRC_LC_BLDG>();
             unassignedBldgList = new List<DSC_MTRC_LC_BLDG>();
             userProductRoleList = new List<UserAppProduct>();

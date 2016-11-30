@@ -71,6 +71,8 @@ namespace MetricDM.Controllers
             else
             {
                 ViewBag.appUserId = id;
+
+                //Add app user details to view model
                 DSC_APP_USER dSC_APP_USER = db.DSC_APP_USER.Find(id);
                 if (dSC_APP_USER == null)
                 {
@@ -79,6 +81,16 @@ namespace MetricDM.Controllers
                 else
                 {
                     userMgmtViewModel.appUserDetails = dSC_APP_USER;
+                }
+
+                //Add employee details to view model
+                if(dSC_APP_USER.dsc_emp_id != null)
+                {
+                    DSC_EMPLOYEE dSC_EMPLOYEE = db.DSC_EMPLOYEE.Find(dSC_APP_USER.dsc_emp_id);
+                    if (dSC_EMPLOYEE != null)
+                    {
+                        userMgmtViewModel.employeeDetails = dSC_EMPLOYEE;
+                    }
                 }
 
                 //Add assigned user building list to view model
