@@ -24,27 +24,27 @@
     </div>
     <br />
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="row"><span>Unassigned:</span></div>
-            <select name="leftRoleBldgList" id="unasgndRoleBldgList" size="10" style="min-width:200px">
+            <select name="leftRoleBldgList" id="unasgndRoleBldgList" size="10" style="min-width:300px">
                 @foreach (var bldg in Model.unassignedBldgList)
                 {
                     <option value="@bldg.dsc_mtrc_lc_bldg_id">@bldg.dsc_mtrc_lc_bldg_name</option>
                 }
             </select>
         </div>
-        <div class="col-md-4" style="margin-top:50px">
+        <div class="col-md-2" style="margin-top:50px; margin-bottom:50px">
             <div class="row">
-                <button type="button" class="btn" id="btnAsgnRoleBldg">>></button>
+                <button type="button" class="btn" id="btnAsgnRoleBldg">></button>
             </div>
             <br />
             <div class="row">
-                <button type="button" class="btn" id="btnUnasgnRoleBldg"><<</button>
+                <button type="button" class="btn" id="btnUnasgnRoleBldg"><</button>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="row"><span>Assigned:</span></div>
-            <select name="asgndRoleBldgList" id="asgndRoleBldgList" size="10" style="min-width:200px">
+            <select name="asgndRoleBldgList" id="asgndRoleBldgList" size="10" style="min-width:300px">
                 @foreach (var bldg in Model.userBldgList)
                 {
                     <option value="@bldg.dsc_mtrc_lc_bldg_id">@bldg.dsc_mtrc_lc_bldg_name</option>
@@ -62,9 +62,9 @@
     </div>
     <br />
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="row"><span>Unassigned:</span></div>
-            <select name="leftRoleMtrcList" id="unasgndRoleMtrcList" size="10" style="min-width:200px">
+            <select name="leftRoleMtrcList" id="unasgndRoleMtrcList" size="10" style="min-width:300px">
                 @foreach (var mtrc in Model.mtrcList)
                 {
                     var mtrcProd = mtrc.MTRC_METRIC_PRODUCTS.Where(x => x.prod_id == Model.product.prod_id);
@@ -75,18 +75,18 @@
                 }
             </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2" style="margin-top:50px; margin-bottom:50px">
             <div class="row">
-                <button type="button" class="btn" id="btnAsgnRoleMtrc">>></button>
+                <button type="button" class="btn" id="btnAsgnRoleMtrc">></button>
             </div>
             <br />
             <div class="row">
-                <button type="button" class="btn" id="btnUnasgnRoleMtrc"><<</button>
+                <button type="button" class="btn" id="btnUnasgnRoleMtrc"><</button>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="row"><span>Assigned:</span></div>
-            <select name="asgndRoleMtrcList" id="asgndRoleMtrcList" size="10" style="min-width:200px">
+            <select name="asgndRoleMtrcList" id="asgndRoleMtrcList" size="10" style="min-width:300px">
 
             </select>
         </div>

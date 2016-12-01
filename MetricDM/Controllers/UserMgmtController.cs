@@ -197,8 +197,12 @@ namespace MetricDM.Controllers
                 {
                     //If product selected, display roles
                     int marId = mar_id ?? 0;
+
+                    List<MTRC_APP_ROLE> userRoleList = getUserMtrcAppRoleList(app_user_id);
+                    List<MTRC_APP_ROLE> roleAddList = db.MTRC_APP_ROLE.Where(x => x.prod_id == prod_id).ToList().Except(userRoleList).ToList();
+
                     ViewBag.role_sel_list_display = true;
-                    ViewBag.role_sel_list = new SelectList(db.MTRC_APP_ROLE.Where(x => x.prod_id == prod_id), "mar_id", "mar_name", marId).OrderBy(x => x.Text);
+                    ViewBag.role_sel_list = new SelectList(roleAddList, "mar_id", "mar_name", marId).OrderBy(x => x.Text);
 
                     if(marId == 0)
                     {
@@ -347,6 +351,30 @@ namespace MetricDM.Controllers
             }
 
             return mtrcList;
+        }
+
+        //Return a list of metric app roles associated with a particular app user id
+        private List<MTRC_APP_ROLE> getUserMtrcAppRoleList(int? appUserId)
+        {
+            List<MTRC_APP_ROLE> roleList = new List<MTRC_APP_ROLE>();
+
+            if (appUserId == null || appUserId == 0)
+            {
+
+            }
+            else
+            {
+                var query =
+                    from a in db.MTRC_USER_APP_ROLES
+                    join b in db.DSC_APP_USER on a.app_user_id equals b.app_user_id
+                    join c in db.MTRC_APP_ROLE on a.mar_id equals c.mar_id
+                    where b.app_user_id == appUserId
+                    select c;
+
+                roleList = query.ToList();
+            }
+
+            return roleList;
         }
 
         //Return a nested list of roles (Product > Role > Metric) associated with a particular app user id

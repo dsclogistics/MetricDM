@@ -6,8 +6,9 @@
 
 <br />
 <div class="row">
-    <div class="col-md-4">
-        <select name="leftMtrcList" id="unasgndMtrcList" size="10" style="min-width:200px">
+    <div class="col-md-5">
+        <div class="row"><span>Unassigned:</span></div>
+        <select name="leftMtrcList" id="unasgndMtrcList" size="10" style="min-width:300px">
             @foreach (var mtrc in Model.unassignedMtrcList)
             {
                 var mtrcProd = mtrc.MTRC_METRIC_PRODUCTS.Where(x => x.prod_id == Model.product.prod_id);
@@ -18,17 +19,18 @@
             }
         </select>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2" style="margin-top:50px; margin-bottom:50px">
         <div class="row">
-            <button type="button" class="btn" id="btnAsgnMtrc">>></button>
+            <button type="button" class="btn" id="btnAsgnMtrc">></button>
         </div>
         <br />
         <div class="row">
-            <button type="button" class="btn" id="btnUnasgnMtrc"><<</button>
+            <button type="button" class="btn" id="btnUnasgnMtrc"><</button>
         </div>
     </div>
-    <div class="col-md-4">
-        <select name="asgndMtrcList" id="asgndMtrcList" size="10" style="min-width:200px">
+    <div class="col-md-5">
+        <div class="row"><span>Assigned:</span></div>
+        <select name="asgndMtrcList" id="asgndMtrcList" size="10" style="min-width:300px">
             @foreach (var mtrc in Model.userRoleMtrcList)
             {
                 var mtrcProd = mtrc.MTRC_METRIC_PRODUCTS.Where(x => x.prod_id == Model.product.prod_id);

@@ -4,13 +4,18 @@
         var $target = $(this).parentsUntil('btn-toolbar').next('.collapse');
         //alert($target.attr("aria-expanded"));
         $target.attr("aria-expanded") ? $target.collapse('toggle') : $target.collapse();
+
+        $(this).children('.glyphicon').toggleClass('glyphicon-chevron-right glyphicon-chevron-down');
+    });
+
+    $('.panel-heading').on('click', '.glyph-link', function (e) {
         $(this).children('.glyphicon').toggleClass('glyphicon-chevron-right glyphicon-chevron-down');
     });
 
 
-    //--------------
+    //-------------------------------------------------------------------------------------------------
     //Building Modal
-    //--------------
+    //-------------------------------------------------------------------------------------------------
     $("#divBldgBtns").on('click', '#btnManageUserBuildings', function () {
         var userId = $("#hdnAppUserId").val();
 
@@ -33,15 +38,15 @@
             $('#mdlBldgAsgn').modal('show');
         });
     });
-
+    //-------------------------------------------------------------------------------------------------
     $("#mdlBldgAsgnBody").on('click', '#btnAsgnBldg', function () {
         moveSelectListItem('unasgndBldgList', 'asgndBldgList', false);
     });
-
+    //-------------------------------------------------------------------------------------------------
     $("#mdlBldgAsgnBody").on('click', '#btnUnasgnBldg', function () {
         moveSelectListItem('asgndBldgList', 'unasgndBldgList', false);
     });
-
+    //-------------------------------------------------------------------------------------------------
     $("#mdlBldgAsgn").on('click', '#btnSaveBldgAsgn', function () {
         var userId = $("#hdnAppUserId").val();
 
@@ -81,11 +86,12 @@
         });
 
     });
+    //-------------------------------------------------------------------------------------------------
 
 
-    //------------
+    //-------------------------------------------------------------------------------------------------
     //Metric Modal
-    //------------
+    //-------------------------------------------------------------------------------------------------
     $(".divMtrcBtns").on('click', '#btnManageRoleMetrics', function () {
         var userRoleId = $(this).siblings('.hdnMuarId').val();
 
@@ -108,15 +114,15 @@
             $('#mdlMtrcAsgn').modal('show');
         });
     });
-
+    //-------------------------------------------------------------------------------------------------
     $("#mdlMtrcAsgnBody").on('click', '#btnAsgnMtrc', function () {
         moveSelectListItem('unasgndMtrcList', 'asgndMtrcList', true);
     });
-
+    //-------------------------------------------------------------------------------------------------
     $("#mdlMtrcAsgnBody").on('click', '#btnUnasgnMtrc', function () {
         moveSelectListItem('asgndMtrcList', 'unasgndMtrcList', true);
     });
-
+    //-------------------------------------------------------------------------------------------------
     $("#mdlMtrcAsgn").on('click', '#btnSaveMtrcAsgn', function () {
         var userId = $("#hdnAppUserId").val();
         var userRoleId = $('#hdnAppUserRoleId').val();
@@ -156,11 +162,12 @@
         });
 
     });
+    //-------------------------------------------------------------------------------------------------
 
 
-    //----------
+    //-------------------------------------------------------------------------------------------------
     //Role Modal
-    //----------
+    //-------------------------------------------------------------------------------------------------
     $("#divRoleBtns").on('click', '#btnManageUserRoles', function () {
         var userId = $("#hdnAppUserId").val();
 
@@ -183,7 +190,7 @@
             $('#mdlRoleAsgn').modal('show');
         });
     });
-
+    //-------------------------------------------------------------------------------------------------
     $("#mdlRoleAsgnBody").on('change', '#prod_sel_list', function () {
         var userId = $("#hdnAppUserId").val();
         var prodId = $("#prod_sel_list").val();
@@ -208,7 +215,7 @@
             $('#mdlRoleAsgn').modal('show');
         });
     });
-
+    //-------------------------------------------------------------------------------------------------
     $("#mdlRoleAsgnBody").on('change', '#role_sel_list', function () {
         var userId = $("#hdnAppUserId").val();
         var prodId = $("#prod_sel_list").val();
@@ -234,23 +241,23 @@
             $('#mdlRoleAsgn').modal('show');
         });
     });
-
+    //-------------------------------------------------------------------------------------------------
     $("#mdlRoleAsgnBody").on('click', '#btnAsgnRoleBldg', function () {
         moveSelectListItem('unasgndRoleBldgList', 'asgndRoleBldgList', false);
     });
-
+    //-------------------------------------------------------------------------------------------------
     $("#mdlRoleAsgnBody").on('click', '#btnUnasgnRoleBldg', function () {
         moveSelectListItem('asgndRoleBldgList', 'unasgndRoleBldgList', false);
     });
-
+    //-------------------------------------------------------------------------------------------------
     $("#mdlRoleAsgnBody").on('click', '#btnAsgnRoleMtrc', function () {
         moveSelectListItem('unasgndRoleMtrcList', 'asgndRoleMtrcList', true);
     });
-
+    //-------------------------------------------------------------------------------------------------
     $("#mdlRoleAsgnBody").on('click', '#btnUnasgnRoleMtrc', function () {
         moveSelectListItem('asgndRoleMtrcList', 'unasgndRoleMtrcList', true);
     });
-
+    //-------------------------------------------------------------------------------------------------
     $("#mdlRoleAsgn").on('click', '#btnSaveRoleAsgn', function () {
         var userId = $("#hdnAppUserId").val();
         var marId = $("#role_sel_list").val();
@@ -301,7 +308,7 @@
         });
 
     });
-
+    //-------------------------------------------------------------------------------------------------
     $(document).on('click', '.btnUserRoleRemove', function () {
         var userId = $("#hdnAppUserId").val();
         var muarId = $(this).siblings('.hdnDelMuarId').val();
@@ -314,25 +321,30 @@
             muar_id: muarId
         }
 
-        // ------------ Make the Ajax Call --------------------------------------------------------------
-        $.ajax({
-            url: '/UserMgmt/_RemoveUserRole',     // the url where we want to direct our Ajax Call
-            method: "POST",
-            cache: false,
-            data: { raw_json: JSON.stringify(data) },     //<---- Data Parameters (if not already passed in the Url)
-            //--- On error, execute this function ------
-            error: function (xhr, status, error) {
-                //var err = eval("(" + xhr.responseText + ")");
-                $("#mdlMtrcAsgnBody").html(xhr.responseText);
-                //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
-            }
-        }).done(function (d) {
-            //Execute this code After the Ajax call completes successfully
-            //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
-            showAlert('Success!', '', 'Y');
-        });
+        var next = confirm("This action will remove the user role and all associated metric associations. Are you sure you want to continue?");
+
+        if (next) {
+            // ------------ Make the Ajax Call --------------------------------------------------------------
+            $.ajax({
+                url: '/UserMgmt/_RemoveUserRole',     // the url where we want to direct our Ajax Call
+                method: "POST",
+                cache: false,
+                data: { raw_json: JSON.stringify(data) },     //<---- Data Parameters (if not already passed in the Url)
+                //--- On error, execute this function ------
+                error: function (xhr, status, error) {
+                    //var err = eval("(" + xhr.responseText + ")");
+                    $("#mdlMtrcAsgnBody").html(xhr.responseText);
+                    //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
+                }
+            }).done(function (d) {
+                //Execute this code After the Ajax call completes successfully
+                //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
+                showAlert('Success!', '', 'Y');
+            });
+        }
 
     });
+    //-------------------------------------------------------------------------------------------------
 
 });
 
