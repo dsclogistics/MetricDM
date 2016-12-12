@@ -20,33 +20,32 @@
             <ul class="nav navbar-nav menuItem" >
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        Metric Maintenance
+                        Maintenance
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Metric Listing", "Index", "MetricPeriod")</li>
+                        @*<li>@Html.ActionLink("Metric Listing", "Index", "MetricPeriod")</li>*@
                         <li><a href="/MetricPeriod/MetricMaintenance/0">Metric Maintenance</a></li>
                         <li><a href="/Building/BuildingMaintenance/0">Building Maintenance</a></li>
-                        <li><a href="/UserMgmt">User Management</a></li>
-                        <li class="disabled"><a href="#">Future Option 03</a></li>
+                        @*<li><a href="/GoalMgmt">Goal Management</a></li>*@
                     </ul>
                 </li>
             </ul>
             <ul class="nav navbar-nav menuItem">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        Dropdown Sample
+                        Users
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         @*<li>@Html.ActionLink("Find Observation", "Index", "Observation")</li>*@
-                        <li class="disabled"><a href="#">Not Enabled 01</a></li>
-                        <li class="disabled"><a href="#">Not Enabled 02</a></li>
-                        <li class="disabled"><a href="#">Not Enabled 03</a></li>
+                        <li><a href="/UserMgmt">User Management</a></li>
+                        @*<li class="disabled"><a href="#">Not Enabled 02</a></li>
+                        <li class="disabled"><a href="#">Not Enabled 03</a></li>*@
                     </ul>
                 </li>
             </ul>
-            <ul class="nav navbar-nav menuItem" id="mTables">
+            @*<ul class="nav navbar-nav menuItem" id="mTables">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         DB TABLES
@@ -58,9 +57,25 @@
                         <li><a href="/UserMgmt/List">App Users</a></li>
                     </ul>
                 </li>
-            </ul>
+            </ul>*@
         </div>
-        <div class="col-md-2" id="divLoginInfo" style="margin-right: 10px">
+        <div class="col-md-3 " id="divLoginInfo" style="margin:0; padding:0; float:right">
+            <div class="row">
+                <div class="col-xm-3 col-lg-4" style="text-align:right">
+                    @* ****** RENDER THE 'TASK' FLAG ICON ONLY IF THE USER ROLE REQUIRES IT *******
+                    @if (User.IsInRole("RZ_BLDG_USER"))
+                    {
+                        @Html.Action("_RZ_TeamsFlag", "MenuBar")
+                    }
+                    else if (User.IsInRole("RZ_AP_REVIEWER") || User.IsInRole("RZ_AP_SUBMITTER") || User.IsInRole("MTRC_COLLECTOR"))
+                    {
+                        @Html.Action("_RZ_TasksFlag", "MenuBar")
+                    }*@
+                </div>
+                <div class="col-xm-9 col-lg-8" style="text-align:left">
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
         </div>
     </div>
     <br />

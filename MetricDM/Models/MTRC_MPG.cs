@@ -16,7 +16,7 @@ namespace MetricDM.Models
     {
         public int mpg_id { get; set; }
         public int mtrc_period_id { get; set; }
-        public Nullable<short> prod_id { get; set; }
+        public short prod_id { get; set; }
         public Nullable<decimal> mpg_less_val { get; set; }
         public Nullable<decimal> mpg_less_eq_val { get; set; }
         public Nullable<decimal> mpg_greater_val { get; set; }

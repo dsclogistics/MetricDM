@@ -3,7 +3,9 @@
 <div class="row" style="margin:0; margin-bottom:20px">
     <div class="col-sm-5" style="text-align:right; padding:0px 0px"><span class="form-control" style="font-weight:bold; max-width:150px; float:right; background-color: lightgray; border-top-right-radius:0px; border-bottom-right-radius:0px">Select a Product: </span></div>
     <div class="col-sm-5" style="text-align: left; padding-left: 0px">@Html.DropDownList("prod_sel_list", null, "--- Select Product ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:350px; border-bottom-left-radius:0px; border-top-left-radius:0px;" })</div>
-</div>
+    <input type="hidden" id="hdnReqBldgAuth" value="@Model.appRole.mar_req_bldg_auth" />
+    <input type="hidden" id="hdnReqMtrcAuth" value="@Model.appRole.mar_req_mtrc_mgmt_auth" />
+ </div>
 
 @if (ViewBag.role_sel_list_display == true)
 {
@@ -11,32 +13,38 @@
         <div class="col-sm-5" style="text-align:right; padding:0px 0px"><span class="form-control" style="font-weight:bold; max-width:150px; float:right; background-color: lightgray; border-top-right-radius:0px; border-bottom-right-radius:0px">Select a Role: </span></div>
         <div class="col-sm-5" style="text-align: left; padding-left: 0px">@Html.DropDownList("role_sel_list", null, "--- Select Role ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:350px; border-bottom-left-radius:0px; border-top-left-radius:0px;" })</div>
     </div>
-
 }
 
-@if (Model.appRole.mar_req_bldg_auth == "Y" && Model.userBldgList.Count() == 0)
+@if (Model.appRole.mar_req_bldg_auth == "Y")
 {
+    string bldgAsgnDisplay = (Model.userBldgList.Count() == 0) ? "Building assignment required:" : "Modify building assignments as needed:";
+
+    <div class="row" style="font-weight:bold">
+        <span>@bldgAsgnDisplay</span>
+    </div>
     <br />
     <div class="row">
-        <div class="col-md-4">
-            <select name="leftRoleBldgList" id="unasgndRoleBldgList" size="10" style="min-width:200px">
+        <div class="col-md-5">
+            <div class="row"><span>Unassigned:</span></div>
+            <select name="leftRoleBldgList" id="unasgndRoleBldgList" size="10" style="min-width:300px">
                 @foreach (var bldg in Model.unassignedBldgList)
                 {
                     <option value="@bldg.dsc_mtrc_lc_bldg_id">@bldg.dsc_mtrc_lc_bldg_name</option>
                 }
             </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2" style="margin-top:50px; margin-bottom:50px">
             <div class="row">
-                <button type="button" class="btn" id="btnAsgnRoleBldg">>></button>
+                <button type="button" class="btn" id="btnAsgnRoleBldg">></button>
             </div>
             <br />
             <div class="row">
-                <button type="button" class="btn" id="btnUnasgnRoleBldg"><<</button>
+                <button type="button" class="btn" id="btnUnasgnRoleBldg"><</button>
             </div>
         </div>
-        <div class="col-md-4">
-            <select name="asgndRoleBldgList" id="asgndRoleBldgList" size="10" style="min-width:200px">
+        <div class="col-md-5">
+            <div class="row"><span>Assigned:</span></div>
+            <select name="asgndRoleBldgList" id="asgndRoleBldgList" size="10" style="min-width:300px">
                 @foreach (var bldg in Model.userBldgList)
                 {
                     <option value="@bldg.dsc_mtrc_lc_bldg_id">@bldg.dsc_mtrc_lc_bldg_name</option>
@@ -47,29 +55,38 @@
 
 }
 
-@if(Model.appRole.mar_req_mtrc_mgmt_auth == "Y")
+@if (Model.appRole.mar_req_mtrc_mgmt_auth == "Y")
 {
+    <div class="row" style="font-weight:bold">
+        <span>Metric assignment required:</span>
+    </div>
     <br />
     <div class="row">
-        <div class="col-md-4">
-            <select name="leftRoleMtrcList" id="unasgndRoleMtrcList" size="10" style="min-width:200px">
+        <div class="col-md-5">
+            <div class="row"><span>Unassigned:</span></div>
+            <select name="leftRoleMtrcList" id="unasgndRoleMtrcList" size="10" style="min-width:300px">
                 @foreach (var mtrc in Model.mtrcList)
                 {
-                    <option value="@mtrc.mtrc_period_id">@mtrc.mtrc_period_name</option>
+                    var mtrcProd = mtrc.MTRC_METRIC_PRODUCTS.Where(x => x.prod_id == Model.product.prod_id);
+                    string display_text = (mtrcProd.Count() > 0) ? mtrcProd.First().mtrc_prod_display_text : "";
+                    string mtrc_display_text = (String.IsNullOrEmpty(display_text)) ? mtrc.mtrc_period_name : mtrc.mtrc_period_name + " (" + display_text + ")";
+                    
+                    <option value="@mtrc.mtrc_period_id">@mtrc_display_text</option>
                 }
             </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2" style="margin-top:50px; margin-bottom:50px">
             <div class="row">
-                <button type="button" class="btn" id="btnAsgnRoleMtrc">>></button>
+                <button type="button" class="btn" id="btnAsgnRoleMtrc">></button>
             </div>
             <br />
             <div class="row">
-                <button type="button" class="btn" id="btnUnasgnRoleMtrc"><<</button>
+                <button type="button" class="btn" id="btnUnasgnRoleMtrc"><</button>
             </div>
         </div>
-        <div class="col-md-4">
-            <select name="asgndRoleMtrcList" id="asgndRoleMtrcList" size="10" style="min-width:200px">
+        <div class="col-md-5">
+            <div class="row"><span>Assigned:</span></div>
+            <select name="asgndRoleMtrcList" id="asgndRoleMtrcList" size="10" style="min-width:300px">
 
             </select>
         </div>

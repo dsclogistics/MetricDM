@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "UserMaintenance";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string nameForPopupTitles = (String.IsNullOrEmpty(Model.appUserDetails.app_user_full_name)) ? Model.appUserDetails.app_user_sso_id : Model.appUserDetails.app_user_full_name;
 }
 
 <script src="~/Scripts/UserMgmt_Maintenance.js"></script>
@@ -11,34 +12,38 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h2>User Management</h2>
+        <h2 style="padding:0; margin:0">User Management</h2>
         <input type="hidden" id="hdnAppUserId" value="@ViewBag.appUserId" />
     </div>
 
+    
     <div class="panel-body ">
+        @*------------*@
+        @*User Details*@
+        @*------------*@
         <div class="row">
             <div class="col-md-3 col-sm-6">
                 <div class="input-group">
                     @Html.LabelFor(model => model.appUserDetails.app_user_full_name, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
-                    @Html.EditorFor(model => model.appUserDetails.app_user_full_name, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", disabled = "disabled" } })
+                    @Html.EditorFor(model => model.appUserDetails.app_user_full_name, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", @readonly = "readonly" } })
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="input-group">
                     @Html.LabelFor(model => model.appUserDetails.app_user_sso_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
-                    @Html.EditorFor(model => model.appUserDetails.app_user_sso_id, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", disabled = "disabled" } })
+                    @Html.EditorFor(model => model.appUserDetails.app_user_sso_id, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", @readonly = "readonly" } })
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="input-group">
                     @Html.LabelFor(model => model.appUserDetails.app_user_sso_system, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
-                    @Html.EditorFor(model => model.appUserDetails.app_user_sso_system, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", disabled = "disabled" } })
+                    @Html.EditorFor(model => model.appUserDetails.app_user_sso_system, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", @readonly = "readonly" } })
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="input-group">
                     @Html.LabelFor(model => model.appUserDetails.app_user_email_addr, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
-                    @Html.EditorFor(model => model.appUserDetails.app_user_email_addr, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", disabled = "disabled" } })
+                    @Html.EditorFor(model => model.appUserDetails.app_user_email_addr, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", @readonly = "readonly" } })
                 </div>
             </div>
 
@@ -48,180 +53,263 @@
         @*---------------------*@
         @*User Employee Details*@
         @*---------------------*@
-        <div class="row" style="margin-left:5px; margin-right:5px">
-            <div class="btn-toolbar">
-                <div class="bordered" style="display:table-cell; border-top-left-radius:4px; border-bottom-left-radius:4px; border-color:darkgray; border-right:transparent">
-                    <button type="button" class="btn btn-default btn-group" style="margin-left:0px; border-color:transparent; border-top-right-radius:0px; border-bottom-right-radius:0px">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </button>
-                </div>
-                <div class="bordered" style="display:table-cell; width:100%; border-top-right-radius:4px; border-bottom-right-radius:4px; vertical-align:middle; border-color:darkgray;">
-                    <h4 class="btn-group" style="text-align:left; margin:auto; margin-left:20px ">User Details</h4>
+        <div class="panel panel-info">
+                            
+            <div class="panel-heading" style="text-align:left">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a class="glyph-link" data-toggle="collapse" href="#collapse-employee" style="text-decoration:none">
+                            <span class="glyphicon glyphicon-chevron-right" style="font-size:12px; color:#333"></span>
+                            <span class="btn-group" style="text-align:left; margin:auto; margin-left:10px; font-weight:bold; font-size:16px; color:#333">
+                                Employee Details
+                            </span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <div class="collapse" style="margin-left:40px">
-                Various Employee Details
+            <div id="collapse-employee" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                @Html.LabelFor(model => model.employeeDetails.dsc_emp_wms_clock_nbr, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.EditorFor(model => model.employeeDetails.dsc_emp_wms_clock_nbr, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", disabled = "disabled" } })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                @Html.LabelFor(model => model.employeeDetails.dsc_emp_temp_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.EditorFor(model => model.employeeDetails.dsc_emp_temp_yn, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", disabled = "disabled" } })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                @Html.LabelFor(model => model.employeeDetails.dsc_emp_hourly_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.EditorFor(model => model.employeeDetails.dsc_emp_hourly_yn, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", disabled = "disabled" } })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                @Html.LabelFor(model => model.employeeDetails.dsc_emp_title, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.EditorFor(model => model.employeeDetails.dsc_emp_title, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", disabled = "disabled" } })
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                @Html.LabelFor(model => model.employeeDetails.dsc_emp_adp_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.EditorFor(model => model.employeeDetails.dsc_emp_adp_id, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", disabled = "disabled" } })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                @Html.LabelFor(model => model.employeeDetails.dsc_emp_hire_dt, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.EditorFor(model => model.employeeDetails.dsc_emp_hire_dt, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", disabled = "disabled" } })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="input-group">
+                                @Html.LabelFor(model => model.employeeDetails.dsc_emp_init_work_dt, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.EditorFor(model => model.employeeDetails.dsc_emp_init_work_dt, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", disabled = "disabled" } })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+
+                        </div>
+                    </div>
+
+                </div>
+                
             </div>
         </div>
-        <br />
 
         @*------------------------*@
         @*User Building Assignment*@
         @*------------------------*@
-        <div class="row" style="margin-left:5px; margin-right:5px">
-            
-            <div class="btn-toolbar">
-                <div class="bordered" style="display:table-cell; border-top-left-radius:4px; border-bottom-left-radius:4px; border-color:darkgray; border-right:transparent">
-                    <button type="button" class="btn btn-default btn-group" style="margin-left:0px; border-color:transparent; border-top-right-radius:0px; border-bottom-right-radius:0px">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </button>
-                </div>
-                <div class="bordered" style="display:table-cell; width:100%; border-top-right-radius:4px; border-bottom-right-radius:4px; vertical-align:middle; border-color:darkgray;">
-                    <h4 class="btn-group" style="text-align:left; margin:auto; margin-left:20px ">Building Assignment</h4>
+        <div class="panel panel-info">
+                            
+            <div class="panel-heading" style="text-align:left">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a class="glyph-link" data-toggle="collapse" href="#collapse-building" style="text-decoration:none">
+                            <span class="glyphicon glyphicon-chevron-right" style="font-size:12px; color:#333"></span>
+                            <span class="btn-group" style="text-align:left; margin:auto; margin-left:10px; font-weight:bold; font-size:16px; color:#333">
+                                Building Assignment
+                            </span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <div class="collapse" style="margin-left:40px">
-                <table class="table table-condensed table-hover" id="tblBuildings">
-                    @if (Model.userBldgList.Count() == 0)
-                    {
-                        <tr>
-                            <td colspan="14"><font color="red">No Buildings Assigned</font></td>
-                        </tr>
-                    }
-                    else
-                    {
-                        <tr> 
-                            <th></th>
-                        </tr>
-
-                        foreach (var bldg in Model.userBldgList)
+            <div id="collapse-building" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table class="table table-condensed table-hover" id="tblBuildings">
+                        @if (Model.userBldgList.Count() == 0)
                         {
                             <tr>
-                                <td style="text-align:left">
-                                    @Html.DisplayFor(modelItem => bldg.dsc_mtrc_lc_bldg_name)
-                                </td>
+                                <td colspan="14"><font color="red">No Buildings Assigned</font></td>
                             </tr>
                         }
-                        <tr>
-                            <td></td>
-                        </tr>
-                    }
-                </table>
-                <div style="text-align:left" id="divBldgBtns">
-                    <button type="button" class="btn btn-primary" id="btnManageUserBuildings">Manage Buildings</button>
+                        else
+                        {
+                            foreach (var bldg in Model.userBldgList)
+                            {
+                                <tr>
+                                    <td style="text-align:left">
+                                        @Html.DisplayFor(modelItem => bldg.dsc_mtrc_lc_bldg_name)
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td></td>
+                            </tr>
+                        }
+                    </table>
+                    <div style="text-align:left" id="divBldgBtns">
+                        <button type="button" class="btn btn-primary" id="btnManageUserBuildings">Manage Buildings</button>
+                    </div>
                 </div>
             </div>
-
         </div>
-        <br />
 
         @*--------------------*@
         @*User Role Assignment*@
         @*--------------------*@
-        <div class="row" style="margin-left:5px; margin-right:5px">
-            <div class="btn-toolbar">
-                <div class="bordered" style="display:table-cell; border-top-left-radius:4px; border-bottom-left-radius:4px; border-color:darkgray; border-right:transparent">
-                    <button type="button" class="btn btn-default btn-group" style="margin-left:0px; border-color:transparent; border-top-right-radius:0px; border-bottom-right-radius:0px">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </button>
-                </div>
-                <div class="bordered" style="display:table-cell; width:100%; border-top-right-radius:4px; border-bottom-right-radius:4px; vertical-align:middle; border-color:darkgray;">
-                    <h4 class="btn-group" style="text-align:left; margin:auto; margin-left:20px ">Role Assignment</h4>
+        <div class="panel panel-info">
+                            
+            <div class="panel-heading" style="text-align:left">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a class="glyph-link" data-toggle="collapse" href="#collapse-role" style="text-decoration:none">
+                            <span class="glyphicon glyphicon-chevron-right" style="font-size:12px; color:#333"></span>
+                            <span class="btn-group" style="text-align:left; margin:auto; margin-left:10px; font-weight:bold; font-size:16px; color:#333">
+                                Role Assignment
+                            </span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <div class="collapse" style="margin-left:40px">
-                @*Display list of products*@
-                @if (Model.userProductRoleList.Count() == 0)
-                {
-                    <span><font color="red">No Roles Assigned</font></span>
-                }
-                else
-                {                    
-                    foreach (var product in Model.userProductRoleList)
+            <div id="collapse-role" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @*Display list of products*@
+                    @if (Model.userProductRoleList.Count() == 0)
                     {
-                        <br />
-                        <div class="btn-toolbar">
-                            <div class="bordered" style="display:table-cell; border-top-left-radius:4px; border-bottom-left-radius:4px; border-color:darkgray; border-right:transparent">
-                                <button type="button" class="btn btn-default btn-group" style="margin-left:0px; border-color:transparent; border-top-right-radius:0px; border-bottom-right-radius:0px">
-                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                </button>
-                            </div>
-                            <div class="bordered" style="display:table-cell; width:100%; border-top-right-radius:4px; border-bottom-right-radius:4px; vertical-align:middle; border-color:darkgray;">
-                                <h4 class="btn-group" style="text-align:left; margin:auto; margin-left:20px ">@product.productName</h4>
-                            </div>
-                        </div>
-                        <div class="collapse" style="margin-left:40px">
-                            @*Display list of roles within each product*@
-                            @foreach(var role in product.userRoles)
-                            {
-                                <br />
-                                <div class="btn-toolbar">
-                                    <div class="bordered" style="display:table-cell; border-top-left-radius:4px; border-bottom-left-radius:4px; border-color:darkgray; border-right:transparent">
-                                        <button type="button" class="btn btn-default btn-group" style="margin-left:0px; border-color:transparent; border-top-right-radius:0px; border-bottom-right-radius:0px">
-                                            <span class="glyphicon glyphicon-chevron-right"></span>
-                                        </button>
-                                    </div>
-                                    <div class="bordered" style="display:table-cell; width:100%; border-top-right-radius:4px; border-bottom-right-radius:4px; vertical-align:middle; border-color:darkgray;">
-                                        <h4 class="btn-group" style="text-align:left; margin:auto; margin-left:20px ">@role.appRoleName</h4>
-                                    </div>
-                                </div>
-                                <div class="collapse" style="margin-left:40px">
-                                    @*Display list of metrics within each role*@
-                                    @if (role.reqMtrcAuth == "N")
-                                    {
-                                            <span><font color="red">This role does not require metric assignments.</font></span>
-                                    }
-                                    else if (role.roleMetrics.Count() == 0)
-                                    {
-                                            <span><font color="red">No Metrics Assigned</font></span>
-
-                                            <div class="divMtrcBtns" style="text-align:left">
-                                                <input type="hidden" class="hdnMuarId" value="@role.userAppRoleId"/>
-                                                <button type="button" class="btn btn-primary" id="btnManageRoleMetrics">Manage Metrics</button>
-                                            </div>
-                                    }
-                                    else
-                                    {
-                                        <table class="table table-condensed table-hover">
-                                            <tr>
-                                                <th></th>
-                                            </tr>
-
-                                            @foreach (var metric in role.roleMetrics)
-                                            {
-                                                <tr>
-                                                    <td style="text-align:left">
-                                                        @Html.DisplayFor(modelItem => metric.mtrc_period_name)
-                                                    </td>
-                                                </tr>
-                                            }
-                                            <tr>
-                                                <td></td>
-                                            </tr>
-                                        </table>
-
-                                        <div class="divMtrcBtns" style="text-align:left">
-                                            <input type="hidden" class="hdnMuarId" value="@role.userAppRoleId" />
-                                            <button type="button" class="btn btn-primary" id="btnManageRoleMetrics">Manage Metrics</button>
-                                        </div>
-                                    }
-
-                                </div>
-                            }
-                        </div>
+                        <span><font color="red">No Roles Assigned</font></span>
                     }
-                }
+                    else
+                    {
+                        foreach (var product in Model.userProductRoleList)
+                        {
+                            <div class="panel panel-default">
+                                <div class="panel-heading" style="text-align:left; background-color:lightgrey">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <a class="glyph-link" data-toggle="collapse" href="#collapse-role-@product.productName.Replace(" ", "")" style="text-decoration:none">
+                                                <span class="glyphicon glyphicon-chevron-right" style="font-size:10px; color:#333"></span>
+                                                <span class="btn-group" style="text-align:left; margin:auto; margin-left:10px; font-weight:bold; font-size:14px; color:#333">
+                                                    @product.productName
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
 
-                <br />
-                <div id="divRoleBtns" style="text-align:left">
-                    <button type="button" class="btn btn-primary" id="btnManageUserRoles">Manage Roles</button>
+                                <div id="collapse-role-@product.productName.Replace(" ", "")" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        @*Display list of roles within each product*@
+                                        @foreach (var role in product.userRoles)
+                                        {
+                                            <div class="btn-toolbar">
+                                                <div class="bordered" style="display:table-cell; border-top-left-radius:4px; border-bottom-left-radius:4px; border-color:darkgray; border-right:transparent">
+                                                    <button type="button" class="btn btn-default btn-group" style="margin-left:0px; border-color:transparent; border-top-right-radius:0px; border-bottom-right-radius:0px">
+                                                        <span class="glyphicon glyphicon-chevron-right" style="font-size:12px"></span>
+                                                    </button>
+                                                </div>
+                                                <div class="bordered" style="display:table-cell; width:100%; border-top-right-radius:4px; border-bottom-right-radius:4px; vertical-align:middle; border-color:darkgray;">
+                                                    <span class="btn-group" style="text-align:left; margin:auto; margin-left:20px; font-size:14px; font-weight:bold ">@role.appRoleName</span>
+                                                    <input type="hidden" class="hdnDelMuarId" value="@role.userAppRoleId" />
+                                                    <button type="button" class="btnUserRoleRemove" title="Remove" style="border:none; background-color:transparent; width:20px; float:right; margin-right:10px; padding:0">
+                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="collapse" style="margin-left:40px">
+                                                @*Display list of metrics within each role*@
+                                                @if (role.reqMtrcAuth == "N")
+                                                {
+                                                    <span><font color="red">This role does not require metric assignments.</font></span>
+                                                }
+                                                else if (role.roleMetrics.Count() == 0)
+                                                {
+                                                    <span><font color="red">No Metrics Assigned</font></span>
+
+                                                    <div class="divMtrcBtns" style="text-align:left">
+                                                        <input type="hidden" class="hdnMuarId" value="@role.userAppRoleId" />
+                                                        <button type="button" class="btn btn-primary" id="btnManageRoleMetrics">Manage Metrics</button>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <table class="table table-condensed table-hover">
+                                                        <tr>
+                                                            <th></th>
+                                                        </tr>
+
+                                                        @foreach (var metric in role.roleMetrics)
+                                                        {
+                                                            <tr>
+                                                                <td style="text-align:left">
+                                                                    @Html.DisplayFor(modelItem => metric.mtrc_period_name)
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                        <tr>
+                                                            <td></td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <div class="divMtrcBtns" style="text-align:left">
+                                                        <input type="hidden" class="hdnMuarId" value="@role.userAppRoleId" />
+                                                        <button type="button" class="btn btn-primary" id="btnManageRoleMetrics">Manage Metrics</button>
+                                                    </div>
+                                                    <br />
+                                                }
+
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            @*<div class="btn-toolbar">
+                                <div class="bordered" style="display:table-cell; border-top-left-radius:4px; border-bottom-left-radius:4px; border-color:darkgray; border-right:transparent">
+                                    <button type="button" class="btn btn-default btn-group" style="margin-left:0px; border-color:transparent; border-top-right-radius:0px; border-bottom-right-radius:0px">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                    </button>
+                                </div>
+                                <div class="bordered" style="display:table-cell; width:100%; border-top-right-radius:4px; border-bottom-right-radius:4px; vertical-align:middle; border-color:darkgray;">
+                                    <h4 class="btn-group" style="text-align:left; margin:auto; margin-left:20px ">@product.productName</h4>
+                                </div>
+                            </div>
+                            <div class="collapse" style="margin-left:40px">
+
+                            </div>*@
+                        }
+                    }
+
+                    <div id="divRoleBtns" style="text-align:left">
+                        <button type="button" class="btn btn-primary" id="btnManageUserRoles">Add Roles</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <br />
 
         @Html.ActionLink("Back", "Index")
     </div>
@@ -230,13 +318,13 @@
 
 <!-- Building Assignment Modal -->
 <div id="mdlBldgAsgn" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="width:60%">
+    <div class="modal-dialog" style="min-width: 800px; max-width: 800px">
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-Primary-Gradient">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Assign Buildings</h4>
+                <h4 class="modal-title">Assign Buildings to @nameForPopupTitles</h4>
             </div>
 
             <div class="modal-body" id="mdlBldgAsgnBody">
@@ -256,13 +344,13 @@
 
 <!-- Metric Assignment Modal -->
 <div id="mdlMtrcAsgn" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="width:60%">
+    <div class="modal-dialog" style="min-width: 800px;max-width: 800px">
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-Primary-Gradient">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Assign Metrics</h4>
+                <h4 class="modal-title">Assign Metrics to @nameForPopupTitles</h4>
             </div>
 
             <div class="modal-body" id="mdlMtrcAsgnBody">
@@ -282,13 +370,13 @@
 
 <!-- Role Assignment Modal -->
 <div id="mdlRoleAsgn" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="width:60%">
+    <div class="modal-dialog" style="min-width: 800px; max-width: 800px">
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-Primary-Gradient">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Assign Role</h4>
+                <h4 class="modal-title">Assign Role to @nameForPopupTitles</h4>
             </div>
 
             <div class="modal-body" id="mdlRoleAsgnBody">

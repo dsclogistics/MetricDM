@@ -1,0 +1,200 @@
+﻿@model MetricDM.Models.dscUser
+
+@{
+    ViewBag.Title = "userInfo";
+    string userStatusColor = Model.isValidUser ? "blue" : "red";
+}
+
+
+<br />
+<div>
+    Select User Id to Display:
+    <input id="txtUserId" type="text" />
+    <input id="btnGetUserInfo" type="button" value="Get Info" />
+</div>
+<br />
+@if (!String.IsNullOrEmpty(@Model.dbUserId))
+{ //There is a valid User Name
+    <div style="text-align:center; color:@userStatusColor">
+        @Model.userStatusMsg for user '@Model.fullName'
+    </div>
+}
+
+@if (Model.isValidUser)
+{
+    <br />
+    <div style="border:3px double black; padding:15px; border-radius:7px">
+        @Model.getJsonUserData()
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="bordered-round" style="font-weight:bold; background-color: #ededed">USER ROLES</div>
+            @if (Model.roles.Count() > 0)
+            {
+                foreach (MetricDM.Models.userRole ur in Model.roles)
+                {
+                    <div style="text-align:left" title="@ur.roleDesc">
+                        <span class="" style="color:darkgreen;display:inline-block; min-width:85px">[@ur.appProduct]</span>
+                        <span style="font-weight:bold">@ur.roleName</span>
+                        @if (!String.IsNullOrEmpty(ur.metricNames))
+                        {
+                            <span>(For: @ur.metricNames)</span>
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                <div style="color:red">There are no Roles defined for this user</div>
+            }
+        </div>
+        <div class="col-xs-6">
+            <div class="bordered-round" style="font-weight:bold; background-color: #ededed">USER BUILDINGS</div>
+            @if (Model.buildings.Count() > 0)
+            {
+                foreach (MetricDM.Models.building ub in Model.buildings)
+                {
+                    <div>
+                        @ub.buildingName
+                    </div>
+                }
+            }
+            else
+            {
+                <div style="color:red">There are no Buildings Assigned to this user</div>
+            }
+        </div>
+    </div>
+}
+
+
+<div style="text-align:left; width:80%">
+    <br /><br />
+    <div>LDAP Authentication Test</div>
+    <div>User Id: <input id="userId" type="text" /></div>
+    <div>User Pw: <input id="userPwd" type="text" /></div>
+    <div><button id="btnSubmit">AD Logon TEST</button></div>
+</div>
+
+<br />
+<hr />
+@if (Session["userRole"] != null)
+{
+    <div>
+        <span style="color:blue">ROLES: </span>
+        User Session Roles are: @Session["userRole"].ToString()
+    </div>
+}
+<br />
+<div>
+    Check If I have this role:
+    <input type="text" id="txtRole" />
+    <input type="button" id="b1" value="Check Role" />
+</div>
+<br />
+<div>
+    Check If I have this Building:
+    <input type="text" id="txtBuilding" />
+    <input type="button" id="b2" value="Check Building" />
+</div>
+
+
+<br /><br /><br />
+
+@if (User.IsInRole("ADMIN"))
+{
+    <div class="bordered-round">
+        This section Should be visible for ADMIN ONLY!<br />
+        Some Admin Stuff here.
+    </div>
+}
+<br />@if (User.IsInRole("MANAGER"))
+{
+    <div class="bordered-round">
+        This section Should be visible for MANAGERS ONLY!
+        <br />
+        Some Manager Stuff here.
+    </div>
+}
+<br />
+@if (User.IsInRole("RZ_ADMIN"))
+{
+    <div class="bordered-round">
+        This section Should be visible for RZ_ADMIN ONLY!<br />
+        Some Red Zone Stuff here.
+    </div>
+}
+<br />
+@*@if (Session["userRoles"].ToString().Contains("|999|"))
+    {
+        <div class="bordered-round">
+            Session User Buildings: @Session["userRoles"]
+        </div>
+    }*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#btnGetUserInfo').click(function () {
+            var userSSO = $('#txtUserId').val();
+            if (userSSO == "") {
+                alert("User Id is required.");
+            }
+            else {
+                window.location.href = "/Account/userInquire/?userSSO=" + userSSO;
+            }
+        });
+
+        $('#btnSubmit').click(function () {
+            var ui = $('#userId').val();
+            var up = $('#userPwd').val();
+            window.location.href = "/Account/userInquire/?userSSO=" + ui + "^" + up;
+        });
+
+        $('#b1').click(function () {
+            //alert(hasRole("AdmiN"));
+            var roleToInspect = $('#txtRole').val().toUpperCase();
+            if (roleToInspect == "") { alert("Enter a valid Role."); }
+            else if (hasRole(roleToInspect)) { alert("Yes, you are an " + roleToInspect); }
+            else{ alert("NO! You are not an " + roleToInspect); }
+        });
+        $('#b2').click(function () {
+            var b = $('#txtBuilding').val().toUpperCase();  //User entered value
+            //alert("Current building List is: " + getUserBuildings());
+            if (b == "") { alert("Enter a valid Building."); }
+            else if (hasBuilding(b) ) { alert("Yes, building '" + b + "' is assigned to you."); }
+            else { alert("NO, building '" + b + "' is NOT assigned to you."); }
+        });
+
+    }); // End of Document->Ready
+
+</script>

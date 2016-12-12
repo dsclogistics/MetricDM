@@ -19,8 +19,8 @@ namespace MetricDM.Models
         {
             this.MTRC_METRIC_PERIOD_VALUE = new HashSet<MTRC_METRIC_PERIOD_VALUE>();
             this.MTRC_BLDG_MTRC_PERIOD = new HashSet<MTRC_BLDG_MTRC_PERIOD>();
-            this.MTRC_MPBG = new HashSet<MTRC_MPBG>();
             this.MTRC_WMS_BLDG_XREF = new HashSet<MTRC_WMS_BLDG_XREF>();
+            this.MTRC_MPBG = new HashSet<MTRC_MPBG>();
             this.RZ_BLDG_ACTION_PLAN = new HashSet<RZ_BLDG_ACTION_PLAN>();
             this.RZ_BLDG_AUTHORIZATION = new HashSet<RZ_BLDG_AUTHORIZATION>();
         }
@@ -38,9 +38,9 @@ namespace MetricDM.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MTRC_BLDG_MTRC_PERIOD> MTRC_BLDG_MTRC_PERIOD { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MTRC_MPBG> MTRC_MPBG { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MTRC_WMS_BLDG_XREF> MTRC_WMS_BLDG_XREF { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MTRC_MPBG> MTRC_MPBG { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RZ_BLDG_ACTION_PLAN> RZ_BLDG_ACTION_PLAN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -14,12 +14,6 @@ namespace MetricDM.Models
     
     public partial class MTRC_METRIC
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MTRC_METRIC()
-        {
-            this.MTRC_METRIC_PERIOD = new HashSet<MTRC_METRIC_PERIOD>();
-        }
-    
         public int mtrc_id { get; set; }
         public short data_type_id { get; set; }
         public string mtrc_name { get; set; }
@@ -34,7 +28,5 @@ namespace MetricDM.Models
         public string mtrc_na_allow_yn { get; set; }
     
         public virtual MTRC_DATA_TYPE MTRC_DATA_TYPE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MTRC_METRIC_PERIOD> MTRC_METRIC_PERIOD { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace MetricDM.Models
         public long mtrc_period_val_id { get; set; }
         public int mtrc_period_id { get; set; }
         public short dsc_mtrc_lc_bldg_id { get; set; }
-        public Nullable<int> tm_period_id { get; set; }
+        public int tm_period_id { get; set; }
         public System.DateTime mtrc_period_val_added_dtm { get; set; }
         public string mtrc_period_val_added_by_usr_id { get; set; }
         public Nullable<System.DateTime> mtrc_period_val_upd_dtm { get; set; }

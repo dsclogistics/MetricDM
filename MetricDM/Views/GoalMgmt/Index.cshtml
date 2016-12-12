@@ -1,0 +1,100 @@
+﻿@model IEnumerable<MetricDM.Models.MTRC_MPG>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.mpg_less_val)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mpg_less_eq_val)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mpg_greater_val)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mpg_greater_eq_val)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mpg_equal_val)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mpg_score)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mpg_display_text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mpg_allow_bldg_override)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mpg_start_eff_dtm)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mpg_end_eff_dtm)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MTRC_METRIC_PERIOD.mtrc_period_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MTRC_PRODUCT.prod_name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.mpg_less_val)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mpg_less_eq_val)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mpg_greater_val)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mpg_greater_eq_val)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mpg_equal_val)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mpg_score)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mpg_display_text)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mpg_allow_bldg_override)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mpg_start_eff_dtm)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mpg_end_eff_dtm)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MTRC_METRIC_PERIOD.mtrc_period_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MTRC_PRODUCT.prod_name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.mpg_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.mpg_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.mpg_id })
+        </td>
+    </tr>
+}
+
+</table>
