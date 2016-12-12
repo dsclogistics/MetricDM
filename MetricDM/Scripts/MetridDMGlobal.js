@@ -5,6 +5,17 @@
 //================ USER AUTHENTICATION RELATED FUNCTIONS =============================
 var SESSION_EXP = 60;   // Define The Maximum Session Inactivity Timeout (In Minutes)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+function showAlert(msg, msgStyle, reload) {
+    var msgClass = "alert-" + msgStyle;
+    if (reload == 'Y') { $('#reloadPage').val('Y'); }
+    if (msgStyle == null || msgStyle == "") { msgClass = ""; }
+    $("#msgFormBodyData").removeClass("alert-warning");
+    $("#msgFormBodyData").removeClass("alert-danger");
+    if (msgStyle) { $("#msgFormBodyData").addClass(msgClass); }
+    $("#msgFormBodyData").html(msg);
+    $('#msgForm').modal('show');
+}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 function getUsrAutToken() {
     $.ajax({
         //url: '@Url.Action("getNewCAMid", "cognosUtils")',
@@ -33,10 +44,10 @@ function setUsrIdentity(usrName, usrRole, usrToken) {
         window.localStorage.setItem("usrRole", usrRole);
         window.localStorage.setItem("usrToken", usrToken);
         window.localStorage.setItem("tokenDate", tokenDate);
-        alert("User Information Successfully written to local Storage");
+        showAlert("User Information Successfully written to local Storage");
     }
     else {
-        alert("Invalid User Information. Token Cannot Be written to local Storage");
+        showAlert("Invalid User Information. Token Cannot Be written to local Storage");
     }
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -45,12 +56,12 @@ function isUsrTokenValid() {
     var tokenDt = new Date(localStorage.getItem("tokenDate"));
     var tokenAge = Math.ceil(((new Date() - tokenDt) / 1000) / 60);     // In Minutes    
     if (!tokenId || tokenId == 'undefined') {
-        alert("User Not Defined");
+        showAlert("User Not Defined");
         return false;  //CAMid does not exist
     }
     //If the Token Date does not exist, is blank, undefined or it is greater than 60 minutes, then it is considered invalid
-    if (!tokenAge || tokenAge == 'undefined' || tokenAge > SESSION_EXP) { alert("Token Expired!" + tokenAge); return false; }       //Set the Timeout valid time of the Token to be 60 minutes (After 60 minutes it is considered Invalid)
-    alert("User Session Token was " + tokenAge + " minutes Old before being reset.");
+    if (!tokenAge || tokenAge == 'undefined' || tokenAge > SESSION_EXP) { showAlert("Token Expired!" + tokenAge); return false; }       //Set the Timeout valid time of the Token to be 60 minutes (After 60 minutes it is considered Invalid)
+    showAlert("User Session Token was " + tokenAge + " minutes Old before being reset.");
     window.localStorage.setItem("tokenDate", new Date());   //Reset the access date every time we verify that the token is valid
     return true;
 }
