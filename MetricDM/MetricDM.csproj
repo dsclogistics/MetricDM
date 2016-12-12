@@ -241,6 +241,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BuildingController.cs" />
+    <Compile Include="Controllers\GoalMgmtController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MetricPeriodController.cs" />
     <Compile Include="Controllers\UserMgmtController.cs" />
@@ -524,6 +525,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\_UserInfo.cshtml" />
     <Content Include="Views\Account\userInquire.cshtml" />
+    <Content Include="Views\GoalMgmt\Create.cshtml" />
+    <Content Include="Views\GoalMgmt\Delete.cshtml" />
+    <Content Include="Views\GoalMgmt\Details.cshtml" />
+    <Content Include="Views\GoalMgmt\Edit.cshtml" />
+    <Content Include="Views\GoalMgmt\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
