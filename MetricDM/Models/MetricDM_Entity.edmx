@@ -806,6 +806,18 @@ warning 6002: The table/view 'DSC_MTRC_DEV.dbo.MTRC_WMS_BLDG_XREF' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="relationship5">
+          <End Role="MTRC_METRIC" Type="Self.MTRC_METRIC" Multiplicity="1" />
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC">
+              <PropertyRef Name="mtrc_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="relationship51">
           <End Role="DSC_APP_USER" Type="Self.DSC_APP_USER" Multiplicity="1" />
           <End Role="MTRC_USER_APP_ROLES" Type="Self.MTRC_USER_APP_ROLES" Multiplicity="*" />
@@ -863,6 +875,18 @@ warning 6002: The table/view 'DSC_MTRC_DEV.dbo.MTRC_WMS_BLDG_XREF' does not have
             </Principal>
             <Dependent Role="RZ_BLDG_AUTHORIZATION">
               <PropertyRef Name="app_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship6">
+          <End Role="MTRC_TIME_PERIOD_TYPE" Type="Self.MTRC_TIME_PERIOD_TYPE" Multiplicity="1" />
+          <End Role="MTRC_METRIC_PERIOD" Type="Self.MTRC_METRIC_PERIOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_TIME_PERIOD_TYPE">
+              <PropertyRef Name="tpt_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="tpt_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1055,6 +1079,10 @@ warning 6002: The table/view 'DSC_MTRC_DEV.dbo.MTRC_WMS_BLDG_XREF' does not have
             <End Role="DSC_EMPLOYEE" EntitySet="DSC_EMPLOYEE" />
             <End Role="DSC_APP_USER" EntitySet="DSC_APP_USER" />
           </AssociationSet>
+          <AssociationSet Name="relationship5" Association="Self.relationship5">
+            <End Role="MTRC_METRIC" EntitySet="MTRC_METRIC" />
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+          </AssociationSet>
           <AssociationSet Name="relationship51" Association="Self.relationship51">
             <End Role="DSC_APP_USER" EntitySet="DSC_APP_USER" />
             <End Role="MTRC_USER_APP_ROLES" EntitySet="MTRC_USER_APP_ROLES" />
@@ -1074,6 +1102,10 @@ warning 6002: The table/view 'DSC_MTRC_DEV.dbo.MTRC_WMS_BLDG_XREF' does not have
           <AssociationSet Name="relationship56" Association="Self.relationship56">
             <End Role="DSC_APP_USER" EntitySet="DSC_APP_USER" />
             <End Role="RZ_BLDG_AUTHORIZATION" EntitySet="RZ_BLDG_AUTHORIZATION" />
+          </AssociationSet>
+          <AssociationSet Name="relationship6" Association="Self.relationship6">
+            <End Role="MTRC_TIME_PERIOD_TYPE" EntitySet="MTRC_TIME_PERIOD_TYPE" />
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
           </AssociationSet>
           <AssociationSet Name="relationship8" Association="Self.relationship8">
             <End Role="DSC_LC" EntitySet="DSC_LC" />
@@ -1276,6 +1308,14 @@ warning 6002: The table/view 'DSC_MTRC_DEV.dbo.MTRC_WMS_BLDG_XREF' does not have
             <End Role="RZ_BLDG_ACTION_PLAN" EntitySet="RZ_BLDG_ACTION_PLAN" />
             <End Role="RZ_BAP_METRICS" EntitySet="RZ_BAP_METRICS" />
           </AssociationSet>
+          <AssociationSet Name="relationship5" Association="DSC_MTRC_DEVModel.relationship5">
+            <End Role="MTRC_METRIC" EntitySet="MTRC_METRIC" />
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+          </AssociationSet>
+          <AssociationSet Name="relationship6" Association="DSC_MTRC_DEVModel.relationship6">
+            <End Role="MTRC_TIME_PERIOD_TYPE" EntitySet="MTRC_TIME_PERIOD_TYPE" />
+            <End Role="MTRC_METRIC_PERIOD" EntitySet="MTRC_METRIC_PERIOD" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="DSC_APP_USER">
           <Key>
@@ -1429,6 +1469,7 @@ warning 6002: The table/view 'DSC_MTRC_DEV.dbo.MTRC_WMS_BLDG_XREF' does not have
           <Property Name="mtrc_max_str_size" Type="Int16" />
           <Property Name="mtrc_na_allow_yn" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="MTRC_DATA_TYPE" Relationship="DSC_MTRC_DEVModel.relationship13" FromRole="MTRC_METRIC" ToRole="MTRC_DATA_TYPE" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD" Relationship="DSC_MTRC_DEVModel.relationship5" FromRole="MTRC_METRIC" ToRole="MTRC_METRIC_PERIOD" />
         </EntityType>
         <EntityType Name="MTRC_METRIC_HIERARCHY">
           <Key>
@@ -1469,6 +1510,8 @@ warning 6002: The table/view 'DSC_MTRC_DEV.dbo.MTRC_WMS_BLDG_XREF' does not have
           <NavigationProperty Name="MTRC_MPBG" Relationship="DSC_MTRC_DEVModel.relationship29" FromRole="MTRC_METRIC_PERIOD" ToRole="MTRC_MPBG" />
           <NavigationProperty Name="MTRC_MP_REASON" Relationship="DSC_MTRC_DEVModel.relationship38" FromRole="MTRC_METRIC_PERIOD" ToRole="MTRC_MP_REASON" />
           <NavigationProperty Name="MTRC_MGMT_AUTH_NEW" Relationship="DSC_MTRC_DEVModel.relationship44" FromRole="MTRC_METRIC_PERIOD" ToRole="MTRC_MGMT_AUTH_NEW" />
+          <NavigationProperty Name="MTRC_METRIC" Relationship="DSC_MTRC_DEVModel.relationship5" FromRole="MTRC_METRIC_PERIOD" ToRole="MTRC_METRIC" />
+          <NavigationProperty Name="MTRC_TIME_PERIOD_TYPE" Relationship="DSC_MTRC_DEVModel.relationship6" FromRole="MTRC_METRIC_PERIOD" ToRole="MTRC_TIME_PERIOD_TYPE" />
         </EntityType>
         <EntityType Name="MTRC_METRIC_PERIOD_VALUE">
           <Key>
@@ -1622,6 +1665,7 @@ warning 6002: The table/view 'DSC_MTRC_DEV.dbo.MTRC_WMS_BLDG_XREF' does not have
           <Property Name="tpt_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="tpt_name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="MTRC_TM_PERIODS" Relationship="DSC_MTRC_DEVModel.relationship21" FromRole="MTRC_TIME_PERIOD_TYPE" ToRole="MTRC_TM_PERIODS" />
+          <NavigationProperty Name="MTRC_METRIC_PERIOD" Relationship="DSC_MTRC_DEVModel.relationship6" FromRole="MTRC_TIME_PERIOD_TYPE" ToRole="MTRC_METRIC_PERIOD" />
         </EntityType>
         <EntityType Name="MTRC_TM_PERIODS">
           <Key>
@@ -2225,6 +2269,30 @@ warning 6002: The table/view 'DSC_MTRC_DEV.dbo.MTRC_WMS_BLDG_XREF' does not have
             </Principal>
             <Dependent Role="RZ_BAP_METRICS">
               <PropertyRef Name="rz_bap_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship5">
+          <End Type="DSC_MTRC_DEVModel.MTRC_METRIC" Role="MTRC_METRIC" Multiplicity="1" />
+          <End Type="DSC_MTRC_DEVModel.MTRC_METRIC_PERIOD" Role="MTRC_METRIC_PERIOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_METRIC">
+              <PropertyRef Name="mtrc_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="mtrc_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relationship6">
+          <End Type="DSC_MTRC_DEVModel.MTRC_TIME_PERIOD_TYPE" Role="MTRC_TIME_PERIOD_TYPE" Multiplicity="1" />
+          <End Type="DSC_MTRC_DEVModel.MTRC_METRIC_PERIOD" Role="MTRC_METRIC_PERIOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MTRC_TIME_PERIOD_TYPE">
+              <PropertyRef Name="tpt_id" />
+            </Principal>
+            <Dependent Role="MTRC_METRIC_PERIOD">
+              <PropertyRef Name="tpt_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

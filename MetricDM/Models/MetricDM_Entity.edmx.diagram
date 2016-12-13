@@ -76,6 +76,8 @@
         <AssociationConnector Association="DSC_MTRC_DEVModel.relationship35" />
         <AssociationConnector Association="DSC_MTRC_DEVModel.relationship40" />
         <AssociationConnector Association="DSC_MTRC_DEVModel.relationship36" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship5" />
+        <AssociationConnector Association="DSC_MTRC_DEVModel.relationship6" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

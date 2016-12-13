@@ -64,5 +64,7 @@ namespace MetricDM.Models
         public virtual ICollection<MTRC_MP_REASON> MTRC_MP_REASON { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MTRC_MGMT_AUTH_NEW> MTRC_MGMT_AUTH_NEW { get; set; }
+        public virtual MTRC_METRIC MTRC_METRIC { get; set; }
+        public virtual MTRC_TIME_PERIOD_TYPE MTRC_TIME_PERIOD_TYPE { get; set; }
     }
 }
