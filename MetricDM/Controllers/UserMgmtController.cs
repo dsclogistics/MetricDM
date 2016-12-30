@@ -41,14 +41,26 @@ namespace MetricDM.Controllers
                         string[] words = search.Split(' ');
                         string word0 = words[0];
                         string word1 = words[1];
+                        return View(appUserList.Where(x => (x.app_user_full_name.Contains(word0) && x.app_user_full_name.Contains(word1)) 
+                                                        || (x.app_user_email_addr.Contains(word0) && x.app_user_email_addr.Contains(word1))
+                                                        || (x.app_user_sso_id.Contains(word0) && x.app_user_sso_id.Contains(word1)))
+                                                        .OrderBy(x => x.app_user_sso_id)
+                                                        .ThenBy(x => x.app_user_full_name).ToList().ToPagedList(page ?? 1, pageSize ?? 10));
                     }
                     catch
                     {
-
+                        return View(appUserList.Where(x => x.app_user_full_name.Contains(search) 
+                                                        || x.app_user_email_addr.Contains(search) 
+                                                        || x.app_user_sso_id.Contains(search) 
+                                                        || x.DSC_EMPLOYEE.dsc_emp_first_name.Contains(search)
+                                                        || x.DSC_EMPLOYEE.dsc_emp_last_name.Contains(search)
+                                                        || x.DSC_EMPLOYEE.dsc_emp_perm_id.ToString().Contains(search)
+                                                        || x.DSC_EMPLOYEE.dsc_emp_adp_id.Contains(search) 
+                                                        || x.DSC_EMPLOYEE.dsc_emp_email_addr.Contains(search))
+                                                        .OrderBy(x => x.app_user_sso_id)
+                                                        .ThenBy(x => x.app_user_full_name).ToList().ToPagedList(page ?? 1, pageSize ?? 10));
                     }
                 }
-
-                return View(appUserList.ToList());
             }
             else
             {
