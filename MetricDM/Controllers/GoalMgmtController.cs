@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -178,6 +179,99 @@ namespace MetricDM.Controllers
                 }
             }
             return PartialView(goalDetailViewModel);
+        }
+
+        //POST: _Detail
+        [HttpPost]
+        public string _UserRoleAssign(string raw_json)
+        {
+            string msg = addEnterpriseGoal(raw_json);
+
+            return msg;
+        }
+
+        private string addEnterpriseGoal(string raw_json)
+        {
+            string msg = "Success";
+
+            try
+            {
+                //Parse JSON
+                JObject parsed_result = JObject.Parse(raw_json);
+
+                // Get parameters from parsed JSON
+                // - Metric Period
+                // - Prod Id
+                // - (Bldg Id)
+                // - New interpretted rule
+                // - New Eff Start Date
+                // - New Eff End Date
+                int mpId = 1;
+                int prodId = 1;
+                double mpg_less_val = 1.00;
+                string start = "2016-01-01";
+                string end = "2060-12-31";
+
+                DateTime startDtm = DateTime.ParseExact(start, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                DateTime endDtm = DateTime.ParseExact(end, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+
+
+
+                // Enforce New Eff Start Date as greater than or equal to current month (depends on the time period type).
+                // - Return error if violated
+
+                // If New Eff Date range leaves a date range where there is no active enterprise goal, return error
+
+                // If overlaps with a goal with the same rule, return message.
+
+                // Check if datetime conflicts with any future goals
+                // - If so, indicate which future goals will be affected and ask user whether it's okay to affect the future records.
+                // - If user says No, cancel. If user says Yes, modify effective date or delete record for future records.
+
+                // If overwriting current month, check to see if current goal was used to generate rows in the RZ_MTRC_PERIOD_VAL_GOAL table
+                // - If so, return error
+                // - Else, overwrite effective end date of current goal. 
+
+                // If never used, overwrite old end effective date. Do this for ALL conflicts (including currently defined goal).
+
+                // Write new record
+
+                // 
+                if (msg == "Success")
+                {
+                    msg = "";
+                }
+                else
+                {
+                    //Begin Add Transaction
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+
+                            if (ModelState.IsValid)
+                            {
+                                //db.MTRC_USER_APP_ROLES.Add(addRow);
+                            }
+
+                            db.SaveChanges();
+
+                            transaction.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            msg = e.Message;
+                            transaction.Rollback();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                msg = e.Message;
+            }
+
+            return msg;
         }
 
     }

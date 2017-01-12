@@ -217,22 +217,29 @@
         </table>
     </div>
 
-    <div class="row" style="margin:0;">
+    <div class="row" style="margin:0; margin-bottom:10px">
         <table>
             <tr>
                 <td>
                     <span>Effective Date: &nbsp;</span>
                 </td>
                 <td>
-                    <div class="input-group date" data-provide="datepicker">
-                        <input type="text" class="form-control">
-                        <div class="input-group-addon">
+                    <div class="input-group input-daterange" data-provide="datepicker">
+                        <input type="text" class="form-control" name="start" />
+                        <span class="input-group-addon">to</span>
+                        @*<div class="input-group-addon">
                             <span class="glyphicon glyphicon-th"></span>
-                        </div>
+                        </div>*@
+                        <input type="text" class="form-control" name="end"  value="12/31/2060"/>
                     </div>
                 </td>
             </tr>
         </table>
+    </div>
+
+    <div style="text-align:left">
+        <button type="button" class="btn btn-primary" id="btnSaveGoal">Save</button>
+        <button type="button" class="btn btn-primary" id="btnCancelEdit">Cancel</button>
     </div>
 </div>
 
