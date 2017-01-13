@@ -304,7 +304,12 @@
         }).done(function (d) {
             //Execute this code After the Ajax call completes successfully
             //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
-            showAlert('Success!', '', 'Y');
+            if (d == "Success") {
+                showAlert('Success!', '', 'Y');
+            }
+            else {
+                showAlert('An error occurred.', '', 'Y');
+            }
         });
 
     });
@@ -339,7 +344,12 @@
             }).done(function (d) {
                 //Execute this code After the Ajax call completes successfully
                 //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
-                showAlert('Success!', '', 'Y');
+                if (d == "Success") {
+                    showAlert('Success!', '', 'Y');
+                }
+                else {
+                    showAlert('An error occurred.', '', 'Y');
+                }
             });
         }
 
@@ -376,7 +386,12 @@
             }).done(function (d) {
                 //Execute this code After the Ajax call completes successfully
                 //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
-                showAlert('User Successfully Disabled.', '', 'Y');
+                if (d == "Success") {
+                    showAlert('Success!', '', 'Y');
+                }
+                else {
+                    showAlert('An error occurred.', '', 'Y');
+                }
             });
         }
 
@@ -409,7 +424,12 @@
             }).done(function (d) {
                 //Execute this code After the Ajax call completes successfully
                 //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
-                showAlert('User Successfully Enabled.', '', 'Y');
+                if (d == "Success") {
+                    showAlert('Success!', '', 'Y');
+                }
+                else {
+                    showAlert('An error occurred.', '', 'Y');
+                }
             });
         }
 

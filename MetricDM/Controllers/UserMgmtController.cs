@@ -700,7 +700,7 @@ namespace MetricDM.Controllers
                                 {
                                     muar_id = app_user_role_id,
                                     mtrc_period_id = Convert.ToInt16(mpId),
-                                    mma_eff_start_date = DateTime.Today,
+                                    mma_eff_start_date = DateTime.Now,
                                     mma_eff_end_date = new DateTime(2060, 12, 31)
                                 };
 
@@ -712,31 +712,30 @@ namespace MetricDM.Controllers
                             }
 
                             //Delete records that are currently being unassigned and whose effective start date is today.
-                            foreach (int mpId in userRoleMtrcListCreatedToday.Except(newUserRoleMtrcList))
-                            {
-                                var removeRow = db.MTRC_MGMT_AUTH_NEW.Where(x => x.muar_id == app_user_role_id &&
-                                                                    x.mtrc_period_id == mpId).First();
+                            //foreach (int mpId in userRoleMtrcListCreatedToday.Except(newUserRoleMtrcList))
+                            //{
+                            //    var removeRow = db.MTRC_MGMT_AUTH_NEW.Where(x => x.muar_id == app_user_role_id &&
+                            //                                        x.mtrc_period_id == mpId).First();
 
-                                if (ModelState.IsValid)
-                                {
-                                    db.MTRC_MGMT_AUTH_NEW.Remove(removeRow);
-                                }
-                            }
+                            //    if (ModelState.IsValid)
+                            //    {
+                            //        db.MTRC_MGMT_AUTH_NEW.Remove(removeRow);
+                            //    }
+                            //}
 
-                            //Update records that are currently being unassigned and whose effective start date is NOT today.
-                            //Set effective end date to yesterday's date
-                            foreach (int mpId in userRoleMtrcList.Except(newUserRoleMtrcList).Except(userRoleMtrcListCreatedToday))
+                            //Update records that are currently being unassigned. Set effective end datetime to now.
+                            //foreach (int mpId in userRoleMtrcList.Except(newUserRoleMtrcList).Except(userRoleMtrcListCreatedToday))
+                            foreach (int mpId in userRoleMtrcList.Except(newUserRoleMtrcList))
                             {
                                 var updateRow = db.MTRC_MGMT_AUTH_NEW.Where(x => x.muar_id == app_user_role_id &&
-                                                                    x.mtrc_period_id == mpId).First();
-                                updateRow.mma_eff_end_date = DateTime.Today.AddDays(-1);
+                                                                    x.mtrc_period_id == mpId).OrderByDescending(x => x.mma_eff_end_date).First();
+                                updateRow.mma_eff_end_date = DateTime.Now;
 
                                 if (ModelState.IsValid)
                                 {
                                     db.Entry(updateRow).State = EntityState.Modified;
                                 }
                             }
-
 
                             db.SaveChanges();
                             transaction.Commit();
@@ -788,7 +787,7 @@ namespace MetricDM.Controllers
                             {
                                 muar_id = app_user_role_id,
                                 mtrc_period_id = Convert.ToInt16(mpId),
-                                mma_eff_start_date = DateTime.Today,
+                                mma_eff_start_date = DateTime.Now,
                                 mma_eff_end_date = new DateTime(2060, 12, 31)
                             };
 
@@ -800,24 +799,24 @@ namespace MetricDM.Controllers
                         }
 
                         //Delete records that are currently being unassigned and whose effective start date is today.
-                        foreach (int mpId in userRoleMtrcListCreatedToday.Except(newUserRoleMtrcList))
-                        {
-                            var removeRow = db.MTRC_MGMT_AUTH_NEW.Where(x => x.muar_id == app_user_role_id &&
-                                                                x.mtrc_period_id == mpId).First();
+                        //foreach (int mpId in userRoleMtrcListCreatedToday.Except(newUserRoleMtrcList))
+                        //{
+                        //    var removeRow = db.MTRC_MGMT_AUTH_NEW.Where(x => x.muar_id == app_user_role_id &&
+                        //                                        x.mtrc_period_id == mpId).First();
 
-                            if (ModelState.IsValid)
-                            {
-                                db.MTRC_MGMT_AUTH_NEW.Remove(removeRow);
-                            }
-                        }
+                        //    if (ModelState.IsValid)
+                        //    {
+                        //        db.MTRC_MGMT_AUTH_NEW.Remove(removeRow);
+                        //    }
+                        //}
 
-                        //Update records that are currently being unassigned and whose effective start date is NOT today.
-                        //Set effective end date to yesterday's date
-                        foreach (int mpId in userRoleMtrcList.Except(newUserRoleMtrcList).Except(userRoleMtrcListCreatedToday))
+                        //Update records that are currently being unassigned. Set effective end datetime to now.
+                        //foreach (int mpId in userRoleMtrcList.Except(newUserRoleMtrcList).Except(userRoleMtrcListCreatedToday))
+                        foreach (int mpId in userRoleMtrcList.Except(newUserRoleMtrcList))
                         {
                             var updateRow = db.MTRC_MGMT_AUTH_NEW.Where(x => x.muar_id == app_user_role_id &&
-                                                                x.mtrc_period_id == mpId).First();
-                            updateRow.mma_eff_end_date = DateTime.Today.AddDays(-1);
+                                                                x.mtrc_period_id == mpId).OrderByDescending(x => x.mma_eff_end_date).First();
+                            updateRow.mma_eff_end_date = DateTime.Now;
 
                             if (ModelState.IsValid)
                             {
@@ -888,12 +887,12 @@ namespace MetricDM.Controllers
                     {
                         try
                         {
-                            MTRC_USER_APP_ROLES newRow = db.MTRC_USER_APP_ROLES.Where(x => x.app_user_id == app_user_id && x.mar_id == mar_id).First();
+                            var mTRC_USER_APP_ROLES = db.MTRC_USER_APP_ROLES.Where(x => x.app_user_id == app_user_id && x.mar_id == mar_id);
+                            MTRC_USER_APP_ROLES newRow = new MTRC_USER_APP_ROLES();
 
                             // If no record exists, create record
-                            if (newRow == null)
+                            if (mTRC_USER_APP_ROLES.Count() == 0)
                             {
-                                
                                 newRow = new MTRC_USER_APP_ROLES
                                 {
                                     app_user_id = app_user_id,
@@ -912,6 +911,7 @@ namespace MetricDM.Controllers
                             // If record exists, update effective end date
                             else
                             {
+                                newRow = mTRC_USER_APP_ROLES.First();
                                 newRow.muar_eff_end_dt = new DateTime(2060, 12, 31);
 
                                 if (ModelState.IsValid)
