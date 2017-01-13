@@ -255,6 +255,21 @@ namespace MetricDM.Controllers
             return msg;
         }
 
+        //POST: DisableUser
+        public string _DisableUser(string raw_json)
+        {
+            string msg = disableUser(raw_json);
+
+            return msg;
+        }
+        //POST: EnableUser
+        public string _EnableUser(string raw_json)
+        {
+            string msg = enableUser(raw_json);
+
+            return msg;
+        }
+
         //-------------------------------------------------------------------------------------------------------------------
         //-------------//
         //"API" Catalog//
@@ -1062,7 +1077,7 @@ namespace MetricDM.Controllers
         }
 
         // Reenables an app user
-        private string reenableUser(string raw_json)
+        private string enableUser(string raw_json)
         {
             string msg = "Success";
 

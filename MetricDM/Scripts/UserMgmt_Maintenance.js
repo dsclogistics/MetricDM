@@ -346,6 +346,74 @@
     });
     //-------------------------------------------------------------------------------------------------
 
+    //-------------------------------------------------------------------------------------------------
+    //Disable/Enable Buttons
+    //-------------------------------------------------------------------------------------------------
+    $(document).on('click', '#btnDisableUser', function () {
+        var userId = $("#hdnAppUserId").val();
+
+        if (userId == null) { userId = 0; }
+
+        data = {
+            app_user_id: userId
+        }
+
+        var next = confirm("This action will disable all login access for the user. Are you sure you want to continue?");
+
+        if (next) {
+            // ------------ Make the Ajax Call --------------------------------------------------------------
+            $.ajax({
+                url: '/UserMgmt/_DisableUser',     // the url where we want to direct our Ajax Call
+                method: "POST",
+                cache: false,
+                data: { raw_json: JSON.stringify(data) },     //<---- Data Parameters (if not already passed in the Url)
+                //--- On error, execute this function ------
+                error: function (xhr, status, error) {
+                    //var err = eval("(" + xhr.responseText + ")");
+                    //$("#mdlMtrcAsgnBody").html(xhr.responseText);
+                    alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
+                }
+            }).done(function (d) {
+                //Execute this code After the Ajax call completes successfully
+                //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
+                showAlert('User Successfully Disabled.', '', 'Y');
+            });
+        }
+
+    });
+
+    $(document).on('click', '#btnEnableUser', function () {
+        var userId = $("#hdnAppUserId").val();
+
+        if (userId == null) { userId = 0; }
+
+        data = {
+            app_user_id: userId
+        }
+
+        var next = confirm("This action will reenable all login access previous held by the user. Are you sure you want to continue?");
+
+        if (next) {
+            // ------------ Make the Ajax Call --------------------------------------------------------------
+            $.ajax({
+                url: '/UserMgmt/_EnableUser',     // the url where we want to direct our Ajax Call
+                method: "POST",
+                cache: false,
+                data: { raw_json: JSON.stringify(data) },     //<---- Data Parameters (if not already passed in the Url)
+                //--- On error, execute this function ------
+                error: function (xhr, status, error) {
+                    //var err = eval("(" + xhr.responseText + ")");
+                    //$("#mdlMtrcAsgnBody").html(xhr.responseText);
+                    alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
+                }
+            }).done(function (d) {
+                //Execute this code After the Ajax call completes successfully
+                //Insert the partial view retrieved into the output 'mdlBldgAsgnBody' section of modal
+                showAlert('User Successfully Enabled.', '', 'Y');
+            });
+        }
+
+    });
 });
 
 

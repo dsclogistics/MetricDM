@@ -311,6 +311,20 @@
             </div>
         </div>
 
+        <div id="divEnableBtns" style="text-align:left">
+            @{ 
+                string showDisable = "";
+                string showEnable = "display:none";
+                if(Model.appUserDetails.app_user_disabled_yn == "Y")
+                {
+                    showDisable = "display:none";
+                    showEnable = "";
+                }
+            }
+            <button type="button" class="btn btn-primary" id="btnDisableUser" style="@showDisable">Disable User</button>
+            <button type="button" class="btn btn-primary" id="btnEnableUser" style="@showEnable">Reenable User</button>
+        </div>
+
         @Html.ActionLink("Back", "Index")
     </div>
 
