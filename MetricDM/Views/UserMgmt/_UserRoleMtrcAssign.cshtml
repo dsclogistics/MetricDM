@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-md-5">
         <div class="row"><span>Unassigned:</span></div>
-        <select name="leftMtrcList" id="unasgndMtrcList" size="10" style="min-width:300px">
+        <select name="leftMtrcList" id="unasgndMtrcList" multiple ="multiple" size="10" style="min-width:300px">
             @foreach (var mtrc in Model.unassignedMtrcList)
             {
                 var mtrcProd = mtrc.MTRC_METRIC_PRODUCTS.Where(x => x.prod_id == Model.product.prod_id);
@@ -30,7 +30,7 @@
     </div>
     <div class="col-md-5">
         <div class="row"><span>Assigned:</span></div>
-        <select name="asgndMtrcList" id="asgndMtrcList" size="10" style="min-width:300px">
+        <select name="asgndMtrcList" id="asgndMtrcList" multiple ="multiple" size="10" style="min-width:300px">
             @foreach (var mtrc in Model.userRoleMtrcList)
             {
                 var mtrcProd = mtrc.MTRC_METRIC_PRODUCTS.Where(x => x.prod_id == Model.product.prod_id);

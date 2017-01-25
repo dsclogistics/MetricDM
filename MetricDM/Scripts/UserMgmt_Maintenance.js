@@ -40,11 +40,19 @@
     });
     //-------------------------------------------------------------------------------------------------
     $("#mdlBldgAsgnBody").on('click', '#btnAsgnBldg', function () {
-        moveSelectListItem('unasgndBldgList', 'asgndBldgList', false);
+        //moveSelectListItem('unasgndBldgList', 'asgndBldgList', false);
+        moveListItems('unasgndBldgList', 'asgndBldgList', false);
+    });
+    $("#mdlBldgAsgnBody").on('click', '#btnUnasgnBldg', function () {
+        //moveSelectListItem('asgndBldgList', 'unasgndBldgList', false);
+        moveListItems('asgndBldgList', 'unasgndBldgList', false);
     });
     //-------------------------------------------------------------------------------------------------
-    $("#mdlBldgAsgnBody").on('click', '#btnUnasgnBldg', function () {
-        moveSelectListItem('asgndBldgList', 'unasgndBldgList', false);
+    $("#mdlBldgAsgnBody").on('dblclick', '#unasgndBldgList', function () {
+        moveListItems('unasgndBldgList', 'asgndBldgList', false);
+    });
+    $("#mdlBldgAsgnBody").on('dblclick', '#asgndBldgList', function () {
+        moveListItems('asgndBldgList', 'unasgndBldgList', false);
     });
     //-------------------------------------------------------------------------------------------------
     $("#mdlBldgAsgn").on('click', '#btnSaveBldgAsgn', function () {
@@ -116,11 +124,19 @@
     });
     //-------------------------------------------------------------------------------------------------
     $("#mdlMtrcAsgnBody").on('click', '#btnAsgnMtrc', function () {
-        moveSelectListItem('unasgndMtrcList', 'asgndMtrcList', true);
+        //moveSelectListItem('unasgndMtrcList', 'asgndMtrcList', true);
+        moveListItems('unasgndMtrcList', 'asgndMtrcList', true);
+    });
+    $("#mdlMtrcAsgnBody").on('click', '#btnUnasgnMtrc', function () {
+        //moveSelectListItem('asgndMtrcList', 'unasgndMtrcList', true);
+        moveListItems('asgndMtrcList', 'unasgndMtrcList', true);
     });
     //-------------------------------------------------------------------------------------------------
-    $("#mdlMtrcAsgnBody").on('click', '#btnUnasgnMtrc', function () {
-        moveSelectListItem('asgndMtrcList', 'unasgndMtrcList', true);
+    $("#mdlMtrcAsgnBody").on('dblclick', '#unasgndMtrcList', function () {
+        moveListItems('unasgndMtrcList', 'asgndMtrcList', true);
+    });
+    $("#mdlMtrcAsgnBody").on('dblclick', '#asgndMtrcList', function () {
+        moveListItems('asgndMtrcList', 'unasgndMtrcList', true);
     });
     //-------------------------------------------------------------------------------------------------
     $("#mdlMtrcAsgn").on('click', '#btnSaveMtrcAsgn', function () {
@@ -243,19 +259,35 @@
     });
     //-------------------------------------------------------------------------------------------------
     $("#mdlRoleAsgnBody").on('click', '#btnAsgnRoleBldg', function () {
-        moveSelectListItem('unasgndRoleBldgList', 'asgndRoleBldgList', false);
+        //moveSelectListItem('unasgndRoleBldgList', 'asgndRoleBldgList', false);
+        moveListItems('unasgndRoleBldgList', 'asgndRoleBldgList', false);
+    });
+    $("#mdlRoleAsgnBody").on('click', '#btnUnasgnRoleBldg', function () {
+        //moveSelectListItem('asgndRoleBldgList', 'unasgndRoleBldgList', false);
+        moveListItems('asgndRoleBldgList', 'unasgndRoleBldgList', false);
     });
     //-------------------------------------------------------------------------------------------------
-    $("#mdlRoleAsgnBody").on('click', '#btnUnasgnRoleBldg', function () {
-        moveSelectListItem('asgndRoleBldgList', 'unasgndRoleBldgList', false);
+    $("#mdlRoleAsgnBody").on('dblclick', '#unasgndRoleBldgList', function () {
+        moveListItems('unasgndRoleBldgList', 'asgndRoleBldgList', false);
+    });
+    $("#mdlRoleAsgnBody").on('dblclick', '#asgndRoleBldgList', function () {
+        moveListItems('asgndRoleBldgList', 'unasgndRoleBldgList', false);
     });
     //-------------------------------------------------------------------------------------------------
     $("#mdlRoleAsgnBody").on('click', '#btnAsgnRoleMtrc', function () {
-        moveSelectListItem('unasgndRoleMtrcList', 'asgndRoleMtrcList', true);
+        //moveSelectListItem('unasgndRoleMtrcList', 'asgndRoleMtrcList', true);
+        moveListItems('unasgndRoleMtrcList', 'asgndRoleMtrcList', true);
+    });
+    $("#mdlRoleAsgnBody").on('click', '#btnUnasgnRoleMtrc', function () {
+        //moveSelectListItem('asgndRoleMtrcList', 'unasgndRoleMtrcList', true);
+        moveListItems('asgndRoleMtrcList', 'unasgndRoleMtrcList', true);
     });
     //-------------------------------------------------------------------------------------------------
-    $("#mdlRoleAsgnBody").on('click', '#btnUnasgnRoleMtrc', function () {
-        moveSelectListItem('asgndRoleMtrcList', 'unasgndRoleMtrcList', true);
+    $("#mdlRoleAsgnBody").on('dblclick', '#unasgndRoleMtrcList', function () {
+        moveListItems('unasgndRoleMtrcList', 'asgndRoleMtrcList', true);
+    });
+    $("#mdlRoleAsgnBody").on('dblclick', '#asgndRoleMtrcList', function () {
+        moveListItems('asgndRoleMtrcList', 'unasgndRoleMtrcList', true);
     });
     //-------------------------------------------------------------------------------------------------
     $("#mdlRoleAsgn").on('click', '#btnSaveRoleAsgn', function () {
@@ -461,6 +493,22 @@ function moveSelectListItem(fromListId, toListId, byId) {
             sortSelect(fromList);
             sortSelect(toList);
         }
+    }
+}
+
+function moveListItems(fromListId, toListId, byId) {
+    var fromList = document.getElementById(fromListId);
+    var toList = document.getElementById(toListId);
+
+    $(fromList).find(':selected').appendTo(toList);
+
+    if (byId == true) {
+        sortSelectById(fromList);
+        sortSelectById(toList);
+    }
+    else {
+        sortSelect(fromList);
+        sortSelect(toList);
     }
 }
 
