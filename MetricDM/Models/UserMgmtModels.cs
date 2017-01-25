@@ -33,7 +33,20 @@ namespace MetricDM.Models
 
     //Metadata for DSC_APP_USER
     [MetadataType(typeof(DSC_EMPLOYEEMetaData))]
-    public partial class DSC_EMPLOYEE { }
+    public partial class DSC_EMPLOYEE {
+        public String dsc_emp_init_work_dt_display
+        {
+            get
+            {
+                string returnString = this.dsc_emp_init_work_dt.ToString();
+                if (returnString == "1/1/0001 12:00:00 AM")
+                {
+                    returnString = "";
+                }
+                return returnString;
+            }
+        }
+    }
 
     public class DSC_EMPLOYEEMetaData
     {
@@ -63,6 +76,8 @@ namespace MetricDM.Models
         public Nullable<System.DateTime> dsc_emp_hire_dt { get; set; }
         [Display(Name = "Initial Work Date")]
         public System.DateTime dsc_emp_init_work_dt { get; set; }
+        [Display(Name = "Initial Work Date")]
+        public string dsc_emp_init_work_dt_display { get; set; }
         [Display(Name = "Termination Date")]
         public Nullable<System.DateTime> dsc_emp_term_dt { get; set; }
         [Display(Name = "Supervisor Id")]
