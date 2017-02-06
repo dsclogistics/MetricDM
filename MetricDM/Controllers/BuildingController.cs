@@ -36,6 +36,7 @@ namespace MetricDM.Controllers
             return View(dSC_MTRC_LC_BLDG);
         }
 
+
         // GET: DSC_BUILDING/Create
         public ActionResult Create()
         {
