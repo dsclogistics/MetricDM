@@ -1,0 +1,246 @@
+﻿@model MetricDM.Models.GoalDetailViewModel
+
+<style>
+    .singleVal{
+        display:none;
+    }
+
+    .btwnVal{
+        display:none;
+    }
+</style>
+
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.datepicker').datepicker();
+    })
+</script>
+
+@***********************@
+@*Building Goal History*@
+@***********************@
+<div class="row" style="margin:0; margin-bottom: 10px">
+    <div>
+        @if (ViewBag.bldgId > 0)
+        {
+            if (Model.buildingGoalHistory.Count() > 0)
+            {
+                <h4 style="text-align:left">Building Goal History:</h4>
+                <table class="table table-condensed table-hover" border="1">
+                    <tr style="background-color:gainsboro">
+                        <th style="text-align:center;">
+                            @*@Html.DisplayNameFor(model => model.mTRC_MPG.MTRC_METRIC_PERIOD.mtrc_period_name)*@
+                            @Html.DisplayNameFor(model => model.buildingGoalHistory.First().bldgName)
+                        </th>
+                        <th style="text-align:center;">
+                            Active Rule
+                        </th>
+                        <th style="text-align:center;">
+                            @Html.DisplayNameFor(model => model.buildingGoalHistory.First().mTRC_MPBG.mpbg_display_text)
+                        </th>
+                        <th style="text-align:center;">
+                            @Html.DisplayNameFor(model => model.enterpriseGoalHistory.First().startDtm)
+                        </th>
+                        <th style="text-align:center;">
+                            @Html.DisplayNameFor(model => model.enterpriseGoalHistory.First().endDtm)
+                        </th>
+
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model.buildingGoalHistory)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.bldgName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.displayRule)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.mTRC_MPBG.mpbg_display_text)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.startDtm)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.endDtm)
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+                </table>
+                <div style="text-align:left">
+                    <button type="button" class="btn btn-primary" id="btnEditGoal">Set New Goal</button>
+                </div>
+            }
+            else
+            {
+                <span style="color:red">There have not been any building goals defined.</span>
+
+                <div style="text-align:left">
+                    <button type="button" class="btn btn-primary" id="btnEditGoal">Set New Goal</button>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@*************************@
+@*Enterprise Goal History*@
+@*************************@
+<div class="row" style="margin:0; margin-bottom: 10px">
+    <div>
+        @if (Model.enterpriseGoalHistory.Count() > 0)
+        {
+            <h4 style="text-align:left">Enterprise Goal History:</h4>
+            <table class="table table-condensed table-hover" border="1">
+                <tr style="background-color:gainsboro">
+                    <th style="text-align:center;">
+                        @*@Html.DisplayNameFor(model => model.mTRC_MPG.MTRC_METRIC_PERIOD.mtrc_period_name)*@
+                        @Html.DisplayNameFor(model => model.enterpriseGoalHistory.First().mtrc_prod_display_text)
+                    </th>
+                    <th style="text-align:center;">
+                        Active Rule
+                    </th>
+                    <th style="text-align:center;">
+                        @Html.DisplayNameFor(model => model.enterpriseGoalHistory.First().mTRC_MPG.mpg_display_text)
+                    </th>
+                    <th style="text-align:center;">
+                        @Html.DisplayNameFor(model => model.enterpriseGoalHistory.First().startDtm)
+                    </th>
+                    <th style="text-align:center;">
+                        @Html.DisplayNameFor(model => model.enterpriseGoalHistory.First().endDtm)
+                    </th>
+
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.enterpriseGoalHistory)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mtrc_prod_display_text)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.displayRule)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mTRC_MPG.mpg_display_text)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.startDtm)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.endDtm)
+                </td>
+                <td></td>
+            </tr>
+            }
+            </table>
+
+            if (ViewBag.bldgId <= 0)
+            {
+                <div style="text-align:left">
+                    <button type="button" class="btn btn-primary" id="btnEditGoal">Set New Goal</button>
+                </div>
+            }
+        }
+        else
+        {
+            <span style="color:red">There is no enterprise goal defined.</span>
+        }
+    </div>
+</div>
+
+@{
+    List<SelectListItem> ruleOptions = new List<SelectListItem>();
+    ruleOptions.Add(new SelectListItem { Text = "Is greater than", Value = "Is greater than" });
+    ruleOptions.Add(new SelectListItem { Text = "Is greater than or equal to", Value = "Is greater than or equal to" });
+    ruleOptions.Add(new SelectListItem { Text = "Is less than", Value = "Is less than" });
+    ruleOptions.Add(new SelectListItem { Text = "Is less than or equal to", Value = "Is less than or equal to" });
+    ruleOptions.Add(new SelectListItem { Text = "Is equal to", Value = "Is equal to" });
+    ruleOptions.Add(new SelectListItem { Text = "Between", Value = "Between" });
+    ViewBag.ruleOptions = ruleOptions;
+}
+
+@***********@
+@*Goal Edit*@
+@***********@
+<div id="divEditGoal" style="margin-top:20px; display:none">
+    <h4 style="text-align:left">Change Active Goal:</h4>
+
+    <div class="row" style="margin:0; margin-bottom:10px;">
+        <table>
+            <tr>
+                <td>
+                    Rule: &nbsp;
+                </td>
+                <td>
+                    <div style="text-align:left; padding-left:0px">@Html.DropDownList("ruleOptions", null, "--", htmlAttributes: new { @class = "form-control", style = "min-width:125px; max-width:250px;" })</div>
+                </td>
+                <td class="singleVal">
+                    &nbsp; Value: &nbsp;
+                </td>
+                <td class="singleVal">
+                    <div style="text-align:left; padding-left:0px">@Html.TextBox("singleRuleVal", "", new { @class = "form-control", placeholder = "Enter Value", style = "min-width:100%; " })</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="row" style="margin:0; margin-bottom:10px">
+        <table>
+            <tr class="btwnVal">
+                <td>
+                    Values: &nbsp;
+                </td>
+                <td>
+                    <div style="text-align:left; padding-left:0px">@Html.TextBox("btwnRuleVal1", "", new { @class = "form-control", placeholder = "Enter Value", style = "min-width:100%; " })</div>
+                </td>
+                <td>
+                    <div style="text-align:left; padding-left:0px">&nbsp;&nbsp;and&nbsp;&nbsp;</div>
+                </td>
+                <td>
+                    <div style="text-align:left; padding-left:0px">@Html.TextBox("btwnRuleVal2", "", new { @class = "form-control", placeholder = "Enter Value", style = "min-width:100%; " })</div>
+                </td>
+            </tr>
+            <tr class="btwnVal">
+                <td></td>
+                <td style="text-align:left"><input id="chkVal1" type="checkbox" />Inclusive</td>
+                <td></td>
+                <td style="text-align:left"><input id="chkVal2" type="checkbox" />Inclusive</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="row" style="margin:0; margin-bottom:10px">
+        <table>
+            <tr>
+                <td>
+                    <span>Effective Date: &nbsp;</span>
+                </td>
+                <td>
+                    <div class="input-group input-daterange" data-provide="datepicker">
+                        <input type="text" class="form-control" name="start" />
+                        <span class="input-group-addon">to</span>
+                        @*<div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </div>*@
+                        <input type="text" class="form-control" name="end"  value="12/31/2060"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="text-align:left">
+        <button type="button" class="btn btn-primary" id="btnSaveGoal">Save</button>
+        <button type="button" class="btn btn-primary" id="btnCancelEdit">Cancel</button>
+    </div>
+</div>
+
+

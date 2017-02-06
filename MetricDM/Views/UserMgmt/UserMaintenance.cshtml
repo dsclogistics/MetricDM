@@ -113,8 +113,8 @@
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="input-group">
-                                @Html.LabelFor(model => model.employeeDetails.dsc_emp_init_work_dt, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
-                                @Html.EditorFor(model => model.employeeDetails.dsc_emp_init_work_dt, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", disabled = "disabled" } })
+                                @Html.LabelFor(model => model.employeeDetails.dsc_emp_init_work_dt_display, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                                @Html.EditorFor(model => model.employeeDetails.dsc_emp_init_work_dt_display, new { htmlAttributes = new { @class = "form-control", placeholder = "", style = "max-width:100%", disabled = "disabled" } })
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
@@ -309,6 +309,20 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div id="divEnableBtns" style="text-align:left">
+            @{ 
+                string showDisable = "";
+                string showEnable = "display:none";
+                if(Model.appUserDetails.app_user_disabled_yn == "Y")
+                {
+                    showDisable = "display:none";
+                    showEnable = "";
+                }
+            }
+            <button type="button" class="btn btn-primary" id="btnDisableUser" style="@showDisable">Disable User</button>
+            <button type="button" class="btn btn-primary" id="btnEnableUser" style="@showEnable">Reenable User</button>
         </div>
 
         @Html.ActionLink("Back", "Index")

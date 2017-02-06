@@ -13,6 +13,9 @@ namespace MetricDM.AppCode
     {
         private string api_url = AppCode.Util.getAPIurl();
 
+        // -------------------- GOALS --------------------
+
+
         //*******************************************************************************************
         //***************************    API HELPER FUNCTION   **************************************
         //** Just pass an endpoint and a payload to post and this helper will fetch the JSON data  **

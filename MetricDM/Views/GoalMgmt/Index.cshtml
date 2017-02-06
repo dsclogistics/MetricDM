@@ -1,100 +1,258 @@
-﻿@model IEnumerable<MetricDM.Models.MTRC_MPG>
+﻿@model MetricDM.Models.GoalMgmtViewModel
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<script src="~/Scripts/GoalMgmt_Index.js"></script>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.mpg_less_val)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.mpg_less_eq_val)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.mpg_greater_val)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.mpg_greater_eq_val)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.mpg_equal_val)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.mpg_score)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.mpg_display_text)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.mpg_allow_bldg_override)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.mpg_start_eff_dtm)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.mpg_end_eff_dtm)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MTRC_METRIC_PERIOD.mtrc_period_name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MTRC_PRODUCT.prod_name)
-        </th>
-        <th></th>
-    </tr>
+<h2>Enterprise Goal Management</h2>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.mpg_less_val)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.mpg_less_eq_val)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.mpg_greater_val)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.mpg_greater_eq_val)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.mpg_equal_val)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.mpg_score)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.mpg_display_text)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.mpg_allow_bldg_override)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.mpg_start_eff_dtm)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.mpg_end_eff_dtm)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MTRC_METRIC_PERIOD.mtrc_period_name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MTRC_PRODUCT.prod_name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.mpg_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.mpg_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.mpg_id })
-        </td>
-    </tr>
-}
+@*Global Variables*@
+<input type="hidden" id="hdnProdId" value="@Model.enterpriseGoal.mTRC_MPG.prod_id" />
+<input type="hidden" id="hdnMpId" value="@Model.enterpriseGoal.mTRC_MPG.mtrc_period_id" />
 
-</table>
+
+<div class="panel panel-default">
+    @***************@
+    @*Panel Heading*@
+    @***************@
+    <div class="panel-heading">
+        <div class="row" style="margin:0; margin-bottom:10px">
+            <div class="col-sm-5" style="text-align:right; padding:0px 0px"><span class="form-control" style="font-weight:bold; max-width:150px; float:right; background-color: lightgray; border-top-right-radius:0px; border-bottom-right-radius:0px">Select a Product: </span></div>
+            <div class="col-sm-5" style="text-align: left; padding-left: 0px">@Html.DropDownList("prod_sel_list", null, "--- Select Product ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:350px; border-bottom-left-radius:0px; border-top-left-radius:0px;" })</div>
+            <div class="col-sm-2" style="text-align:right;vertical-align:central">
+                @if (ViewBag.prodId > 0)
+                {
+                    <a id="lnkEnterpriseSummary" href="#">Enterprise Summary</a>
+                }
+            </div>
+        </div>
+        
+        <div class="row" style="margin:0; margin-top:10px">
+            <div class="col-sm-5" style="text-align:right; padding:0px 0px"><span class="form-control" style="font-weight:bold; max-width:150px; float:right; background-color: lightgray; border-top-right-radius:0px; border-bottom-right-radius:0px">Select a Metric: </span></div>
+            <div class="col-sm-5" style="text-align: left; padding-left: 0px">@Html.DropDownList("mp_sel_list", null, "--- Select Metric ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:350px; border-bottom-left-radius:0px; border-top-left-radius:0px;" })</div>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>
+
+    <div class="panel-body ">
+    @if (Model != null)
+    {
+        @*****************@
+        @*Enterprise Goal*@
+        @*****************@
+        if (Model.enterpriseGoal.mtrc_prod_display_text != null)
+        {
+            <h4>Default Enterprise Goal</h4>
+            
+            <table class="table table-condensed table-hover" border="1">
+                <tr style="background-color:gainsboro">
+                    <th style="text-align:center;">
+                        @*@Html.DisplayNameFor(model => model.mTRC_MPG.MTRC_METRIC_PERIOD.mtrc_period_name)*@
+                        @Html.DisplayNameFor(model => model.enterpriseGoal.mtrc_prod_display_text)
+                    </th>
+                    <th style="text-align:center;">
+                        Active Rule
+                    </th>
+                    @*<th style="text-align:center;">
+                        @Html.DisplayNameFor(model => model.enterpriseGoal.mTRC_MPG.mpg_display_text)
+                    </th>*@
+                    <th style="text-align:center;">
+                        @Html.DisplayNameFor(model => model.enterpriseGoal.startDtm)
+                    </th>
+                    <th style="text-align:center;">
+                        @Html.DisplayNameFor(model => model.enterpriseGoal.endDtm)
+                    </th>
+                    <th></th>
+                </tr>
+
+                <tr>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.mTRC_MPG.MTRC_METRIC_PERIOD.mtrc_period_name)*@
+                        @Html.DisplayFor(model => model.enterpriseGoal.mtrc_prod_display_text)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.enterpriseGoal.displayRule)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(model => model.enterpriseGoal.mTRC_MPG.mpg_display_text)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(model => model.enterpriseGoal.startDtm)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.enterpriseGoal.endDtm)
+                    </td>
+                    <td>
+                        <a href="#" id="lnkManageEntGoal">Manage</a>
+                        @*@Html.ActionLink("Manage", "Detail", new { prodId = Model.enterpriseGoal.mTRC_MPG.prod_id, mpId = Model.enterpriseGoal.mTRC_MPG.mtrc_period_id })*@
+                    </td>
+                </tr>
+            </table>
+        }
+
+        @****************@
+        @*Building Goals*@
+        @****************@
+        if (Model.buildingGoalList.Count() > 0)
+        {
+            <h4>Building Level Goals</h4>
+
+            <div style="overflow-y:scroll">
+                <table class="table table-condensed table-hover" border="1" style="margin:0;padding:0">
+                    <tr style="background-color:gainsboro;">
+                        <th style="text-align:center;width:20%">
+                            @*@Html.DisplayNameFor(model => model.mTRC_MPG.MTRC_METRIC_PERIOD.mtrc_period_name)*@
+                            @Html.DisplayNameFor(model => model.buildingGoalList.First().bldgName)
+                        </th>
+                        <th style="text-align:center;width:20%">
+                            Active Rule
+                        </th>
+                        @*<th style="text-align:center;width:15%">
+                            @Html.DisplayNameFor(model => model.buildingGoalList.First().mTRC_MPBG.mpbg_display_text)
+                        </th>*@
+                        <th style="text-align:center;width:15%">
+                            @Html.DisplayNameFor(model => model.buildingGoalList.First().startDtm)
+                        </th>
+                        <th style="text-align:center;width:15%">
+                            @Html.DisplayNameFor(model => model.buildingGoalList.First().endDtm)
+                        </th>
+                        <th style="text-align: center; width:15%">Future Goal Defined</th>
+                        <th style="text-align:center;width:10%"></th>
+                    </tr>
+                </table>
+            </div>
+            <div style="height:450px; overflow-y:scroll; overflow-x:hidden;">
+                <table class="table table-condensed table-hover" border="1">
+                    @foreach (var item in Model.buildingGoalList)
+                    {
+                        <tr>
+                            <td style="width:20%">
+                                @*@Html.DisplayFor(modelItem => item.mTRC_MPG.MTRC_METRIC_PERIOD.mtrc_period_name)*@
+                                @Html.DisplayFor(modelItem => item.bldgName)
+                            </td>
+                            <td style="width:20%">
+                                @Html.DisplayFor(modelItem => item.displayRule)
+                            </td>
+                            @*<td style="width:15%">
+                                @Html.DisplayFor(modelItem => item.mTRC_MPBG.mpbg_display_text)
+                            </td>*@
+                            <td style="width:15%">
+                                @Html.DisplayFor(modelItem => item.startDtm)
+                            </td>
+                            <td style="width:15%">
+                                @Html.DisplayFor(modelItem => item.endDtm)
+                            </td>
+                            <td style="width:15%">
+
+                            </td>
+                            <td style="width:10%">
+                                <input type="hidden" id="hdnBldgId" value="@item.bldgId" />
+                                <a href="#" id="lnkManageBldgGoal">Manage</a>
+                                @*@Html.ActionLink("Manage", "Detail", new { prodId = ViewBag.prodId, mpId = ViewBag.mpId, bldgId = item.bldgId })*@
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        }
+    }
+    </div>
+</div>
+
+<!-- Enterprise Goal Summary Modal -->
+<div id="mdlEnterpriseGoals" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="min-width: 800px; max-width: 800px">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header bg-Primary-Gradient">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Enterprise Goals</h4>
+            </div>
+
+            <div class="modal-body" id="mdlEnterpriseGoalsBody">
+                @if (Model != null)
+                {
+                    if (Model.enterpriseGoalList.Count() > 0)
+                    {
+                        <table class="table table-condensed table-hover" border="1">
+                            <tr style="background-color:gainsboro">
+                                <th style="text-align:center;">
+                                    @*@Html.DisplayNameFor(model => model.mTRC_MPG.MTRC_METRIC_PERIOD.mtrc_period_name)*@
+                                    @Html.DisplayNameFor(model => model.enterpriseGoalList.First().mtrc_prod_display_text)
+                                </th>
+                                <th style="text-align:center;">
+                                    Active Rule
+                                </th>
+                                <th style="text-align:center;">
+                                    @Html.DisplayNameFor(model => model.enterpriseGoalList.First().mTRC_MPG.mpg_display_text)
+                                </th>
+                                <th style="text-align:center;">
+                                    @Html.DisplayNameFor(model => model.enterpriseGoalList.First().startDtm)
+                                </th>
+                                <th style="text-align:center;">
+                                    @Html.DisplayNameFor(model => model.enterpriseGoalList.First().endDtm)
+                                </th>
+                            </tr>
+
+                            @foreach (var item in Model.enterpriseGoalList)
+                            {
+                                <tr>
+                                    <td>
+                                        @*@Html.DisplayFor(modelItem => item.mTRC_MPG.MTRC_METRIC_PERIOD.mtrc_period_name)*@
+                                        @Html.DisplayFor(modelItem => item.mtrc_prod_display_text)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.displayRule)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.mTRC_MPG.mpg_display_text)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.startDtm)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.endDtm)
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    }
+                }
+            </div>
+
+            <br />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Goal Management Modal -->
+<div id="mdlGoalMgmt" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width:80%">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header bg-Primary-Gradient">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Enterprise Goal Management</h4>
+            </div>
+
+            <div class="modal-body" id="mdlGoalMgmtBody">
+
+            </div>
+
+            <br />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>

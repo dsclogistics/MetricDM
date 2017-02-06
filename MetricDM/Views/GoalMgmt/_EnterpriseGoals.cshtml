@@ -1,0 +1,50 @@
+﻿
+
+<table class="table table-condensed table-hover" border="1">
+    <tr style="background-color:gainsboro">
+        <th style="text-align:center;">
+            @*@Html.DisplayNameFor(model => model.mTRC_MPG.MTRC_METRIC_PERIOD.mtrc_period_name)*@
+            @Html.DisplayNameFor(model => model.mtrc_prod_display_text)
+        </th>
+        <th style="text-align:center;">
+            Active Rule
+        </th>
+        <th style="text-align:center;">
+            @Html.DisplayNameFor(model => model.mTRC_MPG.mpg_display_text)
+        </th>
+        <th style="text-align:center;">
+            @Html.DisplayNameFor(model => model.startDtm)
+        </th>
+        <th style="text-align:center;">
+            @Html.DisplayNameFor(model => model.endDtm)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.mTRC_MPG.MTRC_METRIC_PERIOD.mtrc_period_name)*@
+                @Html.DisplayFor(modelItem => item.mtrc_prod_display_text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.displayRule)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mTRC_MPG.mpg_display_text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.startDtm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.endDtm)
+            </td>
+            <td>
+                @Html.ActionLink("Detail", "Detail", new { prodId = item.mTRC_MPG.prod_id, mpId = item.mTRC_MPG.mtrc_period_id })
+            </td>
+        </tr>
+    }
+
+</table>

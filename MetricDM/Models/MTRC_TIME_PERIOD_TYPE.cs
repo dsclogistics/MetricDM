@@ -18,6 +18,7 @@ namespace MetricDM.Models
         public MTRC_TIME_PERIOD_TYPE()
         {
             this.MTRC_TM_PERIODS = new HashSet<MTRC_TM_PERIODS>();
+            this.MTRC_METRIC_PERIOD = new HashSet<MTRC_METRIC_PERIOD>();
         }
     
         public short tpt_id { get; set; }
@@ -25,5 +26,7 @@ namespace MetricDM.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MTRC_TM_PERIODS> MTRC_TM_PERIODS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MTRC_METRIC_PERIOD> MTRC_METRIC_PERIOD { get; set; }
     }
 }
