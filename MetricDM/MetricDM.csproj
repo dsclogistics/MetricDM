@@ -243,6 +243,7 @@
     <Compile Include="Controllers\BuildingController.cs" />
     <Compile Include="Controllers\GoalMgmtController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MetricController.cs" />
     <Compile Include="Controllers\MetricPeriodController.cs" />
     <Compile Include="Controllers\UserMgmtController.cs" />
     <Compile Include="Global.asax.cs">
@@ -584,11 +585,9 @@
     <Content Include="Views\Building\Details.cshtml" />
     <Content Include="Views\Building\Edit.cshtml" />
     <Content Include="Views\Building\Index.cshtml" />
-    <Content Include="Views\MetricPeriod\Create.cshtml" />
-    <Content Include="Views\MetricPeriod\Delete.cshtml" />
-    <Content Include="Views\MetricPeriod\Edit.cshtml" />
-    <Content Include="Views\MetricPeriod\Index.cshtml" />
-    <Content Include="Views\MetricPeriod\MetricMaintenance.cshtml" />
+    <Content Include="Views\Metric\Create.cshtml" />
+    <Content Include="Views\Metric\Edit.cshtml" />
+    <Content Include="Views\Metric\Index.cshtml" />
     <Content Include="Views\MetricPeriod\_metricPeriodList.cshtml" />
     <Content Include="Views\MetricPeriod\_metricPeriodDetails.cshtml" />
     <Content Include="Views\MetricPeriod\AddMetricPeriod.cshtml" />
@@ -614,6 +613,7 @@
     <Content Include="Views\GoalMgmt\Index.cshtml" />
     <Content Include="Views\GoalMgmt\_EnterpriseGoals.cshtml" />
     <Content Include="Views\GoalMgmt\_Detail.cshtml" />
+    <Content Include="Views\MetricPeriod\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

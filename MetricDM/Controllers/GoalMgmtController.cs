@@ -206,9 +206,9 @@ namespace MetricDM.Controllers
                 // - New interpretted rule
                 // - New Eff Start Date
                 // - New Eff End Date
-                int mpId = 1;
-                int prodId = 1;
-                double mpg_less_val = 1.00;
+                //int mpId = 1;
+                //int prodId = 1;
+                //double mpg_less_val = 1.00;
                 string start = "2016-01-01";
                 string end = "2060-12-31";
 
