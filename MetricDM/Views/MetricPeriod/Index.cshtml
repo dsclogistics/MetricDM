@@ -174,10 +174,11 @@
             //DIV PERIOD LIST
             <input type="hidden" id="MtrcId" value="@Model.mtrc_id" />
             <div class="row" id="divPeriodList" style="border:0px double black; margin: 0px 0px">
-                <div class="row" style="border-bottom: 1px solid black; margin:0; "><h3><span style="font-weight:normal">@Model.mtrc_name</span> Metric Periods</h3></div>
+                <div class="row" style="border-bottom: 1px solid black; margin:0; ">
+                    <h3>@Model.mtrc_name Metric Periods</h3>
+                </div>
                 <div class="row" id="divPeriodListView" style="margin:0; margin-bottom:10px">
                     @Html.Action("_metricPeriodList")
-                    @*@Html.Action("Action", "optionalController", new { id = "someid" });*@
                 </div>
             </div>
             <br />
@@ -195,7 +196,7 @@
         }
         else
         {
-            <div style="color: red">
+            <div style="color: red; max-width:300px; margin:0 auto; border:4px double red; border-radius:7px; margin-top:20px; margin-bottom:20px; padding:20px; " >
                 There are no Details to Display. Select a value from the dropdown.
             </div>
         }

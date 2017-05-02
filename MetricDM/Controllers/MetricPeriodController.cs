@@ -23,12 +23,9 @@ namespace MetricDM.Controllers
             if (id > 0) 
             {
                 selectedMetric = db.MTRC_METRIC.Find(id);
+                if (selectedMetric != null)
                 ViewBag.data_type_id = new SelectList(db.MTRC_DATA_TYPE, "data_type_id", "data_type_name", selectedMetric.data_type_id);
             }
-            //if (selectedMetric == null)
-            //{
-            //    throw new Exception("The selected Metric does not exist");
-            //}
             return View(selectedMetric);
         }
 

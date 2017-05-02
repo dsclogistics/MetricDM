@@ -41,18 +41,21 @@
                 <td>
                     <input type="hidden" id="MPId" value="@item.mtrc_period_id"/>
                     <input type="button" class="btnMPDetails" value="Details" />
-                    @*@Html.ActionLink("Details", "_metricPeriodDetails", new { id=item.mtrc_period_id })*@
                 </td>
             </tr>
 }
 
     </table>
+    @if (((List<MetricDM.Models.MTRC_METRIC_PERIOD>)Model).Count == 0)
+    { 
+        <div style="border: 1px solid red; border-radius:4px; color:red; margin:0 auto; max-width:500px; padding: 15px; font-style:italic ">
+            No Metric Periods have been set up for this Metric
+        </div>    
+    }
 
     <hr />
     <div class="row" style="text-align:center">
-        @*<a href="/MetricPeriod/AddMetricPeriod">*@
         <input type="button" class="btn btn-primary" id="btnAddMP" value="Add New Metric Period" />
-        @*</a>*@
     </div>
     <br />
 </div>
