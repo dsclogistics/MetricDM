@@ -181,12 +181,10 @@
                     @Html.Action("_metricPeriodList")
                 </div>
             </div>
-            <br />
-            @*<div id="saveMessage" class="alert-success" style="display:none; font-size:large; font-weight:bold"> </div>*@
 
             //DIV OUTPUT
-            <div class="row" id="divOutput" style="border:0px double black; display:none; text-align:center; margin: 0px 0px">
-                <div class="row" style="border-bottom: 1px solid black; margin:0; "><h3>Metric Period Details</h3></div>
+            <div class="row" id="divOutput" style="border:4px double black; border-radius:4px; display:none; text-align:center; margin: 0px 0px">
+                <div class="row" style="border-bottom: 1px solid black; margin:0; background-color: #fafafa"><h3>Metric Period Details</h3></div>
                 <div id="msgLoading">
                     <br /><p>Please wait... Loading Info</p><img src="~/Images/ui-anim_basic_16x16.gif" /><br /><br />
                 </div>
@@ -355,11 +353,21 @@
             $(this).css("background-color", "white");
         });
 
+        //Force Uppercase text for Selected Fields in Add MP Details Popup View
+        $("#newMetricPeriodBody").on('change', ".mustUpperCase", function () {
+            $(this).val($(this).val().toUpperCase());
+        });
+
+        //Force Uppercase text for Selected Fields in Details View
+        $("#mpDetailsView").on('change', ".mustUpperCase", function () {
+            $(this).val($(this).val().toUpperCase());
+        });
+
+
         //Details Class of Button
         $(".btnMPDetails").click(function (e) {
-            var idToDisplay = $(this).siblings("#MPId").val();
-            //alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
-            //$("#divPeriodList").hide();
+            var mpIdToDisplay = $(this).siblings("#MPId").val();
+
             $("#divOutput").show();        //Show the panel that holds the Metric Period Details Partial View
             $("#msgLoading").show();
             $("#mpDetailsView").hide();
@@ -371,7 +379,7 @@
                 url: '/MetricPeriod/_metricPeriodDetails',     // the url where we want to direct our Ajax Call
                 method: "GET",
                 cache: false,
-                data: { id: idToDisplay },     //<---- Data Parameters (if not already passed in the Url)
+                data: { id: mpIdToDisplay },     //<---- Data Parameters (if not already passed in the Url)
                 //--- On error, execute this function ------
                 error: function (xhr, status, error) {
                     //var err = eval("(" + xhr.responseText + ")");
@@ -393,6 +401,9 @@
                 $(".color-defaulted-value").css("background-color", "white");
                 $(".save-metric-period").css("visibility", "visible");
                 $(".default-message").css("visibility", "hidden")
+
+                //Scroll to the bottom of the page so that the newly retrieved data becomes visible
+                window.scrollTo(0, document.body.scrollHeight);
             });
         });
 
