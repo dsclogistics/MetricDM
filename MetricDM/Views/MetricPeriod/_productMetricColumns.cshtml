@@ -1,0 +1,82 @@
+﻿@model IEnumerable<MetricDM.Models.dataPair>
+<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+
+<div class="panel panel-primary" style="margin:0 auto; max-width:95%; border-top-width:2px">
+    <div class="panel-heading">SELECT COLUMN ORDER DISPLAY ARRANGEMENT IN THE DASHBOARD</div>
+    <div class="panel-body" style="padding:3px">
+        <div>NOTE: Your New Metric Period will get displayed as a column in the Metric's Dashboard</div>
+        <div>Drag and drop the column for the new Metric to it's final desired position in the Dashboard</div>
+    @if (Model.Count() > 0)
+    {
+        <div id="menu-outer">
+                <div class="table1" >
+                    <ul id="horizontal-list" class="sortable">
+                        @foreach (var item in Model)
+                        {
+                            <li class="ui-state-default column" style="min-width:100px">
+                                <label style="min-width:70px"><span id="colName">@item.dataValue</span></label>
+                                <input type="hidden" name="colOrder" class="colOrder" value="@item.dataValue2" />
+                                <input type="hidden" name="mProdId" class="mProdId" value="@item.id" />
+                            </li>
+                        }
+                        <li class="ui-state-default column" style="min-width:100px">
+                            <label style="min-width:70px"><span id="colName" style="color:blue; font-weight:bold">NEW METRIC</span></label>
+                            <input type="hidden" name="colOrder" class="colOrder" value="999" />
+                            <input type="hidden" name="mProdId" class="mProdId" value="0" />
+                        </li>
+                    </ul>
+                </div>
+        </div>
+        <input type="button" id="btnReorder" value="View New Order" />
+    }
+    else
+    {
+        <div style="color:red;"> No Columns were retrieved from Database </div>
+    }
+
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $(".sortable").sortable({
+            items: "li:not(.placeholder)",
+            //placeholder: "ui-state-highlight",
+            placeholder: {
+                element: function (currentItem) {
+                    return $('<li><label style="min-width:70px; background-color:lightgreen; text-align:center;""><span id="colName">[MOVE HERE]</span></label></li>')[0];
+                },
+                update: function (container, p) {
+                    return;
+                }
+            },
+            containment: "parent",
+            containment: "#menu-outer",
+            helper: "clone",
+            //opacity: 0.8
+        });
+        $(".sortable").disableSelection();
+
+        $('#btnReorder').click(function () {
+            var message = "";
+            var newSeq = 10;
+            $('.column').each(function () {
+                var mProdId = $(this).find(".mProdId").first().val();
+                var colName = $(this).find("#colName").first().html();
+                var oldSeq = $(this).find(".colOrder").first().val();
+
+                if ((newSeq.toString()) != oldSeq && oldSeq != "999") {
+                    message = message + mProdId + "~" + colName + "~" + oldSeq + "~" + newSeq + ",\n";
+                }
+                //if ( newSeq.toString() != oldSeq) {
+                //    message = message + (oldSeq == "999") ? "": $(this).children("#colName").first().val() + "~" + oldSeq + "~" + newSeq + ",";
+                //}
+                newSeq = newSeq + 10;
+            });
+            if (message == "") message = "No changes Detected";
+            alert(message);
+        });
+
+    });
+</script>

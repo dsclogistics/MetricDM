@@ -5,16 +5,6 @@
 //================ USER AUTHENTICATION RELATED FUNCTIONS =============================
 var SESSION_EXP = 60;   // Define The Maximum Session Inactivity Timeout (In Minutes)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-function showAlert(msg, msgStyle, reload) {
-    var msgClass = "alert-" + msgStyle;
-    if (reload == 'Y') { $('#reloadPage').val('Y'); }
-    if (msgStyle == null || msgStyle == "") { msgClass = ""; }
-    $("#msgFormBodyData").removeClass("alert-warning");
-    $("#msgFormBodyData").removeClass("alert-danger");
-    if (msgStyle) { $("#msgFormBodyData").addClass(msgClass); }
-    $("#msgFormBodyData").html(msg);
-    $('#msgForm').modal('show');
-}
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 function getUsrAutToken() {
     $.ajax({
@@ -172,6 +162,33 @@ function showAlert(msg, msgStyle, reload) {
     $("#msgFormBodyData").html(msg);
     $('#msgForm').modal('show');
 }
+
+//Not Tested Function. Havinf issue with JQuery UI Library
+function showConfirmation(question) {
+    var defer = $.Deferred();
+    $('<div></div>')
+        .html(question)
+        .dialog({
+            autoOpen: true,
+            modal: true,
+            title: 'Confirmation',
+            buttons: {
+                "Yes/Continue": function () {
+                    defer.resolve('true');     //this text 'true' can be anything. But for this usage, it should be true or false.
+                    $(this).dialog("close");
+                },
+                "No/Cancel": function () {
+                    defer.resolve('false');   //this text 'false' can be anything. But for this usage, it should be true or false.
+                    $(this).dialog("close");
+                }
+            },
+            close: function () {
+                $(this).remove();
+            }
+        });
+    return defer.promise();
+}
+
 function notify(message, type) {
     //Requires bootstrap-notify.js and animate.css references
     switch (type) {

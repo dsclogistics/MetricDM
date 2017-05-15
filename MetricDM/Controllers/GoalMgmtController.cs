@@ -23,8 +23,8 @@ namespace MetricDM.Controllers
             List<MetricPeriodBuildingGoal> buildingGoalList = new List<MetricPeriodBuildingGoal>();
             List<MetricPeriodGoal> enterpriseGoalList = new List<MetricPeriodGoal>();
 
-            prodId = (prodId == null) ? 0 : prodId;    //Assign a Zero value to Id if it's null
-            mpId = (mpId == null) ? 0 : mpId;    //Assign a Zero value to Id if it's null
+            prodId = prodId ?? 0;     //Assign a Zero value to prodId if it's null
+            mpId = mpId ?? 0;         //Assign a Zero value to mpId if it's null
 
             ViewBag.prodId = prodId;
             ViewBag.mpId = mpId;
@@ -123,9 +123,9 @@ namespace MetricDM.Controllers
         public ActionResult _Detail(int? prodId, int? mpId, int? bldgId)
         {
             GoalDetailViewModel goalDetailViewModel = new GoalDetailViewModel();
-            prodId = (prodId == null) ? 0 : prodId;    //Assign a Zero value to Id if it's null
-            mpId = (mpId == null) ? 0 : mpId;
-            bldgId = (bldgId == null) ? 0 : bldgId;
+            prodId = prodId ?? 0;    //Assign a Zero value to Id if it's null
+            mpId = mpId ?? 0;
+            bldgId = bldgId ?? 0;
             ViewBag.prodId = prodId;
             ViewBag.mpId = mpId;
             ViewBag.bldgId = bldgId;
@@ -146,7 +146,8 @@ namespace MetricDM.Controllers
                             select new MetricPeriodGoal
                             {
                                 mTRC_MPG = a,
-                                mtrc_prod_display_text = c.mtrc_prod_display_text
+                                mtrc_prod_display_text = c.mtrc_prod_display_text,
+                                mtrc_period_id = a.mtrc_period_id.ToString()
                             };
 
                 goalDetailViewModel.enterpriseGoalHistory = query.ToList();
@@ -273,6 +274,194 @@ namespace MetricDM.Controllers
 
             return msg;
         }
+
+        public string _addSaveBuildingGoal(string prodId, string mpId, string bldgId, string mpGoal, string startDate, string endDate)
+        {
+            //Param "mpGoal" is a comma delimited field (Goal Condition, Goal value1, Goal Value2, bool 'include lower limit', bool 'include higuer limit'.
+            //Perform parameter Input Validation
+            string validationText = "";
+            int iprodId = 0;
+            int impId = 0;
+            int ibldgId = 0;
+            String[] mpGoalValues = mpGoal.Split(',');
+            DateTime goalStartDate = new DateTime();
+            DateTime goalEndDate = new DateTime();
+            validationText = Int32.TryParse(prodId, out iprodId) ? "" : "The Product Id Parameter is invalid\n";
+            validationText += Int32.TryParse(mpId, out impId) ? "" : "The Metric Period Id Parameter is invalid\n";
+            validationText += Int32.TryParse(bldgId, out ibldgId) ? "" : "The Building Id Parameter is invalid\n";
+            validationText += DateTime.TryParse(startDate, out goalStartDate) ? "" : "The Effective Goal Start Date is not valid.\n";
+            validationText += DateTime.TryParse(endDate, out goalEndDate) ? "" : "The Effective Goal End Date is not valid.\n";
+            if (validationText != "") { return validationText; }      //No need to continue if parameters passed are not valid
+
+            //Verify that this building is allowed to override the Enterprise Metric Goal
+            string overrideFlag = db.MTRC_MPG.FirstOrDefault(x => x.mtrc_period_id == impId && x.prod_id == iprodId).mpg_allow_bldg_override;
+            overrideFlag = overrideFlag ?? "N";
+            validationText += overrideFlag.Equals("N") ? "\nThe Selected Metric Cannot be Overriden at the Building Level." : "";
+
+            //Verify tha the Effective Start date of the New goal is valid. It cannot be on or before the last closed period.
+            var lastClosedMP = db.RZ_MTRC_PERIOD_STATUS.Include("MTRC_TM_PERIODS").Where(x => x.mtrc_period_id == impId && x.rz_mps_status == "Closed").OrderByDescending(o => o.tm_period_id).FirstOrDefault();
+            DateTime earliestGoalDate = DateTime.Today;
+
+            if (lastClosedMP == null) { earliestGoalDate = new DateTime(1900, 1, 1); }  //There are no previously closed periods for this Metric Period. The Start date can be any date after Jan 1, 1900
+            earliestGoalDate = lastClosedMP.MTRC_TM_PERIODS.tm_per_end_dtm;
+            if (goalStartDate <= earliestGoalDate) {
+                validationText += String.Format( "Invalid Goal Start Date.<br/>It Must be after the last closed period's end date:  [{0}]", earliestGoalDate);
+            }
+
+            //Verify that a valid goal syntax is received
+            if (mpGoalValues.Length < 2)
+            {
+                validationText += "The Goal Condition Symtax is not valid.\n";
+            }
+            else {
+                mpGoalValues[0] = mpGoalValues[0].Trim().ToUpper();
+                if (mpGoalValues[0].Equals("BETWEEN") && mpGoalValues.Length < 5) {
+                    validationText += "The Goal Condition Symtax is not valid.\n";
+                }
+            } 
+
+            if (validationText != "") { return validationText; }     
+            // ------------- Stop Here if there are any validation Errors
+
+            string displayText = "";
+            double value01 = 0;
+            double value02 = -999;
+            if (!Double.TryParse(mpGoalValues[1], out value01)){ return "The Specified Value is not valid. Data must be Numeric"; }
+
+            switch (mpGoalValues[0])
+            {
+                case "IS GREATER THAN":
+                    displayText += "> X";
+                    break;
+                case "IS GREATER THAN OR EQUAL TO":
+                    displayText += ">= X";
+                    break;
+                case "IS LESS THAN":
+                    displayText += "< X";
+                    break;
+                case "IS LESS THAN OR EQUAL TO":
+                    displayText += "<= X";
+                    break;
+                case "IS EQUAL TO":
+                    displayText += " = X";
+                    break;
+                case "BETWEEN":
+                    if (!Double.TryParse(mpGoalValues[2], out value02)){ return "The Specified Maximum Value is not valid. Data must be Numeric"; }
+                    if (mpGoalValues[3].Equals("true")) {
+                        displayText += ">= X";
+                    } else {
+                        displayText += "> X";
+                    }
+                    if (mpGoalValues[4].Equals("true")) { displayText += " and <= Y"; }
+                    else { displayText += " and < Y"; }
+                    break;
+                default:
+                    validationText += "Goal Condition Syntax is Invalid";
+                    break;
+            }
+
+            if (validationText != "") { return validationText; }     
+
+
+            //Retrieve the current Metric Periods Metadata
+            MTRC_METRIC_PERIOD currentMP = db.MTRC_METRIC_PERIOD.Find(impId);
+            if (currentMP == null) { return "Metric Period No Found in Database."; }
+
+            double minValue = (currentMP.mtrc_period_min_val == null) ? (double)currentMP.MTRC_METRIC.mtrc_min_val : (double)currentMP.mtrc_period_min_val;
+            double maxValue = (currentMP.mtrc_period_max_val == null) ? (double)currentMP.MTRC_METRIC.mtrc_max_val : (double)currentMP.mtrc_period_max_val;
+            int decimals = (currentMP.mtrc_period_max_dec_places == null) ? (int)currentMP.MTRC_METRIC.mtrc_max_dec_places : (int)currentMP.mtrc_period_max_dec_places;
+            string valueTypeToken = currentMP.MTRC_METRIC.MTRC_DATA_TYPE.data_type_token;  //Possible Values: str,char,int,dec,cur,pct
+
+            //Verify that the New Values are withing the accepted Metric or Metric Period Min/Max Range
+            if (value01 < minValue || value01 > maxValue ) { return "Specified Goal Value is not within the Acceptable Metric Values Range"; }
+            if (value02 != -999 &&  (value02 < minValue || value02 > maxValue) ) { return "One or more of the Specified Goal Values is not within the Acceptable Metric Values Range"; }
+
+
+            //Retrieve all current MP building goals that are still active and set their end effective dates accordingly then add the new goal record
+            List<MTRC_MPBG> activeGoals = db.MTRC_MPBG.Where(x => x.dsc_mtrc_lc_bldg_id == ibldgId && x.mtrc_period_id == impId && x.prod_id == iprodId && x.mpbg_end_eff_dtm > goalStartDate).ToList();
+            activeGoals.ForEach(x => x.mpbg_end_eff_dtm = goalStartDate.AddDays(-1));
+
+            MTRC_MPBG newGoal = new MTRC_MPBG
+            {
+                dsc_mtrc_lc_bldg_id = (short)ibldgId,
+                mtrc_period_id = impId,
+                prod_id = (short)iprodId,
+                mpbg_score = 1,
+                mpbg_start_eff_dtm = goalStartDate,
+                mpbg_end_eff_dtm = new DateTime(2060, 12, 31)
+            };
+
+            //displayText
+            string formatingString = "";
+            switch(valueTypeToken){
+                case "str":
+                case "char":
+                    displayText = displayText.Replace("X", value01.ToString()).Replace("Y", value02.ToString());                    
+                    break;
+                case "int":
+                    formatingString = "N0";
+                    break;
+                case "dec":
+                    formatingString = "N" + decimals.ToString();
+                    break;
+                case "cur":
+                    formatingString = "C" + decimals.ToString();
+                    break;
+                case "pct":
+                    formatingString = "P" + decimals.ToString();
+                    break;
+                default:
+                    break;            
+            }
+            displayText = displayText.Replace("X", value01.ToString(formatingString)).Replace("Y", value02.ToString(formatingString));
+
+            newGoal.mpbg_display_text = displayText;
+
+            switch (mpGoalValues[0])
+            {
+                case "IS GREATER THAN":
+                    newGoal.mpbg_greater_val = (decimal)value01;
+                    break;
+                case "IS GREATER THAN OR EQUAL TO":
+                    newGoal.mpbg_greater_eq_val = (decimal)value01;
+                    break;
+                case "IS LESS THAN":
+                    newGoal.mpbg_less_val = (decimal)value01;
+                    break;
+                case "IS LESS THAN OR EQUAL TO":
+                    newGoal.mpbg_less_eq_val = (decimal)value01;
+                    break;
+                case "IS EQUAL TO":
+                    newGoal.mpbg_equal_val = value01.ToString();
+                    break;
+                case "BETWEEN":
+                    if (mpGoalValues[3].Equals("true")) { newGoal.mpbg_greater_eq_val = (decimal)value01; }
+                    else { newGoal.mpbg_greater_val = (decimal)value01; }
+                    if (mpGoalValues[4].Equals("true")) { newGoal.mpbg_less_eq_val = (decimal)value02; }
+                    else { newGoal.mpbg_less_val = (decimal)value02; }
+                    break;
+                default:
+                    validationText += "Goal Condition Syntax is Invalid";
+                    break;
+            }
+
+
+            db.MTRC_MPBG.Add(newGoal);
+            try { db.SaveChanges(); }
+            catch (Exception ex) { return "Failed to Save Changes to Database:\n" + ex.Message; }
+
+            return "Changes Saved Successfully!";    //Debug Checkpoint
+
+            
+            //string periodType = lastClosedMP.MTRC_TM_PERIODS.MTRC_TIME_PERIOD_TYPE.tpt_name;
+            
+           
+
+            //string response = "Save Functionality is not enabled yet: \nProdId:" + prodId + "\nMPid: " + mpId + "\nBuilding Id: " + bldgId;
+            //response += "\nGoal: " + mpGoal + "\nFrom: " + goalStartDate.ToString("MMM dd, yyyy") + "\nUntil: " + goalEndDate.ToString("MMM dd, yyyy");
+            //return "SUCCESS:Response from Server: " + response + "\nMetric Level Allow Override?: " + overrideFlag;
+        }
+        
 
     }
 }

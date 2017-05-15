@@ -150,7 +150,12 @@
                             </td>
                             <td style="width:10%">
                                 <input type="hidden" id="hdnBldgId" value="@item.bldgId" />
-                                <a href="#" id="lnkManageBldgGoal">Manage</a>
+                                @if (Model.enterpriseGoal.mTRC_MPG.mpg_allow_bldg_override.Equals("Y"))
+                                {
+                                    <a href="#" id="lnkManageBldgGoal">Manage</a>
+                                }
+                                else { <span>---</span>}
+                                
                                 @*@Html.ActionLink("Manage", "Detail", new { prodId = ViewBag.prodId, mpId = ViewBag.mpId, bldgId = item.bldgId })*@
                             </td>
                         </tr>

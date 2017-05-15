@@ -347,17 +347,6 @@
             });
         });
 
-        //Hides asterisk from Metric Period Detail fields with default values after those values have been changed.
-        $("#newMetricPeriodBody").on('change', ".form-control", function () {
-            $(this).siblings(".indicate-defaulted-value").removeClass("asterisk");
-            $(this).css("background-color", "white");
-        });
-
-        //Force Uppercase text for Selected Fields in Add MP Details Popup View
-        $("#newMetricPeriodBody").on('change', ".mustUpperCase", function () {
-            $(this).val($(this).val().toUpperCase());
-        });
-
         //Force Uppercase text for Selected Fields in Details View
         $("#mpDetailsView").on('change', ".mustUpperCase", function () {
             $(this).val($(this).val().toUpperCase());

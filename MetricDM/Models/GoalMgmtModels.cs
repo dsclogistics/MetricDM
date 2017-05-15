@@ -71,6 +71,7 @@ namespace MetricDM.Models
         [Display(Name = "End Datetime")]
         public string endDtm { get; set; }
     }
+
     [MetadataType(typeof(MetricPeriodGoalMetaData))]
     public class MetricPeriodGoal
     {
@@ -211,7 +212,7 @@ namespace MetricDM.Models
         public string endDtm { get; set; }
     }
     [MetadataType(typeof(MetricPeriodBuildingGoalMetaData))]
-    public class MetricPeriodBuildingGoal
+    public class    MetricPeriodBuildingGoal
     {
         public MTRC_MPBG mTRC_MPBG { get; set; }
         public string mtrc_prod_display_text { get; set; }

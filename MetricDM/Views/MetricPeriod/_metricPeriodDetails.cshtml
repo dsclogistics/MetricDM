@@ -27,6 +27,7 @@ else
 @using (Html.BeginForm("AddMetricPeriod","MetricPeriod", FormMethod.Post, new { enctype = "multipart/form-data", id = ViewBag.formId}))
 {
     @Html.AntiForgeryToken()
+
     <div class="row">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.mtrc_period_id)
@@ -49,7 +50,6 @@ else
         </div>
             </div>
     </div>
-    
     <div class="row" style="margin-top:5px">
         <div class="col-md-3 col-sm-6">
             <div class="input-group metric-period">
@@ -77,6 +77,10 @@ else
             </div>
         </div>
     </div>
+
+    
+    
+    
     <div>
         @Html.ValidationMessageFor(model => model.tpt_id, "", new { @class = "text-danger" })
         @Html.ValidationMessageFor(model => model.mtrc_period_name, "", new { @class = "text-danger" })

@@ -74,7 +74,7 @@
                     }
                 </table>
                 <div style="text-align:left">
-                    <button type="button" class="btn btn-primary" id="btnEditGoal">Set New Goal</button>
+                    <button type="button" class="btn btn-primary" id="btnEditGoal">Set New Building Goal</button>
                 </div>
             }
             else
@@ -82,7 +82,7 @@
                 <span style="color:red">There have not been any building goals defined.</span>
 
                 <div style="text-align:left">
-                    <button type="button" class="btn btn-primary" id="btnEditGoal">Set New Goal</button>
+                    <button type="button" class="btn btn-primary" id="btnEditGoal">Set New Building Metric Goal</button>
                 </div>
             }
         }
@@ -145,7 +145,7 @@
             if (ViewBag.bldgId <= 0)
             {
                 <div style="text-align:left">
-                    <button type="button" class="btn btn-primary" id="btnEditGoal">Set New Goal</button>
+                    <button type="button" class="btn btn-primary" id="btnEditGoal">Set New Enterprise Metric Goal</button>
                 </div>
             }
         }
@@ -180,13 +180,13 @@
                     Rule: &nbsp;
                 </td>
                 <td>
-                    <div style="text-align:left; padding-left:0px">@Html.DropDownList("ruleOptions", null, "--", htmlAttributes: new { @class = "form-control", style = "min-width:125px; max-width:250px;" })</div>
+                    <div style="text-align:left; padding-left:0px">@Html.DropDownList("ruleOptions", null, "--", htmlAttributes: new { @class = "form-control goalField", style = "min-width:125px; max-width:250px;" })</div>
                 </td>
                 <td class="singleVal">
                     &nbsp; Value: &nbsp;
                 </td>
                 <td class="singleVal">
-                    <div style="text-align:left; padding-left:0px">@Html.TextBox("singleRuleVal", "", new { @class = "form-control", placeholder = "Enter Value", style = "min-width:100%; " })</div>
+                    <div style="text-align:left; padding-left:0px">@Html.TextBox("singleRuleVal", "", new { @class = "form-control goalField", placeholder = "Enter Value", style = "min-width:100%; ", id = "singleRuleVal" })</div>
                 </td>
             </tr>
         </table>
@@ -199,20 +199,20 @@
                     Values: &nbsp;
                 </td>
                 <td>
-                    <div style="text-align:left; padding-left:0px">@Html.TextBox("btwnRuleVal1", "", new { @class = "form-control", placeholder = "Enter Value", style = "min-width:100%; " })</div>
+                    <div style="text-align:left; padding-left:0px">@Html.TextBox("btwnRuleVal1", "", new { @class = "form-control goalField", placeholder = "Enter Value", style = "min-width:100%; ", id = "btwnRuleVal1" })</div>
                 </td>
                 <td>
                     <div style="text-align:left; padding-left:0px">&nbsp;&nbsp;and&nbsp;&nbsp;</div>
                 </td>
                 <td>
-                    <div style="text-align:left; padding-left:0px">@Html.TextBox("btwnRuleVal2", "", new { @class = "form-control", placeholder = "Enter Value", style = "min-width:100%; " })</div>
+                    <div style="text-align:left; padding-left:0px">@Html.TextBox("btwnRuleVal2", "", new { @class = "form-control goalField", placeholder = "Enter Value", style = "min-width:100%; ", id = "btwnRuleVal2" })</div>
                 </td>
             </tr>
             <tr class="btwnVal">
                 <td></td>
-                <td style="text-align:left"><input id="chkVal1" type="checkbox" />Inclusive</td>
+                <td style="text-align:left"><input id="chkVal1" type="checkbox" class="goalField" />Inclusive</td>
                 <td></td>
-                <td style="text-align:left"><input id="chkVal2" type="checkbox" />Inclusive</td>
+                <td style="text-align:left"><input id="chkVal2" type="checkbox" class="goalField" />Inclusive</td>
             </tr>
         </table>
     </div>
@@ -225,17 +225,18 @@
                 </td>
                 <td>
                     <div class="input-group input-daterange" data-provide="datepicker">
-                        <input type="text" class="form-control" name="start" />
+                        <input type="text" class="form-control goalField" name="start" id="start" />
                         <span class="input-group-addon">to</span>
                         @*<div class="input-group-addon">
                             <span class="glyphicon glyphicon-th"></span>
                         </div>*@
-                        <input type="text" class="form-control" name="end"  value="12/31/2060"/>
+                        <input type="text" class="form-control goalField" name="end" id="end" value="12/31/2060" />
                     </div>
                 </td>
             </tr>
         </table>
     </div>
+    <div id="divErrorMsg" class="alert-danger" style="max-width:600px; text-align:left; margin-left:5px; padding-left:10px; margin-bottom:15px" ></div>
 
     <div style="text-align:left">
         <button type="button" class="btn btn-primary" id="btnSaveGoal">Save</button>

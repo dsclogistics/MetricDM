@@ -3,132 +3,426 @@
 @{
     ViewBag.Title = "AddMetricPeriod";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string metricType = (ViewBag.metricType == null) ? "" : ViewBag.metricType;
+    string minGoal = metricType.Equals("pct") ? ((double)(Model.mtrc_period_min_val ?? 0) * 100).ToString() : ((double)(Model.mtrc_period_min_val ?? 0)).ToString();
+    string maxGoal = metricType.Equals("pct") ? ((double)(Model.mtrc_period_max_val ?? 0) * 100).ToString() : ((double)(Model.mtrc_period_max_val ?? 0)).ToString();
 }
 
-<h2>Add Metric Period</h2>
+<style>
+    .metric-period > .indicate-defaulted-value, .asterisk:after {
+        content: "*";
+    }
+    .metric-period > .color-defaulted-value {
+        background-color: antiquewhite;
+    }
+    .ui-dialog-titlebar-close {
+        padding: 0 !important;
+    }
+    .ui-dialog-titlebar-close:after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            /* Change path to image*/
+            background-image: url(/Content/images/ui-icons_777777_256x240.png);
+            background-position: -96px -128px;
+            background-repeat: no-repeat;
+    }
 
-@using (Html.BeginForm())
+    #menu-outer {
+        height: 73px;
+        border:1px solid black; 
+        border-radius:7px; 
+        margin-top:5px;
+        margin-bottom:8px;
+    }
+
+    .ui-state-highlight { height: 1.5em; line-height: 1.2em; width:85px;}
+
+    .table1 {
+        display: table; /* Allow the centering to work */
+        margin: 0 auto;
+    }
+    
+    ul#horizontal-list {
+        min-width: 696px;
+        list-style: none;
+        list-style-type: none;
+        /*padding-top: 20px;*/
+        margin: 0;
+        margin-top:25px;
+        padding: 0;
+    }
+
+    ul#horizontal-list li {
+       display: inline;
+       border: 1px solid blue;
+       border-radius: 5px;
+       padding: 5px;
+       margin-left:5px;
+    }
+    ul#horizontal-list li label {
+        cursor: pointer;
+    }
+</style>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<h2>Add New Metric Period</h2>
+<div> <input type="hidden" id="orig_mtrc_id" value="@Model.mtrc_id" /></div>
+
+@using (Html.BeginForm("AddMetricPeriod", "MetricPeriod", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmAddMP" }))
 {
     @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row" style="margin-top:5px">
+        <div class="col-md-4 col-md-offset-4  col-sm-6 col-sm-offset-3">
+            <div class="input-group metric-period">
+                @Html.LabelFor(model => model.mtrc_id, "For Metric", htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:130px" })
+                @Html.DropDownList("mtrc_id", null, "--- Select Metric ---", htmlAttributes: new { @class = "form-control" })
+                @*@Html.ValidationMessageFor(model => model.mtrc_id, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row" style="text-align:center;">
+        <span>Metric Is:[@ViewBag.metricId] @ViewBag.metricName</span>
+    </div>
+
+
+    <span font-size:large; font-weight:bold"> </span>
+    <span id="saveMessage" class="alert-success" style="display:none; font-size:large; font-weight:bold"> </span>
+    <br />
+    <div class="row" style="margin-top:5px">
+        <div class="col-md-4 col-sm-3">
+            <div class="input-group metric-period" style="height:55px">
+                @Html.LabelFor(model => model.mtrc_period_name, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
+                @Html.EditorFor(model => model.mtrc_period_name, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Name", style = "min-width:100%; height:55px;" } })
+                @*@Html.ValidationMessageFor(model => model.mtrc_period_name, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-9">
+            <div class="input-group metric-period">
+                @Html.LabelFor(model => model.mtrc_period_desc, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold" })
+                @Html.EditorFor(model => model.mtrc_period_desc, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Enter Description", style = "min-width:100%" } })
+                @*@Html.ValidationMessageFor(model => model.mtrc_period_desc, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:5px">
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group metric-period">
+                @Html.LabelFor(model => model.tpt_id, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:130px" })
+                @*@Html.EditorFor(model => model.tpt_id, new { htmlAttributes = new { @class = "form-control", placeholder = "___" } })*@
+                @Html.DropDownList("tpt_id", null, "--- Select Time Period ---", htmlAttributes: new { @class = "form-control", id = "tpt_id" })
+                @*@Html.ValidationMessageFor(model => model.tpt_id, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group metric-period">
+                @Html.LabelFor(model => model.mtrc_period_token, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })
+                @Html.EditorFor(model => model.mtrc_period_token, new { htmlAttributes = new { @class = "form-control mustUpperCase", placeholder = "Enter Token", id = "mtrc_period_token" } })
+                @*@Html.ValidationMessageFor(model => model.mtrc_period_token, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group metric-period">
+                @Html.LabelFor(model => model.mtrc_period_max_dec_places, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:133px" })
+                @Html.EditorFor(model => model.mtrc_period_max_dec_places, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Enter Max Decimals" } })
+                @*@Html.ValidationMessageFor(model => model.mtrc_period_max_dec_places, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group metric-period">
+                @Html.LabelFor(model => model.mtrc_period_calc_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:133px" })
+                @Html.EditorFor(model => model.mtrc_period_calc_yn, new { htmlAttributes = new { @class = "form-control mustUpperCase", placeholder = "Y/N?" } })
+                @*@Html.ValidationMessageFor(model => model.mtrc_period_calc_yn, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+    </div>
+
+    <div>
+        @Html.ValidationMessageFor(model => model.tpt_id, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.mtrc_period_name, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.mtrc_period_token, "", new { @class = "text-danger" })
+
+    </div>
+
+    <div class="row" style="margin-top:5px">
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group metric-period">
+                @Html.LabelFor(model => model.mtrc_period_min_val, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:130px" })
+                @Html.EditorFor(model => model.mtrc_period_min_val, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Enter Min Value" } })
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group metric-period">
+                @Html.LabelFor(model => model.mtrc_period_max_val, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:90px" })
+                @Html.EditorFor(model => model.mtrc_period_max_val, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Enter Max Value" } })
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group metric-period">
+                @Html.LabelFor(model => model.mtrc_period_na_allow_yn, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:133px" })
+                @Html.EditorFor(model => model.mtrc_period_na_allow_yn, new { htmlAttributes = new { @class = "form-control mustUpperCase color-defaulted-value", placeholder = "Y/N?" } })
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 metric-period">
+            @if (metricType == "str" || metricType == "char")
+            {
+                <div class="input-group">
+                    @Html.LabelFor(model => model.mtrc_period_max_str_size, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:133px" })
+                    @Html.EditorFor(model => model.mtrc_period_max_str_size, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Enter Max String Size" } })
+                </div>
+            }
+        </div>
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.mtrc_period_min_val, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.mtrc_period_max_val, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.mtrc_period_max_dec_places, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.mtrc_period_max_str_size, "", new { @class = "text-danger" })
+
+    </div>
+
+
+
+    <div class="row" style="margin-top:5px">
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group metric-period">
+                @Html.LabelFor(model => model.mtrc_period_can_import_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:130px" })
+                @Html.EditorFor(model => model.mtrc_period_can_import_yn, new { htmlAttributes = new { @class = "form-control mustUpperCase", placeholder = "Y/N?" } })
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="input-group metric-period">
+                @Html.LabelFor(model => model.mtrc_period_is_auto_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })
+                @Html.EditorFor(model => model.mtrc_period_is_auto_yn, new { htmlAttributes = new { @class = "form-control mustUpperCase", placeholder = "Y/N?" } })
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 metric-period">
+        </div>
+
+        <div class="col-md-3 col-sm-6 metric-period">
+        </div>
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.mtrc_period_na_allow_yn, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.mtrc_period_can_import_yn, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.mtrc_period_is_auto_yn, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.Action("_productMetricColumns")
+
+
+    <div class="panel panel-primary" style="margin:0 auto; margin-top:15px; max-width:95%; border-top-width:2px">
+        <div class="panel-heading">METRIC PERIOD GOAL</div>
+        <br />
+        <div class="panel-body" style="position:relative; height: 100px">
+            <div style="position: absolute; top: -15px; left: 0; z-index: 20; margin-left: 10px; width:279px">
+                <span style="float:left">@minGoal</span>
+                <span style="float:right">@maxGoal</span>
+            </div>
+            <div id="divRangeSlider" style="position: absolute; top: 0; left: 0; z-index: 999; margin-left: 10px">
+                <input type="range" id="leftRange" value="@minGoal" min="@minGoal" max="@maxGoal" step="1" width="300" style="width:300px;" />
+                <input type="range" id="rightRange" value="@maxGoal" min="@minGoal" max="@maxGoal" step="1" style="width:300px" />
+                <br />
+                <input type="text" id="selRange" name="selRange" style="min-width:300px" value="@minGoal to @maxGoal" />
+            </div>
+            <div id="divRangeColors" style="position: absolute; top: 0; left: 0; z-index: 10;margin-left:10px; display:none">
+                <table style="width:279px">
+                    <tr>
+                        <td><div id="divRange1" style="background-color:red; width:93px; height:40px; "></div></td>
+                        <td><div id="divRange2" style="background-color:green; width:93px; height:40px; "></div></td>
+                        <td><div id="divRange3" style="background-color:blue; width:93px; height:40px; "></div></td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
 
     <div class="form-horizontal">
-        @*<h4>MTRC_METRIC_PERIOD</h4>*@
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.mtrc_id, "Metric", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("mtrc_id", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
-                @Html.ValidationMessageFor(model => model.mtrc_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.tpt_id, "Time Period Type", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("tpt_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.tpt_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.mtrc_period_name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mtrc_period_name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mtrc_period_name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mtrc_period_token, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mtrc_period_token, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mtrc_period_token, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mtrc_period_desc, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mtrc_period_desc, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mtrc_period_desc, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mtrc_period_calc_yn, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mtrc_period_calc_yn, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mtrc_period_calc_yn, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mtrc_period_min_val, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mtrc_period_min_val, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mtrc_period_min_val, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mtrc_period_max_val, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mtrc_period_max_val, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mtrc_period_max_val, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mtrc_period_max_dec_places, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mtrc_period_max_dec_places, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mtrc_period_max_dec_places, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mtrc_period_max_str_size, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mtrc_period_max_str_size, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mtrc_period_max_str_size, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mtrc_period_na_allow_yn, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mtrc_period_na_allow_yn, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mtrc_period_na_allow_yn, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mtrc_period_can_import_yn, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mtrc_period_can_import_yn, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mtrc_period_can_import_yn, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mtrc_period_is_auto_yn, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mtrc_period_is_auto_yn, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mtrc_period_is_auto_yn, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" disabled="disabled" />
+                <input type="button" id="btnDebug" value="Debug Form Values" class="btn btn-default" />
+                <input type="reset" value="Reset Form Values" class="btn btn-default">
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "MetricMaintenance", "MetricPeriod", new { id = ViewBag.return_id }, null)
+    @Html.ActionLink("Back to List", "MetricMaintenance", "MetricPeriod", new { id = ViewBag.metric_id }, null)
 </div>
 
 <br />
+
+
+<script>
+    function formatI(iValue, type) {
+        //switch (type) {
+        //    'str':
+        //    "char":
+        //    return iValue;
+        //    break;
+        //    int
+        //    dec
+        //    cur
+        //    pct
+
+        //}
+    }
+
+    function reloadFill() {
+        $('#divRange1').css('background-color', 'white');
+    }
+
+    function parseGoal(range1, range2) {
+        var minVal = parseInt($('#leftRange').prop("min"));
+        var maxVal = parseInt($('#leftRange').prop("max"));
+        var formattingChar = (("@metricType" == "pct") ? "%" : "");
+
+        if (range1 == 'NaN' || range2 == 'NaN' || minVal == 'NaN' || maxVal == 'NaN') {
+            return "Goal Can't be Parsed.";
+        }
+
+        if (range1 == range2) { return "Invalid Goal"; }
+
+        if (range1 < range2) {//Standard Position
+            if (range1 == maxVal) {
+
+            }
+
+            return $('#leftRange').val() + formattingChar + " to " + $('#rightRange').val() + formattingChar;
+        }
+        else { //Crossed position
+            if (range1 == maxVal && range2 == minVal) { return "Invalid Goal"; }
+            if (range1 == maxVal) { return "Les than " + $('#rightRange').val() + formattingChar; }
+            if (range2 == minVal) { return "greater than " + $('#leftRange').val() + formattingChar; }
+            return "Less than " + $('#rightRange').val() + formattingChar + " or greater than " + $('#leftRange').val() + formattingChar;
+        }
+
+    }
+
+    $(document).ready(function () {
+
+        var originalToken = $('#mtrc_period_token').val();
+
+        $('#leftRange').change(function () {
+            $('#selRange').val(parseGoal(parseInt($('#leftRange').val()), parseInt($('#rightRange').val())));
+            reloadFill();
+        });
+
+        $('#rightRange').change(function () {
+            $('#selRange').val(parseGoal(parseInt($('#leftRange').val()), parseInt($('#rightRange').val())));
+            reloadFill();
+        });
+
+        $('#leftRange').on('drag', function (e) {
+            alert("Hey");
+            $('#selRange').val("Loading...");
+        });
+
+        $('#btnDebug').click(function () {
+            var queryString = $('#frmAddMP').serialize();
+            alert("Query String is: \n" + queryString);
+
+            var fieldValuePairs = $('#frmAddMP').serializeArray();
+            var formData = "";
+            $.each(fieldValuePairs, function (index, fieldValuePair) {
+                formData = formData + "Item " + index + " is [" + fieldValuePair.name + "," + fieldValuePair.value + "]\n";
+            });
+            alert("Full Form Elements Data: \n" + formData);
+        });
+
+
+        //Hides asterisk from Metric Period Detail fields with default values after those values have been changed.
+        $("#frmAddMP").on('change', ".form-control", function () {
+            $(this).siblings(".indicate-defaulted-value").removeClass("asterisk");
+            $(this).css("background-color", "white");
+            $('#pageModified').val("Y");  //Flag the current page as modified
+        });
+
+        //Force Uppercase text for Selected Fields in Add MP Details Popup View
+        $("#frmAddMP").on('change', ".mustUpperCase", function () {
+            $(this).val($(this).val().toUpperCase());
+        });
+
+
+        $('#mtrc_id').change(function () {
+            if ($('#pageModified').val() == "Y") {
+                if (confirm("Current Changes have not been Saved.\nDiscard Changes?")) {
+                    alert("Changes have been discarded.");
+                }
+                else {
+                    alert("Keep working then");
+                }
+
+                var question = "Current Changes have not been Saved.\nDiscard Changes?";
+                showConfirmation(question).then(function (answer) {
+                    //var ansbool = Boolean.parse(answer.toString());
+                    if (answer == 'true') { //TRUE
+                        alert("You Answered Yes.\nGo to Id: " + $(this).val());
+                        //window.location.href = "/MetricPeriod/AddMetricPeriod/" + $(this).val();
+                    } else { //FALSE
+                        //Return Drop Down List back to it's previous value
+                        $('#mtrc_id').val($('#orig_mtrc_id').val());
+                        alert("You Answered NO!");
+                        //No Action taken.
+                    }
+                });
+            }
+            else {
+                window.location.href = "/MetricPeriod/AddMetricPeriod/" + $(this).val();
+            }
+        });
+
+        $('#tpt_id').change(function () {
+
+            var selectedText = document.getElementById("tpt_id").options[document.getElementById('tpt_id').selectedIndex].text;
+            var tokenPrefix = "";
+            switch (selectedText) {
+                case "Day":
+                    tokenPrefix = "DLY";
+                    break;
+                case "Hour":
+                    tokenPrefix = "HRLY";
+                    break;
+                case "Minute":
+                    tokenPrefix = "MIN";
+                    break;
+                case "Month":
+                    tokenPrefix = "MNTH";
+                    break;
+                case "Quarter":
+                    tokenPrefix = "QTR";
+                    break;
+                case "Second":
+                    tokenPrefix = "SCND";
+                    break;
+                case "Week":
+                    tokenPrefix = "WKLY";
+                    break;
+                case "Year":
+                    tokenPrefix = "YRLY";
+                    break;
+                default:
+                    tokenPrefix = "_";
+                    break;
+
+            }
+            $('#mtrc_period_token').val(originalToken + tokenPrefix);
+        });
+
+    });
+
+</script>

@@ -16,6 +16,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <![endif]-->
     <title>@ViewBag.Title - DSC METRIC DM</title>
     @* ---------------------- Load CSS Styles -----------------------*@
     <link href="~/Content/jquery-ui.css" rel="stylesheet" />
@@ -24,6 +27,7 @@
     @* ---------------------- Load Jquery Libraries (Must be Before Bootstraps is Loaded) -----------------*@
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/MetricDMGlobal.js"></script>
+    <script src="~/Scripts/Site.js"></script>
     <script>
         // Verify that the session variables exist and have not been lost. Reset Them on the server via ajax if needed!
         if ("@pageFirstLoad" == "NULL") {
@@ -93,6 +97,7 @@
     <div id="RZ_Flags">
         <input type="hidden" id="reloadPage" value="N" />
         <input type="hidden" id="cacheTasksList" value="Y" />
+        <input type="hidden" id="pageModified" value="N" />
     </div>
 
     @*/---------------------------------- TO DO -----------------------------------------\
@@ -189,8 +194,7 @@
     </div>
 
 
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/jqueryUI")
+    @Scripts.Render("~/bundles/bootstrap")    
     @RenderSection("scripts", required: false)
     <script>
     $(document).ready(function () {
