@@ -12,13 +12,16 @@
     .metric-period > .indicate-defaulted-value, .asterisk:after {
         content: "*";
     }
+
     .metric-period > .color-defaulted-value {
         background-color: antiquewhite;
     }
+
     .ui-dialog-titlebar-close {
         padding: 0 !important;
     }
-    .ui-dialog-titlebar-close:after {
+
+        .ui-dialog-titlebar-close:after {
             content: '';
             width: 20px;
             height: 20px;
@@ -27,42 +30,50 @@
             background-image: url(/Content/images/ui-icons_777777_256x240.png);
             background-position: -96px -128px;
             background-repeat: no-repeat;
-    }
+        }
 
     #menu-outer {
         height: 73px;
-        border:1px solid black; 
-        border-radius:7px; 
-        margin-top:5px;
-        margin-bottom:8px;
+        border: 1px solid black;
+        border-radius: 7px;
+        margin-top: 5px;
+        margin-bottom: 8px;
     }
 
-    .ui-state-highlight { height: 1.5em; line-height: 1.2em; width:85px;}
+    .ui-state-highlight {
+        height: 1.5em;
+        line-height: 1.2em;
+        width: 85px;
+    }
 
     .table1 {
         display: table; /* Allow the centering to work */
         margin: 0 auto;
     }
-    
+
     ul#horizontal-list {
         min-width: 696px;
         list-style: none;
         list-style-type: none;
         /*padding-top: 20px;*/
         margin: 0;
-        margin-top:25px;
+        margin-top: 25px;
         padding: 0;
     }
 
     ul#horizontal-list li {
-       display: inline;
-       border: 1px solid blue;
-       border-radius: 5px;
-       padding: 5px;
-       margin-left:5px;
+            display: inline;
+            border: 1px solid blue;
+            border-radius: 5px;
+            padding: 5px;
+            margin-left: 5px;
     }
+
     ul#horizontal-list li label {
-        cursor: pointer;
+                cursor: pointer;
+    }
+    .fieldError {
+        background-color:red !important;
     }
 </style>
 
@@ -83,19 +94,15 @@
                 @*@Html.ValidationMessageFor(model => model.mtrc_id, "", new { @class = "text-danger" })*@
             </div>
         </div>
-
     </div>
-
-
-    <div class="row" style="text-align:center;">
+    @*<div class="row" style="text-align:center;">
         <span>Metric Is:[@ViewBag.metricId] @ViewBag.metricName</span>
-    </div>
-
-
+    </div>*@
     <span font-size:large; font-weight:bold"> </span>
     <span id="saveMessage" class="alert-success" style="display:none; font-size:large; font-weight:bold"> </span>
     <br />
-    <div class="row" style="margin-top:5px">
+
+        <div class="row" style="margin-top:5px">
         <div class="col-md-4 col-sm-3">
             <div class="input-group metric-period" style="height:55px">
                 @Html.LabelFor(model => model.mtrc_period_name, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
@@ -111,6 +118,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="row" style="margin-top:5px">
         <div class="col-md-3 col-sm-6">
@@ -148,7 +156,6 @@
         @Html.ValidationMessageFor(model => model.tpt_id, "", new { @class = "text-danger" })
         @Html.ValidationMessageFor(model => model.mtrc_period_name, "", new { @class = "text-danger" })
         @Html.ValidationMessageFor(model => model.mtrc_period_token, "", new { @class = "text-danger" })
-
     </div>
 
     <div class="row" style="margin-top:5px">
@@ -180,15 +187,13 @@
             }
         </div>
     </div>
+
     <div>
         @Html.ValidationMessageFor(model => model.mtrc_period_min_val, "", new { @class = "text-danger" })
         @Html.ValidationMessageFor(model => model.mtrc_period_max_val, "", new { @class = "text-danger" })
         @Html.ValidationMessageFor(model => model.mtrc_period_max_dec_places, "", new { @class = "text-danger" })
         @Html.ValidationMessageFor(model => model.mtrc_period_max_str_size, "", new { @class = "text-danger" })
-
     </div>
-
-
 
     <div class="row" style="margin-top:5px">
         <div class="col-md-3 col-sm-6">
@@ -215,56 +220,61 @@
         @Html.ValidationMessageFor(model => model.mtrc_period_is_auto_yn, "", new { @class = "text-danger" })
     </div>
 
+}  
+    
     @Html.Action("_productMetricColumns")
 
-
     <div class="panel panel-primary" style="margin:0 auto; margin-top:15px; max-width:95%; border-top-width:2px">
-        <div class="panel-heading">METRIC PERIOD GOAL</div>
-        <br />
-        <div class="panel-body" style="position:relative; height: 100px">
-            <div style="position: absolute; top: -15px; left: 0; z-index: 20; margin-left: 10px; width:279px">
-                <span style="float:left">@minGoal</span>
-                <span style="float:right">@maxGoal</span>
+        <div class="panel-heading" style="padding:4px">METRIC PERIOD GOAL</div>
+        <div class="panel-body" style="height: 80px; margin:0 auto; padding: 15px 0px 0px 0px;">
+            <div class="row" style="margin:0 auto">
+                <div class="col-xm-6 col-md-3">
+                    <div style ="position:relative; max-width:250px">
+                        <div style="position: absolute; top: -12px; left: 0; z-index: 20; margin-left: 10px; width:279px">
+                            <span style="float:left">@minGoal</span>
+                            <span style="float:right">@maxGoal</span>
+                        </div>
+                        <div id="divRangeSlider" style="position: absolute; top: 5px; left: 0; z-index: 999; margin-left: 10px">
+                            <input type="range" id="leftRange" value="@minGoal" min="@minGoal" max="@maxGoal" step="1" width="300" style="width:300px;" />
+                            <input type="range" id="rightRange" value="@maxGoal" min="@minGoal" max="@maxGoal" step="1" style="width:300px" />
+                        </div>
+                        <div id="divRangeColors" style="position: absolute; top: 5px; left: 0; z-index: 10;margin-left:10px; display:none">
+                            <table style="width:279px">
+                                <tr>
+                                    <td><div id="divRange1" style="background-color:red; width:93px; height:40px; "></div></td>
+                                    <td><div id="divRange2" style="background-color:green; width:93px; height:40px; "></div></td>
+                                    <td><div id="divRange3" style="background-color:blue; width:93px; height:40px; "></div></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xm-6 col-md-9" style="text-align:left; margin-bottom:15px">
+                    <span style="text-align:left">Selected Goal: </span><br />
+                    <input type="text" id="selRange" name="selRange" style="min-width:300px;" value="@minGoal to @maxGoal" disabled="disabled" />
+                </div>
             </div>
-            <div id="divRangeSlider" style="position: absolute; top: 0; left: 0; z-index: 999; margin-left: 10px">
-                <input type="range" id="leftRange" value="@minGoal" min="@minGoal" max="@maxGoal" step="1" width="300" style="width:300px;" />
-                <input type="range" id="rightRange" value="@maxGoal" min="@minGoal" max="@maxGoal" step="1" style="width:300px" />
-                <br />
-                <input type="text" id="selRange" name="selRange" style="min-width:300px" value="@minGoal to @maxGoal" />
-            </div>
-            <div id="divRangeColors" style="position: absolute; top: 0; left: 0; z-index: 10;margin-left:10px; display:none">
-                <table style="width:279px">
-                    <tr>
-                        <td><div id="divRange1" style="background-color:red; width:93px; height:40px; "></div></td>
-                        <td><div id="divRange2" style="background-color:green; width:93px; height:40px; "></div></td>
-                        <td><div id="divRange3" style="background-color:blue; width:93px; height:40px; "></div></td>
-                    </tr>
-                </table>
-            </div>
-
         </div>
     </div>
 
+    <hr />
     <div class="form-horizontal">
-        <hr />
-
-
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" disabled="disabled" />
+                <input type="button" id="addMP" value="Create Metric Period" class="btn btn-default" disabled="disabled" />
                 <input type="button" id="btnDebug" value="Debug Form Values" class="btn btn-default" />
-                <input type="reset" value="Reset Form Values" class="btn btn-default">
+                <input type="button" id="btnReset" value="Reset Form Values" class="btn btn-default">
             </div>
         </div>
     </div>
-}
 
+
+<br />
 <div>
     @Html.ActionLink("Back to List", "MetricMaintenance", "MetricPeriod", new { id = ViewBag.metric_id }, null)
 </div>
+<br /><br />
 
-<br />
 
 
 <script>
@@ -286,22 +296,64 @@
         $('#divRange1').css('background-color', 'white');
     }
 
+    function validateInput() {
+        var eMsg = "";
+        mpName = $('#mtrc_period_name');
+        mpDesc = $('#mtrc_period_desc');
+        mpType = $('#tpt_id');
+        mpToken = $('#mtrc_period_token');
+        mMaxDec = $('#mtrc_period_max_dec_places');
+        mpCalc = $('#mtrc_period_calc_yn');
+        mpMin = $('#mtrc_period_min_val');
+        mpMax = $('#mtrc_period_max_val');
+        mpNA = $('#mtrc_period_na_allow_yn');
+        mpImport = $('#mtrc_period_can_import_yn');
+        mpAuto = $('#mtrc_period_is_auto_yn');
+
+        if (mpName.val() == ""){eMsg += "Metric Period Name is Required\n"; mpName.addClass("fieldError");}
+        if (mpDesc.val() == "") { eMsg += "Metric Period Description is Required\n"; mpDesc.addClass("fieldError"); }
+        if (mpType.val() == 0) { eMsg += "Select a Metric Type\n"; mpType.addClass("fieldError"); }
+        if (mpToken.val() == "") { eMsg += "Metric Period Token is Required\n"; mpToken.addClass("fieldError"); }
+        if (mMaxDec.val() == "") { eMsg += "Metric Period Max Decimals Value is Required\n"; mMaxDec.addClass("fieldError"); }
+        if (Number(mMaxDec.val()) == "NaN") { eMsg += "Metric Period Max Decimals Value Must be Numeric\n"; mMaxDec.addClass("fieldError"); }
+        if (mpCalc.val() == "") { eMsg += "Metric Period Calculated Flag is Required\n"; mpCalc.addClass("fieldError"); }
+        if (!(mpCalc.val() == "Y" || mpCalc.val() == "N")) { eMsg += "Metric Period Calculated Flag Must be 'Y' or 'N'\n"; mpCalc.addClass("fieldError"); }
+        if (mpMin.val() == "") { eMsg += "Metric Period Minimum Value is Required\n"; mpMin.addClass("fieldError"); }
+        if (Number(mpMin.val()) == "NaN") { eMsg += "Metric Period Minimum Value Must be Numeric\n"; mpMin.addClass("fieldError"); }
+        if (mpMax.val() == "") { eMsg += "Metric Period Maximum Value is Required\n"; mpMax.addClass("fieldError"); }
+        if (Number(mpMax.val()) == "NaN") { eMsg += "Metric Period Maximum Value Must be Numeric\n"; mpMax.addClass("fieldError"); }
+        if (mpNA.val() == "") { eMsg += "Metric Period 'NA Allowed' Flag is Required\n"; mpNA.addClass("fieldError"); }
+        if (!(mpNA.val() == "Y" || mpNA.val() == "N")) { eMsg += "Metric Period 'NA Allowed' Flag Must be 'Y' or 'N'\n"; mpNA.addClass("fieldError"); }
+        if (mpImport.val() == "") { eMsg += "Metric Period 'Can Inport' Flag is Required\n"; mpImport.addClass("fieldError"); }
+        if (!(mpImport.val() == "Y" || mpImport.val() == "N")) { eMsg += "Metric Period 'Can Import' Flag Must be 'Y' or 'N'\n"; mpImport.addClass("fieldError"); }
+        if (mpAuto.val() == "") { eMsg += "Metric Period 'Is Automatic' Flag is Required\n"; mpAuto.addClass("fieldError"); }
+        if (!(mpAuto.val() == "Y" || mpAuto.val() == "N")) { eMsg += "Metric Period 'Is Automatic' Flag Must be 'Y' or 'N'\n"; mpAuto.addClass("fieldError"); }
+
+        if ($('#selRange').val() == "Invalid Goal") {
+            eMsg += "The Metric Period Goal is not Valid."; $('#selRange').addClass("fieldError");
+        }
+
+        if (eMsg == "") { return true; }
+        else {
+            alert(eMsg);
+            return false;
+        }
+
+    }
+
     function parseGoal(range1, range2) {
+        var validGoal = true;
         var minVal = parseInt($('#leftRange').prop("min"));
         var maxVal = parseInt($('#leftRange').prop("max"));
         var formattingChar = (("@metricType" == "pct") ? "%" : "");
 
-        if (range1 == 'NaN' || range2 == 'NaN' || minVal == 'NaN' || maxVal == 'NaN') {
-            return "Goal Can't be Parsed.";
-        }
-
-        if (range1 == range2) { return "Invalid Goal"; }
+        if (range1 == 'NaN' || range2 == 'NaN' || minVal == 'NaN' || maxVal == 'NaN') { return "Goal Can't be Parsed"; }
+        if (range1 == range2) { return "Invalid Goal";}
 
         if (range1 < range2) {//Standard Position
             if (range1 == maxVal) {
 
             }
-
             return $('#leftRange').val() + formattingChar + " to " + $('#rightRange').val() + formattingChar;
         }
         else { //Crossed position
@@ -317,21 +369,20 @@
 
         var originalToken = $('#mtrc_period_token').val();
 
-        $('#leftRange').change(function () {
+        $('#leftRange, #rightRange').change(function () {
             $('#selRange').val(parseGoal(parseInt($('#leftRange').val()), parseInt($('#rightRange').val())));
+            if ($('#selRange').val() == "Goal Can't be Parsed" || $('#selRange').val() == "Invalid Goal") {
+                $('#addMP').prop('disabled', true);
+                $('#selRange').addClass("fieldError");
+            }
+            else {
+                $('#addMP').prop('disabled', false);
+                $('#selRange').removeClass("fieldError");
+            }
             reloadFill();
         });
 
-        $('#rightRange').change(function () {
-            $('#selRange').val(parseGoal(parseInt($('#leftRange').val()), parseInt($('#rightRange').val())));
-            reloadFill();
-        });
-
-        $('#leftRange').on('drag', function (e) {
-            alert("Hey");
-            $('#selRange').val("Loading...");
-        });
-
+        //Debug Form Values Buttong for Debugging only
         $('#btnDebug').click(function () {
             var queryString = $('#frmAddMP').serialize();
             alert("Query String is: \n" + queryString);
@@ -347,6 +398,8 @@
 
         //Hides asterisk from Metric Period Detail fields with default values after those values have been changed.
         $("#frmAddMP").on('change', ".form-control", function () {
+            $('#addMP').prop('disabled', false);
+            $(this).removeClass("fieldError");
             $(this).siblings(".indicate-defaulted-value").removeClass("asterisk");
             $(this).css("background-color", "white");
             $('#pageModified').val("Y");  //Flag the current page as modified
@@ -423,6 +476,30 @@
             $('#mtrc_period_token').val(originalToken + tokenPrefix);
         });
 
+        $('#addMP').click(function () {
+            if (validateInput()) {
+                alert("Saving has not been enable yet. Will be done soon...")
+            }
+            else {
+                $('#addMP').prop('disabled', true);
+            }
+        });
+
+        $('#btnReset').click(function () {
+            if ($('#pageModified').val() == "Y") {
+                if (confirm("Current Changes have not been Saved.\nDiscard Changes?")) {
+                    window.location.href = "/MetricPeriod/AddMetricPeriod/" + $('#mtrc_id').val();
+                }
+                else {
+                    alert("Keep working then");
+                }
+            }
+            else {
+                window.location.href = "/MetricPeriod/AddMetricPeriod/" + $('#mtrc_id').val();
+            }
+        });
+
     });
 
 </script>
+

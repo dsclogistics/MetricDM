@@ -11,7 +11,8 @@ namespace MetricDM.Controllers
     public class MetricPeriodController : Controller
     {
         private DSC_MTRC_DEVEntities db = new DSC_MTRC_DEVEntities();
-        //===========================================================================
+
+        //= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
         // GET: MetricPeriod
         public ActionResult Index(int? id)
         {
@@ -29,7 +30,18 @@ namespace MetricDM.Controllers
             return View(selectedMetric);
         }
 
-        //============================================================================================================
+        //= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+
+        // GET: /MetricPeriod/_metricPeriodList/
+        public PartialViewResult _metricPeriodList(int id)
+        {
+            List<MTRC_METRIC_PERIOD> metricPeriods = db.MTRC_METRIC_PERIOD.Where(x => x.mtrc_id == id).ToList();
+
+            return PartialView(metricPeriods);
+        }
+
+        //= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+
         // GET: /MetricPeriod/_metricPeriodDetails/
         //[ChildActionOnly]
         public PartialViewResult _metricPeriodDetails(int? id, int? mtrcId)
@@ -79,41 +91,32 @@ namespace MetricDM.Controllers
 
             return PartialView(mPeriod);
         }
-        //============================================================================================================
+        
+        //= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 
-
-
-        public ActionResult _productMetricColumns()
+        // POST: /MetricPeriod/_metricPeriodDetails
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public PartialViewResult _metricPeriodDetails(MTRC_METRIC_PERIOD mPeriod)
         {
-            List<dataPair> columns = new List<dataPair>();
-            try
+            if (ModelState.IsValid)
             {
-                columns.AddRange(
-                    db.MTRC_METRIC_PRODUCTS.Where(x => x.prod_id == 1 && x.mtrc_prod_display_order != null)
-                    .Select(
-                    y => new dataPair
-                    {
-                        id = y.mtrc_prod_id,
-                        dataValue = y.mtrc_prod_display_text,
-                        dataValue2 = y.mtrc_prod_display_order.ToString()
-                    })
-                    .OrderBy(o => o.dataValue2)
-                );
-            }
-            catch { }
+                db.Entry(mPeriod).State = EntityState.Modified;
+                db.SaveChanges();
 
-            return View(columns);
+                ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name", mPeriod.tpt_id);
+                ViewBag.createNewMetricPeriod = false;
+                return PartialView(mPeriod);
+            }
+            ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name", mPeriod.tpt_id);
+            ViewBag.createNewMetricPeriod = false;
+            return PartialView(mPeriod);
         }
 
+        //= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 
-
-
-
-
-
-
-
-
+        //Get:  /MetricPeriod/AddMetricPeriod/'id'
+        [HttpGet]
         public ActionResult AddMetricPeriod(int? id)
         {
             //Parameter "id" is the Metric Id for which a new Metric Period will be built for
@@ -157,7 +160,9 @@ namespace MetricDM.Controllers
             return View(mPeriod);
         }
 
-        //============================================================================================================
+
+        //= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+
         // POST: /MetricPeriod/AddMetricPeriod
         [HttpPost]
         public string AddMetricPeriod(MTRC_METRIC_PERIOD newMetricPeriod)
@@ -181,70 +186,39 @@ namespace MetricDM.Controllers
 
         }
 
-        //============================================================================================================
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // GET: /MetricPeriod/_metricPeriodList/
-        public PartialViewResult _metricPeriodList(int id)
+        //= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+        
+        [ChildActionOnly]
+        public ActionResult _productMetricColumns()
         {
-            List<MTRC_METRIC_PERIOD> metricPeriods = db.MTRC_METRIC_PERIOD.Where(x => x.mtrc_id == id).ToList();
-
-            return PartialView(metricPeriods);
-        }
-        //============================================================================================================
-
-        // POST: /MetricPeriod/_metricPeriodDetails
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public PartialViewResult _metricPeriodDetails(MTRC_METRIC_PERIOD mPeriod)
-        {
-            if (ModelState.IsValid)
+            List<dataPair> columns = new List<dataPair>();
+            try
             {
-                db.Entry(mPeriod).State = EntityState.Modified;
-                db.SaveChanges();
-
-                ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name", mPeriod.tpt_id);
-                ViewBag.createNewMetricPeriod = false;
-                return PartialView(mPeriod);
+                columns.AddRange(
+                    db.MTRC_METRIC_PRODUCTS.Where(x => x.prod_id == 1 && x.mtrc_prod_display_order != null)
+                    .Select(
+                    y => new dataPair
+                    {
+                        id = y.mtrc_prod_id,
+                        dataValue = y.mtrc_prod_display_text,
+                        dataValue2 = y.mtrc_prod_display_order.ToString()
+                    })
+                    .OrderBy(o => o.dataValue2)
+                );
             }
-            ViewBag.tpt_id = new SelectList(db.MTRC_TIME_PERIOD_TYPE, "tpt_id", "tpt_name", mPeriod.tpt_id);
-            ViewBag.createNewMetricPeriod = false;
-            return PartialView(mPeriod);
+            catch { }
+
+            return PartialView(columns);
         }
-        //============================================================================================================
+
+        //= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+
+        //= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 
 
+        //= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 
-        // POST: /MetricPeriod/Maintenance/5
-        //[HttpPost]
-        //public ActionResult MetricMaintenance(MTRC_METRIC selectedMetric)
-        //{
-        //    ViewBag.saveResult = "Data Saved Successfully.";
-        //    return View(selectedMetric);
-        //}
-
-
-        //=============================================================================================================
-        //======================== HELPER METHODS AND CLASES ==========================================================
 
 
 

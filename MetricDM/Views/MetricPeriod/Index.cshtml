@@ -13,24 +13,25 @@
         max-width: 400px;
         text-align: left;
     }
-    .frmLabel {
-        font-weight:bold; max-width:140px; float:right; background-color: lightgray; border-top-right-radius:0px; border-bottom-right-radius:0px;
-    }
 
+    .frmLabel {
+        font-weight: bold;
+        max-width: 140px;
+        float: right;
+        background-color: lightgray;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
 </style>
 <div class="row">
     <h2>Metric Maintenance</h2>
 </div>
 
-@*<div>
-        <input type="button" id="abc" value="click" />
-    </div>*@
-
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="row" style="margin:0; margin-bottom:20px">
             <div class="col-sm-5" style="text-align:right; padding:0px 0px">
-                <span class="form-control frmLabel" >Select a Metric: </span>
+                <span class="form-control frmLabel">Select a Metric: </span>
             </div>
             <div class="col-sm-5" style="text-align: left; padding-left: 0px">
                 @Html.DropDownList("metric_sel_list", null, "--- Select Metric ---", htmlAttributes: new { @class = "form-control", style = "min-width:200px; max-width:350px; border-bottom-left-radius:0px; border-top-left-radius:0px;" })
@@ -194,7 +195,7 @@
         }
         else
         {
-            <div style="color: red; max-width:300px; margin:0 auto; border:4px double red; border-radius:7px; margin-top:20px; margin-bottom:20px; padding:20px; " >
+            <div style="color: red; max-width:300px; margin:0 auto; border:4px double red; border-radius:7px; margin-top:20px; margin-bottom:20px; padding:20px; ">
                 There are no Details to Display. Select a value from the dropdown.
             </div>
         }
@@ -222,6 +223,10 @@
 
     </div>
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
 <script>
     $(document).ready(function () {
@@ -254,12 +259,11 @@
             //};
 
             $.ajax({
-                type      : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
                 //method    : 'POST',
-                @*url     : '@Url.Action("_metricPeriodDetails", "MetricPeriod")',*@
                 url: '/MetricPeriod/_metricPeriodDetails', // the url where we want to POST
                 //data    : { id: idToDisplay },     //<---- Data Parameters (if not already passed in the Url)
-                data      : formData, // our data object created earlier
+                data: formData, // our data object created earlier
                 //dataType  : 'json', // what type of data do we expect back from the server (Remove line if expecting html [partial or full]view result)
                 //encode    : true,
                 cache: false,
@@ -311,47 +315,47 @@
             });
         });
 
-
         //Add New Metric Period Button -> initiate popup
         $("#divPeriodList").on('click', '#btnAddMP', function () {
             var mtrcIdToDisplay = $("#MtrcId").val();
+            //Redirect processing to the AddMetricPeriod Page
+            window.location.href = "/MetricPeriod/AddMetricPeriod/" + mtrcIdToDisplay;
+
             //alert("Please wait.. Loading Ajax info for Metric Period Id " + idToDisplay);
 
-            // ------------ Make the Ajax Call ---------------------------------------------
-            $.ajax({
-                @*url: '@Url.Action("_metricPeriodDetails", "MetricPeriod")',*@
-                url: '/MetricPeriod/_metricPeriodDetails',     // the url where we want to direct our Ajax Call
-                method: "GET",
-                cache: false,
-                data: { mtrcId: mtrcIdToDisplay },     //<---- Data Parameters (if not already passed in the Url)
-                //--- On error, execute this function ------
-                error: function (xhr, status, error) {
-                    //var err = eval("(" + xhr.responseText + ")");
-                    $("#mpDetailsView").html(xhr.responseText);
-                    //$("#msgLoading").hide();
-                    //$("#mpDetailsView").show();
-                    //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
-                }
-            }).done(function (d) {
-                //Execute this code After the Ajax call completes successfully
-                //Insert the partial view retrieved into the output 'newMetricPeriodBody' panel
-                $('#newMetricPeriodBody').html(d);
-                $("#divOutput").hide();
-                $('#newMetricPeriodForm').modal('show');
+            //// ------------ Make the Ajax Call ---------------------------------------------
+            //$.ajax({
+            //                url: '/MetricPeriod/_metricPeriodDetails',     // the url where we want to direct our Ajax Call
+            //    method: "GET",
+            //    cache: false,
+            //    data: { mtrcId: mtrcIdToDisplay },     //<---- Data Parameters (if not already passed in the Url)
+            //    //--- On error, execute this function ------
+            //    error: function (xhr, status, error) {
+            //        //var err = eval("(" + xhr.responseText + ")");
+            //        $("#mpDetailsView").html(xhr.responseText);
+            //        //$("#msgLoading").hide();
+            //        //$("#mpDetailsView").show();
+            //        //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
+            //    }
+            //}).done(function (d) {
+            //    //Execute this code After the Ajax call completes successfully
+            //    //Insert the partial view retrieved into the output 'newMetricPeriodBody' panel
+            //    $('#newMetricPeriodBody').html(d);
+            //    $("#divOutput").hide();
+            //    $('#newMetricPeriodForm').modal('show');
 
-                //Change CSS attributes for several elements
-                $(".indicate-defaulted-value").addClass("asterisk");
-                $(".color-defaulted-value").css("background-color", "antiquewhite");
-                $(".save-metric-period").css("visibility", "hidden");
-                $(".default-message").css("visibility", "visible")
-            });
+            //    //Change CSS attributes for several elements
+            //    $(".indicate-defaulted-value").addClass("asterisk");
+            //    $(".color-defaulted-value").css("background-color", "antiquewhite");
+            //    $(".save-metric-period").css("visibility", "hidden");
+            //    $(".default-message").css("visibility", "visible")
+            //});
         });
 
         //Force Uppercase text for Selected Fields in Details View
         $("#mpDetailsView").on('change', ".mustUpperCase", function () {
             $(this).val($(this).val().toUpperCase());
         });
-
 
         //Details Class of Button
         $(".btnMPDetails").click(function (e) {
@@ -398,9 +402,7 @@
 
         //MTRC_METRIC attributes are set to read-only
         $(".mtrc-metric").prop("disabled", true);
-    });
 
+
+    });
 </script>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
