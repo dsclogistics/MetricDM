@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<MetricDM.Models.dataPair>
 <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
 
-<div class="panel panel-primary" style="margin:0 auto; max-width:95%; border-top-width:2px">
-    <div class="panel-heading">SELECT COLUMN ORDER DISPLAY ARRANGEMENT IN THE DASHBOARD</div>
+<div class="panel panel-primary" style="margin:0 auto; max-width:95%; border-top-width:2px; margin-top:10px">
+    <div class="panel-heading">SELECT COLUMN ORDER TO USE IN THE DASHBOARD</div>
     <div class="panel-body" style="padding:3px">
         <div>NOTE: Your New Metric Period will get displayed as a column in the Metric's Dashboard</div>
         <div>Drag and drop the column for the new Metric to it's final desired position in the Dashboard</div>
@@ -20,7 +20,7 @@
                             </li>
                         }
                         <li class="ui-state-default column" style="min-width:100px">
-                            <label style="min-width:70px"><span id="colName" style="color:blue; font-weight:bold">NEW METRIC</span></label>
+                            <label style="min-width:70px"><span class="newColumn" id="colName" style="color:blue; font-weight:bold">NEW METRIC</span></label>
                             <input type="hidden" name="colOrder" class="colOrder" value="999" />
                             <input type="hidden" name="mProdId" class="mProdId" value="0" />
                         </li>
@@ -61,6 +61,7 @@
             }
         });
         $(".sortable").disableSelection();
+
 
         //$('#btnReorder').click(function () {
         //    var message = "";

@@ -73,7 +73,8 @@
                 cursor: pointer;
     }
     .fieldError {
-        background-color:red !important;
+        color: white !important;
+        background-color:#fe6b42 !important;
     }
 </style>
 
@@ -96,13 +97,13 @@
         </div>
     </div>
     @*<div class="row" style="text-align:center;">
-        <span>Metric Is:[@ViewBag.metricId] @ViewBag.metricName</span>
-    </div>*@
+            <span>Metric Is:[@ViewBag.metricId] @ViewBag.metricName</span>
+        </div>*@
     <span font-size:large; font-weight:bold"> </span>
     <span id="saveMessage" class="alert-success" style="display:none; font-size:large; font-weight:bold"> </span>
     <br />
 
-        <div class="row" style="margin-top:5px">
+    <div class="row" style="margin-top:5px">
         <div class="col-md-4 col-sm-3">
             <div class="input-group metric-period" style="height:55px">
                 @Html.LabelFor(model => model.mtrc_period_name, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold" })
@@ -118,7 +119,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="row" style="margin-top:5px">
         <div class="col-md-3 col-sm-6">
@@ -180,10 +180,10 @@
         <div class="col-md-3 col-sm-6 metric-period">
             @if (metricType == "str" || metricType == "char")
             {
-                <div class="input-group">
-                    @Html.LabelFor(model => model.mtrc_period_max_str_size, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:133px" })
-                    @Html.EditorFor(model => model.mtrc_period_max_str_size, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Enter Max String Size" } })
-                </div>
+            <div class="input-group">
+                @Html.LabelFor(model => model.mtrc_period_max_str_size, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:133px" })
+                @Html.EditorFor(model => model.mtrc_period_max_str_size, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Enter Max String Size" } })
+            </div>
             }
         </div>
     </div>
@@ -209,6 +209,10 @@
             </div>
         </div>
         <div class="col-md-3 col-sm-6 metric-period">
+            <div class="input-group metric-period">
+                <label class="input-group-addon" for="mtrc_prod_display_text" style="font-weight:bold; min-width:133px">Column Display Text</label>
+                <input class="form-control text-box single-line" id="mtrc_prod_display_text" name="mtrc_prod_display_text" placeholder="Enter Col Title" type="text" value="" />
+            </div>
         </div>
 
         <div class="col-md-3 col-sm-6 metric-period">
@@ -220,53 +224,109 @@
         @Html.ValidationMessageFor(model => model.mtrc_period_is_auto_yn, "", new { @class = "text-danger" })
     </div>
 
-}  
-    
-    @Html.Action("_productMetricColumns")
+}
 
-    <div class="panel panel-primary" style="margin:0 auto; margin-top:15px; max-width:95%; border-top-width:2px">
-        <div class="panel-heading" style="padding:4px">METRIC PERIOD GOAL</div>
-        <div class="panel-body" style="height: 80px; margin:0 auto; padding: 15px 0px 0px 0px;">
-            <div class="row" style="margin:0 auto">
-                <div class="col-xm-6 col-md-3">
-                    <div style ="position:relative; max-width:250px">
-                        <div style="position: absolute; top: -12px; left: 0; z-index: 20; margin-left: 10px; width:279px">
-                            <span style="float:left">@minGoal</span>
-                            <span style="float:right">@maxGoal</span>
+@Html.Action("_productMetricColumns")
+
+<div class="panel panel-primary" style="margin:0 auto; margin-top:15px; max-width:95%; border-top-width:2px">
+    <div class="panel-heading" style="padding:4px">METRIC PERIOD GOAL</div>
+    <div class="panel-body" style="min-height: 195px; margin:0 auto; padding: 15px 0px 0px 0px;">
+        <div class="row " style="margin:0; width:100%; padding-left:5px">
+            <div class="col-xs-12 col-sm-4 col-md-5 bordered-rnd" style="padding:0">
+                <div style="background-color: #f4f4f4">Goal Effective Dates</div>
+                <div style="text-align:left; padding:5px 10px;">
+                    <div class="row" style="margin:0 auto">
+                        <table style="margin:0 auto; width:100%">
+                            <tr>
+                                <td style="width:50%; text-align:center">
+                                    <div class="input-group">
+                                        <label class="input-group-addon" for="effStartDate" style="font-weight:bold; min-width:60px">Start</label>
+                                        <input class="form-control text-box single-line" id="effStartDate" name="effStartDate" placeholder="yyyy/mm/dd" type="text" style="width:150px" />
+                                    </div>
+                                </td>
+                                <td style="width:50%; text-align:center">
+                                    <div class="input-group">
+                                        <label class="input-group-addon" for="effEndDate" style="font-weight:bold; min-width:60px">End</label>
+                                        <input class="form-control text-box single-line" id="effEndDate" name="effEndDate" placeholder="yyyy/mm/dd" type="text" style="width:150px" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-md-offset-1" style="padding:0; padding-top:17px">
+                <div style="text-align:left; padding-left:10px;">
+                    <div class="input-group">
+                        <label class="input-group-addon" for="flgBldgOverride" style="font-weight:bold; min-width:120px">Allow Bldg Override</label>
+                        <input class="form-control text-box single-line" id="flgBldgOverride" name="flgBldgOverride" placeholder="Y/N" type="text" style="width:80px" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-3 " style="padding:0; padding-top:17px">
+                <div></div>
+                <div style="text-align:left; padding-left:10px;">
+                    <div class="input-group">
+                        <label class="input-group-addon" for="goal_disp_text" style="font-weight:bold; min-width:120px">Goal Disp Text</label>
+                        <input class="form-control text-box single-line" id="goal_disp_text" name="goal_disp_text" type="text" style="width:150px" disabled="disabled" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin:0 auto; padding:2px; margin-top:5px; background-color:#f4f4f4">
+            Adjust the Metric Goal Values
+        </div>
+        <div class="row " style="margin:0 auto; padding-top:5px; height:65px">
+            <div class="col-xs-4 col-sm-4 col-md-3" style="padding:0; position:static">
+                <div style="position:relative; max-width:250px">
+                    <div style="position: absolute; top: -6px; left: 0; z-index: 02; margin-left: 10px; width:279px">
+                        <span style="float:left">@minGoal</span>
+                        <span style="float:right">@maxGoal</span>
+                    </div>
+                    <div id="divRangeSlider" style="position: absolute; top: 10px; left: 0; z-index: 03; margin-left: 10px">
+                        <input type="range" id="leftRange" value="@minGoal" min="@minGoal" max="@maxGoal" step="1" width="300" style="width:300px;" />
+                        <input type="range" id="rightRange" value="@maxGoal" min="@minGoal" max="@maxGoal" step="1" style="width:300px" />
+                    </div>
+                    <div id="divRangeColors" style="position: absolute; top: 10px; left: 0; z-index: 01;margin-left:10px; display:none">
+                        <table style="width:279px">
+                            <tr>
+                                <td><div id="divRange1" style="background-color:red; width:93px; height:40px; "></div></td>
+                                <td><div id="divRange2" style="background-color:green; width:93px; height:40px; "></div></td>
+                                <td><div id="divRange3" style="background-color:blue; width:93px; height:40px; "></div></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="position: absolute; top: 55px; left: 0; z-index: 10; margin-left: 10px; width:279px;">
+                        <div>
+                            <span style="float:left"><input type="checkbox" checked="checked" /></span>
+                            <span style="float:right"><input type="checkbox" checked="checked" /></span>
                         </div>
-                        <div id="divRangeSlider" style="position: absolute; top: 5px; left: 0; z-index: 999; margin-left: 10px">
-                            <input type="range" id="leftRange" value="@minGoal" min="@minGoal" max="@maxGoal" step="1" width="300" style="width:300px;" />
-                            <input type="range" id="rightRange" value="@maxGoal" min="@minGoal" max="@maxGoal" step="1" style="width:300px" />
-                        </div>
-                        <div id="divRangeColors" style="position: absolute; top: 5px; left: 0; z-index: 10;margin-left:10px; display:none">
-                            <table style="width:279px">
-                                <tr>
-                                    <td><div id="divRange1" style="background-color:red; width:93px; height:40px; "></div></td>
-                                    <td><div id="divRange2" style="background-color:green; width:93px; height:40px; "></div></td>
-                                    <td><div id="divRange3" style="background-color:blue; width:93px; height:40px; "></div></td>
-                                </tr>
-                            </table>
+                        <div>
+                            <span style="float:left; font-size: x-small; margin-left:5px; margin-top:5px">Include Lower Limit</span>
+                            <span style="float:right; font-size: x-small; margin-right:5px; margin-top:5px">Include Upper Limit</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-xm-6 col-md-9" style="text-align:left; margin-bottom:15px">
-                    <span style="text-align:left">Selected Goal: </span><br />
-                    <input type="text" id="selRange" name="selRange" style="min-width:300px;" value="@minGoal to @maxGoal" disabled="disabled" />
-                </div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-3" style="padding:0; position:static">
+                <br />
+                <input type="text" id="selRange" name="selRange" style="min-width:300px;" value="@minGoal to @maxGoal" disabled="disabled" />
             </div>
         </div>
     </div>
+</div>
 
-    <hr />
-    <div class="form-horizontal">
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" id="addMP" value="Create Metric Period" class="btn btn-default" disabled="disabled" />
-                <input type="button" id="btnDebug" value="Debug Form Values" class="btn btn-default" />
-                <input type="button" id="btnReset" value="Reset Form Values" class="btn btn-default">
-            </div>
+<hr />
+<div class="form-horizontal">
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" id="addMP" value="Create Metric Period" class="btn btn-default" disabled="disabled" />
+            <input type="button" id="btnDebug" value="Debug Form Values" class="btn btn-default" />
+            <input type="button" id="btnReset" value="Reset Form Values" class="btn btn-default">
         </div>
     </div>
+</div>
 
 
 <br />
@@ -309,8 +369,9 @@
         mpNA = $('#mtrc_period_na_allow_yn');
         mpImport = $('#mtrc_period_can_import_yn');
         mpAuto = $('#mtrc_period_is_auto_yn');
+        mpDispText = $('#mtrc_prod_display_text');
 
-        if (mpName.val() == ""){eMsg += "Metric Period Name is Required\n"; mpName.addClass("fieldError");}
+        if (mpName.val() == "") { eMsg += "Metric Period Name is Required\n"; mpName.addClass("fieldError"); }
         if (mpDesc.val() == "") { eMsg += "Metric Period Description is Required\n"; mpDesc.addClass("fieldError"); }
         if (mpType.val() == 0) { eMsg += "Select a Metric Type\n"; mpType.addClass("fieldError"); }
         if (mpToken.val() == "") { eMsg += "Metric Period Token is Required\n"; mpToken.addClass("fieldError"); }
@@ -328,6 +389,7 @@
         if (!(mpImport.val() == "Y" || mpImport.val() == "N")) { eMsg += "Metric Period 'Can Import' Flag Must be 'Y' or 'N'\n"; mpImport.addClass("fieldError"); }
         if (mpAuto.val() == "") { eMsg += "Metric Period 'Is Automatic' Flag is Required\n"; mpAuto.addClass("fieldError"); }
         if (!(mpAuto.val() == "Y" || mpAuto.val() == "N")) { eMsg += "Metric Period 'Is Automatic' Flag Must be 'Y' or 'N'\n"; mpAuto.addClass("fieldError"); }
+        if (mpDispText.val() == "") { eMsg += "The Metric Column Display Text is Required\n"; mpDispText.addClass("fieldError"); }
 
         if ($('#selRange').val() == "Invalid Goal") {
             eMsg += "The Metric Period Goal is not Valid."; $('#selRange').addClass("fieldError");
@@ -348,7 +410,7 @@
         var formattingChar = (("@metricType" == "pct") ? "%" : "");
 
         if (range1 == 'NaN' || range2 == 'NaN' || minVal == 'NaN' || maxVal == 'NaN') { return "Goal Can't be Parsed"; }
-        if (range1 == range2) { return "Invalid Goal";}
+        if (range1 == range2) { return "Invalid Goal"; }
 
         if (range1 < range2) {//Standard Position
             if (range1 == maxVal) {
@@ -366,8 +428,16 @@
     }
 
     $(document).ready(function () {
-
         var originalToken = $('#mtrc_period_token').val();
+        $("#effStartDate").datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true
+        });
+        $("#effEndDate").datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true
+        });
+
 
         $('#leftRange, #rightRange').change(function () {
             $('#selRange').val(parseGoal(parseInt($('#leftRange').val()), parseInt($('#rightRange').val())));
@@ -379,6 +449,7 @@
                 $('#addMP').prop('disabled', false);
                 $('#selRange').removeClass("fieldError");
             }
+            $('#pageModified').val("Y");  //Flag the current page as modified
             reloadFill();
         });
 
@@ -388,11 +459,75 @@
             alert("Query String is: \n" + queryString);
 
             var fieldValuePairs = $('#frmAddMP').serializeArray();
+            var formJson = "{";
             var formData = "";
             $.each(fieldValuePairs, function (index, fieldValuePair) {
                 formData = formData + "Item " + index + " is [" + fieldValuePair.name + "," + fieldValuePair.value + "]\n";
+                formJson += '"' + fieldValuePair.name + '" : "' + fieldValuePair.value + '", ';
             });
-            alert("Full Form Elements Data: \n" + formData);
+            alert(formData);
+            return;
+            //Add the Columns Order to the Json Data
+            var newSeq = 10;
+            var columnData = "";
+            //formJson += '"ColumnOrder" : [' +
+            //      { "firstName":"John", "lastName":"Doe" },
+            //      { "firstName":"Anna", "lastName":"Smith" },
+            //      { "firstName":"Peter", "lastName":"Jones" }
+
+            mtrc_prod_id
+            prod_id
+            mtrc_period_id
+            mtrc_prod_top_lvl_parent_yn
+            mtrc_prod_display_text
+            mtrc_prod_display_order
+            mtrc_prod_eff_start_dt
+            mtrc_prod_eff_end_dt
+
+            $('.column').each(function () {
+                var mProdId = $(this).find(".mProdId").first().val();
+                var colName = $(this).find("#colName").first().html();
+                var oldSeq = $(this).find(".colOrder").first().val();
+                if ((newSeq.toString()) != oldSeq && oldSeq != "999") {
+                    message = message + mProdId + "~" + colName + "~" + oldSeq + "~" + newSeq + ",\n";
+                }
+                //if ( newSeq.toString() != oldSeq) {
+                //    message = message + (oldSeq == "999") ? "": $(this).children("#colName").first().val() + "~" + oldSeq + "~" + newSeq + ",";
+                //}
+                newSeq = newSeq + 10;
+            });
+
+
+            //    var message = "";
+            //    var newSeq = 10;
+            //    $('.column').each(function () {
+            //        var mProdId = $(this).find(".mProdId").first().val();
+            //        var colName = $(this).find("#colName").first().html();
+            //        var oldSeq = $(this).find(".colOrder").first().val();
+
+            //        if ((newSeq.toString()) != oldSeq && oldSeq != "999") {
+            //            message = message + mProdId + "~" + colName + "~" + oldSeq + "~" + newSeq + ",\n";
+            //        }
+            //        //if ( newSeq.toString() != oldSeq) {
+            //        //    message = message + (oldSeq == "999") ? "": $(this).children("#colName").first().val() + "~" + oldSeq + "~" + newSeq + ",";
+            //        //}
+            //        newSeq = newSeq + 10;
+            //    });
+            //    if (message == "") message = "No changes Detected";
+            //    alert(message);
+
+
+
+
+
+
+
+
+
+
+
+            alert("Json Data: \n" + formJson);
+            //alert("Full Form Elements Data: \n" + formData);
         });
 
 
@@ -494,9 +629,12 @@
                     alert("Keep working then");
                 }
             }
-            else {
-                window.location.href = "/MetricPeriod/AddMetricPeriod/" + $('#mtrc_id').val();
-            }
+        });
+
+        $('#mtrc_prod_display_text').change(function () {
+            if ($(this).val() == "") { $('.newColumn').html("NEW METRIC"); }
+            else { $('.newColumn').html($(this).val()); }
+            //alert("Name Changed");
         });
 
     });
