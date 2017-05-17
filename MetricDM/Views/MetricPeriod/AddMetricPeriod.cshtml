@@ -139,14 +139,14 @@
         <div class="col-md-3 col-sm-6">
             <div class="input-group metric-period">
                 @Html.LabelFor(model => model.mtrc_period_max_dec_places, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:133px" })
-                @Html.EditorFor(model => model.mtrc_period_max_dec_places, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Enter Max Decimals" } })
+                @Html.EditorFor(model => model.mtrc_period_max_dec_places, new { htmlAttributes = new { @class = "form-control color-defaulted-value numClass", placeholder = "Enter Max Decimals" } })
                 @*@Html.ValidationMessageFor(model => model.mtrc_period_max_dec_places, "", new { @class = "text-danger" })*@
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="input-group metric-period">
                 @Html.LabelFor(model => model.mtrc_period_calc_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:133px" })
-                @Html.EditorFor(model => model.mtrc_period_calc_yn, new { htmlAttributes = new { @class = "form-control mustUpperCase", placeholder = "Y/N?" } })
+                @Html.EditorFor(model => model.mtrc_period_calc_yn, new { htmlAttributes = new { @class = "form-control flagYN", placeholder = "Y/N?" } })
                 @*@Html.ValidationMessageFor(model => model.mtrc_period_calc_yn, "", new { @class = "text-danger" })*@
             </div>
         </div>
@@ -161,20 +161,22 @@
     <div class="row" style="margin-top:5px">
         <div class="col-md-3 col-sm-6">
             <div class="input-group metric-period">
+                <input type="hidden" id="origMin" value="@Model.mtrc_period_min_val" />
                 @Html.LabelFor(model => model.mtrc_period_min_val, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:130px" })
-                @Html.EditorFor(model => model.mtrc_period_min_val, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Enter Min Value" } })
+                @Html.EditorFor(model => model.mtrc_period_min_val, new { htmlAttributes = new { @class = "form-control color-defaulted-value numClass", placeholder = "Enter Min Value" } })
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="input-group metric-period">
+                <input type="hidden" id="origMax" value="@Model.mtrc_period_max_val" />
                 @Html.LabelFor(model => model.mtrc_period_max_val, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:90px" })
-                @Html.EditorFor(model => model.mtrc_period_max_val, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Enter Max Value" } })
+                @Html.EditorFor(model => model.mtrc_period_max_val, new { htmlAttributes = new { @class = "form-control color-defaulted-value numClass", placeholder = "Enter Max Value" } })
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="input-group metric-period">
                 @Html.LabelFor(model => model.mtrc_period_na_allow_yn, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:133px" })
-                @Html.EditorFor(model => model.mtrc_period_na_allow_yn, new { htmlAttributes = new { @class = "form-control mustUpperCase color-defaulted-value", placeholder = "Y/N?" } })
+                @Html.EditorFor(model => model.mtrc_period_na_allow_yn, new { htmlAttributes = new { @class = "form-control color-defaulted-value flagYN", placeholder = "Y/N?" } })
             </div>
         </div>
         <div class="col-md-3 col-sm-6 metric-period">
@@ -182,7 +184,7 @@
             {
             <div class="input-group">
                 @Html.LabelFor(model => model.mtrc_period_max_str_size, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:133px" })
-                @Html.EditorFor(model => model.mtrc_period_max_str_size, new { htmlAttributes = new { @class = "form-control color-defaulted-value", placeholder = "Enter Max String Size" } })
+                @Html.EditorFor(model => model.mtrc_period_max_str_size, new { htmlAttributes = new { @class = "form-control color-defaulted-value numClass", placeholder = "Enter Max String Size" } })
             </div>
             }
         </div>
@@ -199,13 +201,13 @@
         <div class="col-md-3 col-sm-6">
             <div class="input-group metric-period">
                 @Html.LabelFor(model => model.mtrc_period_can_import_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:130px" })
-                @Html.EditorFor(model => model.mtrc_period_can_import_yn, new { htmlAttributes = new { @class = "form-control mustUpperCase", placeholder = "Y/N?" } })
+                @Html.EditorFor(model => model.mtrc_period_can_import_yn, new { htmlAttributes = new { @class = "form-control flagYN", placeholder = "Y/N?" } })
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="input-group metric-period">
                 @Html.LabelFor(model => model.mtrc_period_is_auto_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:90px" })
-                @Html.EditorFor(model => model.mtrc_period_is_auto_yn, new { htmlAttributes = new { @class = "form-control mustUpperCase", placeholder = "Y/N?" } })
+                @Html.EditorFor(model => model.mtrc_period_is_auto_yn, new { htmlAttributes = new { @class = "form-control flagYN", placeholder = "Y/N?" } })
             </div>
         </div>
         <div class="col-md-3 col-sm-6 metric-period">
@@ -224,7 +226,7 @@
         @Html.ValidationMessageFor(model => model.mtrc_period_is_auto_yn, "", new { @class = "text-danger" })
     </div>
 
-}
+
 
 @Html.Action("_productMetricColumns")
 
@@ -259,7 +261,7 @@
                 <div style="text-align:left; padding-left:10px;">
                     <div class="input-group">
                         <label class="input-group-addon" for="flgBldgOverride" style="font-weight:bold; min-width:120px">Allow Bldg Override</label>
-                        <input class="form-control text-box single-line" id="flgBldgOverride" name="flgBldgOverride" placeholder="Y/N" type="text" style="width:80px" />
+                        <input class="form-control text-box single-line flagYN" id="flgBldgOverride" name="flgBldgOverride" placeholder="Y/N" type="text" style="width:80px" />
                     </div>
                 </div>
             </div>
@@ -277,12 +279,14 @@
         <div class="row" style="margin:0 auto; padding:2px; margin-top:5px; background-color:#f4f4f4">
             Adjust the Metric Goal Values
         </div>
+
+
         <div class="row " style="margin:0 auto; padding-top:5px; height:65px">
             <div class="col-xs-4 col-sm-4 col-md-3" style="padding:0; position:static">
                 <div style="position:relative; max-width:250px">
                     <div style="position: absolute; top: -6px; left: 0; z-index: 02; margin-left: 10px; width:279px">
-                        <span style="float:left">@minGoal</span>
-                        <span style="float:right">@maxGoal</span>
+                        <span id="lblMin" style="float:left">@minGoal</span>
+                        <span id="lblMax" style="float:right">@maxGoal</span>
                     </div>
                     <div id="divRangeSlider" style="position: absolute; top: 10px; left: 0; z-index: 03; margin-left: 10px">
                         <input type="range" id="leftRange" value="@minGoal" min="@minGoal" max="@maxGoal" step="1" width="300" style="width:300px;" />
@@ -303,8 +307,8 @@
                             <span style="float:right"><input type="checkbox" checked="checked" /></span>
                         </div>
                         <div>
-                            <span style="float:left; font-size: x-small; margin-left:5px; margin-top:5px">Include Lower Limit</span>
-                            <span style="float:right; font-size: x-small; margin-right:5px; margin-top:5px">Include Upper Limit</span>
+                            <span style="float:left; font-size: x-small; margin-left:5px; margin-top:5px; ">Include Lower Limit</span>
+                            <span style="float:right; font-size: x-small; margin-right:5px; margin-top:5px;">Include Upper Limit</span>
                         </div>
                     </div>
                 </div>
@@ -327,13 +331,20 @@
         </div>
     </div>
 </div>
-
+}
 
 <br />
 <div>
     @Html.ActionLink("Back to List", "MetricMaintenance", "MetricPeriod", new { id = ViewBag.metric_id }, null)
 </div>
 <br /><br />
+
+<div id="postResults" class="bordered-dbl" style="display:none; padding:20px;">
+    Form Post Results go here
+</div>
+<br /><br /><br />
+
+
 
 
 
@@ -420,11 +431,22 @@
         }
         else { //Crossed position
             if (range1 == maxVal && range2 == minVal) { return "Invalid Goal"; }
-            if (range1 == maxVal) { return "Les than " + $('#rightRange').val() + formattingChar; }
+            if (range1 == maxVal) { return "Less than " + $('#rightRange').val() + formattingChar; }
             if (range2 == minVal) { return "greater than " + $('#leftRange').val() + formattingChar; }
             return "Less than " + $('#rightRange').val() + formattingChar + " or greater than " + $('#leftRange').val() + formattingChar;
         }
 
+    }
+    function adjustGoal() {
+        $('#selRange').val(parseGoal(parseInt($('#leftRange').val()), parseInt($('#rightRange').val())));
+        if ($('#selRange').val() == "Goal Can't be Parsed" || $('#selRange').val() == "Invalid Goal") {
+            $('#addMP').prop('disabled', true);
+            $('#selRange').addClass("fieldError");
+        }
+        else {
+            $('#addMP').prop('disabled', false);
+            $('#selRange').removeClass("fieldError");
+        }
     }
 
     $(document).ready(function () {
@@ -437,18 +459,9 @@
             showOtherMonths: true,
             selectOtherMonths: true
         });
-
-
+       
         $('#leftRange, #rightRange').change(function () {
-            $('#selRange').val(parseGoal(parseInt($('#leftRange').val()), parseInt($('#rightRange').val())));
-            if ($('#selRange').val() == "Goal Can't be Parsed" || $('#selRange').val() == "Invalid Goal") {
-                $('#addMP').prop('disabled', true);
-                $('#selRange').addClass("fieldError");
-            }
-            else {
-                $('#addMP').prop('disabled', false);
-                $('#selRange').removeClass("fieldError");
-            }
+            adjustGoal();
             $('#pageModified').val("Y");  //Flag the current page as modified
             reloadFill();
         });
@@ -533,16 +546,67 @@
 
         //Hides asterisk from Metric Period Detail fields with default values after those values have been changed.
         $("#frmAddMP").on('change', ".form-control", function () {
-            $('#addMP').prop('disabled', false);
-            $(this).removeClass("fieldError");
-            $(this).siblings(".indicate-defaulted-value").removeClass("asterisk");
-            $(this).css("background-color", "white");
-            $('#pageModified').val("Y");  //Flag the current page as modified
-        });
+            //Perform Input Validation according to the Type of field
+            var isInputValid = true;
 
-        //Force Uppercase text for Selected Fields in Add MP Details Popup View
-        $("#frmAddMP").on('change', ".mustUpperCase", function () {
-            $(this).val($(this).val().toUpperCase());
+            $(this).val($(this).val().trim());  //Trim Spaces by default on all entry fields
+
+            if ($(this).hasClass('mustUpperCase')) { $(this).val($(this).val().toUpperCase()); }   //Uppercase Field Value if Neeeded
+            if ($(this).hasClass('numClass')) { isInputValid = !isNaN($(this).val()); }            //Validate Numeric Input Fields
+            if ($(this).hasClass('flagYN')) {
+                $(this).val($(this).val().toUpperCase());
+                isInputValid = ($(this).val() == 'Y' || $(this).val() == 'N');
+            }               //Validate Y/N Fields
+
+            //Verify the Min Max Values are valid if changed
+            if ($(this).prop('id') == 'mtrc_period_min_val') {
+                var origMin = Number($('#origMin').val());
+                var origMax = Number($('#origMax').val());
+                var newMin = Number($(this).val());
+                var curMax = Number($('#mtrc_period_max_val').val());
+                isInputValid = (newMin >= origMin && newMin <= origMax && newMin < curMax);   //It is within the parent Metric range values
+                //If Valid, adjust the Goal scales accordingly with the new Min
+                if (isInputValid) {
+                    $('#lblMin').html($(this).val());
+                    $('#leftRange').prop('min', $(this).val());
+                    $('#rightRange').prop('min', $(this).val());
+                    adjustGoal();
+                }
+                else {
+                    if (newMin < curMax) { alert("Selected value '" + newMin + "' is not withing the valid range of " + origMin + " and " + origMax); }
+                    else { alert("Selected value '" + newMin + "' must be less than the maximun of " + curMax); }
+                }
+            }
+            if ($(this).prop('id') == 'mtrc_period_max_val') {
+                var origMin = Number($('#origMin').val());
+                var origMax = Number($('#origMax').val());
+                var newMax = Number($(this).val());
+                var curMin = Number($('#mtrc_period_min_val').val());
+                isInputValid = (newMax >= origMin && newMax <= origMax && newMax > curMin);     //Is it within the parent Metric range values
+                //If Valid, adjust the Goal scales accordingly with the new Max
+                if (isInputValid) {
+                    $('#lblMax').html($(this).val());
+                    $('#leftRange').prop('max', $(this).val());
+                    $('#rightRange').prop('max', $(this).val());
+                    adjustGoal();
+                }
+                else {
+                    if (newMax > curMin) { alert("Selected value '" + newMax + "' is not withing the valid range of " + origMin + " and " + origMax); }
+                    else { alert("Selected value '" + newMax + "' must be more than the minimum of " + curMin); }
+                }
+            }
+
+            if (isInputValid) {
+                $(this).removeClass("fieldError");
+                $('#addMP').prop('disabled', false);
+                $(this).siblings(".indicate-defaulted-value").removeClass("asterisk");
+                $(this).css("background-color", "white");
+                $('#pageModified').val("Y");  //Flag the current page as modified
+            }
+            else {
+                $(this).addClass("fieldError");
+                $('#addMP').prop('disabled', true);
+            }
         });
 
 
@@ -613,11 +677,30 @@
 
         $('#addMP').click(function () {
             if (validateInput()) {
-                alert("Saving has not been enable yet. Will be done soon...")
+                var jsonDataValue = '{"name":"Feliciano"}';
+
+
+                // ------------ Make the Ajax Call ---------------------------------------------
+                $.ajax({
+                    url: '/MetricPeriod/AddMetricPeriod',     // the url where we want to direct our Ajax Call
+                    method: "POST",
+                    cache: false,
+                    data: { jsonData: jsonDataValue },     //<---- Data Parameters (if not already passed in the Url)
+                    //--- On error, execute this function ------
+                    error: function (xhr, status, error) {
+                        $('#postResults').html(xhr + "<br />STATUS: " + status);
+                        $('#postResults').addClass('alert-danger').show().fadeOut(5000);
+                    }
+                }).done(function (d) {
+                    $('#postResults').html(d).addClass('alert-success').show().fadeOut(5000);
+                    
+                    //Scroll to the bottom of the page so that the newly retrieved data becomes visible
+                    window.scrollTo(0, document.body.scrollHeight);
+                });
+
+
             }
-            else {
-                $('#addMP').prop('disabled', true);
-            }
+            else { $(this).prop('disabled', true); }
         });
 
         $('#btnReset').click(function () {

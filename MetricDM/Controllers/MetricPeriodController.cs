@@ -165,24 +165,19 @@ namespace MetricDM.Controllers
 
         // POST: /MetricPeriod/AddMetricPeriod
         [HttpPost]
-        public string AddMetricPeriod(MTRC_METRIC_PERIOD newMetricPeriod)
+        public string AddMetricPeriod(string jsonData)
         {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    db.MTRC_METRIC_PERIOD.Add(newMetricPeriod);
-                    db.SaveChanges();
-                }
-                catch (Exception e)
-                {
-                    return "Error: " + e.Message;
-                }
+            //This "Post" Action will add a new Metric Period  and all it's associated Table entries:
+            // - Add a record to the "MTRC_METRIC_PERIOD" table for the New Metric Period
+            // - Add a record to the "MTRC_METRIC_PRODUCTS" table. New record to be used as the column identifier in the dashboards
+            // - Add a record to the "MTRC_MPG" table. This is Metric Period Goal to be used for this new MP
+            // - Add multiple records to the "MTRC_BLDG_MTRC_PERIOD" table. One records for each active building that will be part of the metric
+            // - If the New Metric Period has a start date prior to the Current Period; then the period that will be affected must be created:
+            //      Create a record for each (past or current) period that will be used for data entry in the "RZ_MTRC_PERIOD_STATUS" table. 
+            //      Future Periods will be opened automatilly at the begining of next period
 
-                return "Data saved successfully!";
-            }
 
-            return "Validation errors found. Please review your input.";
+            return "Controller Action has not been implemented.";
 
         }
 
