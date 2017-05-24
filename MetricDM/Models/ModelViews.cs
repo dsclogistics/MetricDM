@@ -21,8 +21,7 @@ namespace MetricDM.Models
         public string mtrc_name { get; set; }
         [Display(Name = "Token")]
         public string mtrc_token { get; set; }
-        [Display(Name = "Description")]
-        [DataType(DataType.MultilineText)]
+        [Display(Name = "Description")] [Required] [DataType(DataType.MultilineText)]
         public string mtrc_desc { get; set; }
         [Display(Name = "Effective Start Date")]
         [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}", ApplyFormatInEditMode = true)]

@@ -34,7 +34,7 @@ else
         <input type="hidden" id="mID" name="mtrc_id" value="@Model.mtrc_id" />
     </div>
     <span font-size:large; font-weight:bold"> </span>
-    <span id="saveMessage" class="alert-success" style="display:none; font-size:large; font-weight:bold"> </span>
+    <span id="saveMessage" class="@ViewBag.alertCSS" style="font-size:large; font-weight:bold">@ViewBag.ErrorMsg</span>
     <br />
     <div class="row" style="margin-top:5px">
         <div class="col-md-4 col-sm-3" >
@@ -157,13 +157,15 @@ else
     </div>
 
     <br class="default-message" />
-    <div class="default-message">*Values defaulted from parent metric. Please update as needed.</div>
-
+    <div class="default-message">*Values defaulted from parent metric. Please update as needed.</div>    
     <hr class="save-metric-period"/>
     <div class="row save-metric-period" style="text-align:center">
         <input type="button" class="btn btn-primary" id="btnSaveMPDetail" value="Save Metric Period Data" />
+        @if (ViewBag.DeleteAllowed != null && ViewBag.DeleteAllowed == "Y")
+        {
+            <input type="button" class="btn btn-warning" id="btnDeleteMP" value="Delete Metric Period" style="margin-left:20px; min-width: 180px"/>
+        }
     </div>
-
     <br />
     <div>
         @ViewBag.saveResult

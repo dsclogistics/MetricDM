@@ -9,73 +9,167 @@
 }
 
 <style>
-    .metric-period > .indicate-defaulted-value, .asterisk:after {
-        content: "*";
-    }
-
-    .metric-period > .color-defaulted-value {
-        background-color: antiquewhite;
-    }
-
-    .ui-dialog-titlebar-close {
-        padding: 0 !important;
-    }
-
-        .ui-dialog-titlebar-close:after {
-            content: '';
-            width: 20px;
-            height: 20px;
-            display: inline-block;
-            /* Change path to image*/
-            background-image: url(/Content/images/ui-icons_777777_256x240.png);
-            background-position: -96px -128px;
-            background-repeat: no-repeat;
+        .metric-period > .indicate-defaulted-value, .asterisk:after {
+            content: "*";
         }
 
-    #menu-outer {
-        height: 73px;
-        border: 1px solid black;
-        border-radius: 7px;
-        margin-top: 5px;
-        margin-bottom: 8px;
+        .metric-period > .color-defaulted-value {
+            background-color: antiquewhite;
+        }
+
+        .ui-dialog-titlebar-close {
+            padding: 0 !important;
+        }
+
+        .ui-dialog-titlebar-close:after {
+                content: '';
+                width: 20px;
+                height: 20px;
+                display: inline-block;
+                /* Change path to image*/
+                background-image: url(/Content/images/ui-icons_777777_256x240.png);
+                background-position: -96px -128px;
+                background-repeat: no-repeat;
+        }
+
+        #menu-outer {
+            height: 73px;
+            border: 1px solid black;
+            border-radius: 7px;
+            margin-top: 5px;
+            margin-bottom: 8px;
+        }
+
+        .ui-state-highlight {
+            height: 1.5em;
+            line-height: 1.2em;
+            width: 85px;
+        }
+
+        .table1 {
+            display: table; /* Allow the centering to work */
+            margin: 0 auto;
+        }
+
+        ul#horizontal-list {
+            min-width: 696px;
+            list-style: none;
+            list-style-type: none;
+            /*padding-top: 20px;*/
+            margin: 0;
+            margin-top: 25px;
+            padding: 0;
+        }
+
+        ul#horizontal-list li {
+                display: inline;
+                border: 1px solid blue;
+                border-radius: 5px;
+                padding: 5px;
+                margin-left: 5px;
+        }
+
+        ul#horizontal-list li label {
+                    cursor: pointer;
+        }
+
+        .fieldError {
+            color: white !important;
+            background-color: #fe6b42 !important;
+        }
+        /*  -------------- Range Sliders Styling ----------------------- */
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      margin: 5.3px 0;
+    }
+    input[type=range]:focus {
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 10.4px;
+      cursor: pointer;
+      box-shadow: 3.1px 3.1px 7.4px #000000, 0px 0px 3.1px #0d0d0d;
+      background: rgba(135, 129, 135, 0.58);
+      border-radius: 4.1px;
+      border: 1.2px solid #562425;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      box-shadow: 0.8px 0.8px 0.9px #290000, 0px 0px 0.8px #430000;
+      border: 1.2px solid #070000;
+      height: 21px;
+      width: 11px;
+      border-radius: 3px;
+      background: rgba(124, 65, 57, 0.91);
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -6.5px;
+    }
+    input[type=range]:focus::-webkit-slider-runnable-track {
+      background: rgba(147, 142, 147, 0.58);
+    }
+    input[type=range]::-moz-range-track {
+      width: 100%;
+      height: 10.4px;
+      cursor: pointer;
+      box-shadow: 3.1px 3.1px 7.4px #000000, 0px 0px 3.1px #0d0d0d;
+      background: rgba(135, 129, 135, 0.58);
+      border-radius: 4.1px;
+      border: 1.2px solid #562425;
+    }
+    input[type=range]::-moz-range-thumb {
+      box-shadow: 0.8px 0.8px 0.9px #290000, 0px 0px 0.8px #430000;
+      border: 1.2px solid #070000;
+      height: 21px;
+      width: 11px;
+      border-radius: 3px;
+      background: rgba(124, 65, 57, 0.91);
+      cursor: pointer;
+    }
+    input[type=range]::-ms-track {
+      width: 100%;
+      height: 10.4px;
+      cursor: pointer;
+      background: transparent;
+      border-color: transparent;
+      color: transparent;
+    }
+    input[type=range]::-ms-fill-lower {
+      background: rgba(122, 116, 122, 0.58);
+      border: 1.2px solid #562425;
+      border-radius: 8.2px;
+      box-shadow: 3.1px 3.1px 7.4px #000000, 0px 0px 3.1px #0d0d0d;
+    }
+    input[type=range]::-ms-fill-upper {
+      background: rgba(135, 129, 135, 0.58);
+      border: 1.2px solid #562425;
+      border-radius: 8.2px;
+      box-shadow: 3.1px 3.1px 7.4px #000000, 0px 0px 3.1px #0d0d0d;
+    }
+    input[type=range]::-ms-thumb {
+      box-shadow: 0.8px 0.8px 0.9px #290000, 0px 0px 0.8px #430000;
+      border: 1.2px solid #070000;
+      height: 21px;
+      width: 11px;
+      border-radius: 3px;
+      background: rgba(124, 65, 57, 0.91);
+      cursor: pointer;
+      height: 10.4px;
+    }
+    input[type=range]:focus::-ms-fill-lower {
+      background: rgba(135, 129, 135, 0.58);
+    }
+    input[type=range]:focus::-ms-fill-upper {
+      background: rgba(147, 142, 147, 0.58);
     }
 
-    .ui-state-highlight {
-        height: 1.5em;
-        line-height: 1.2em;
-        width: 85px;
+    .ui-datepicker-calendar {
+        z-index: 999;
     }
 
-    .table1 {
-        display: table; /* Allow the centering to work */
-        margin: 0 auto;
-    }
+        /* \----- End of the Range Slider's Styling --------/  */
 
-    ul#horizontal-list {
-        min-width: 696px;
-        list-style: none;
-        list-style-type: none;
-        /*padding-top: 20px;*/
-        margin: 0;
-        margin-top: 25px;
-        padding: 0;
-    }
-
-    ul#horizontal-list li {
-            display: inline;
-            border: 1px solid blue;
-            border-radius: 5px;
-            padding: 5px;
-            margin-left: 5px;
-    }
-
-    ul#horizontal-list li label {
-                cursor: pointer;
-    }
-    .fieldError {
-        color: white !important;
-        background-color:#fe6b42 !important;
-    }
 </style>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -145,10 +239,8 @@
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="input-group metric-period">
-                @Html.LabelFor(model => model.mtrc_period_calc_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:133px" })
-                @Html.EditorFor(model => model.mtrc_period_calc_yn, new { htmlAttributes = new { @class = "form-control flagYN", placeholder = "Y/N?" } })
-                @*@Html.ValidationMessageFor(model => model.mtrc_period_calc_yn, "", new { @class = "text-danger" })*@
-            </div>
+                <label class="input-group-addon" for="prod_id" style="font-weight:bold; min-width:130px">Metric Product</label>
+                @Html.DropDownList("prod_id", null, "--- Select Metric Product ---", htmlAttributes: new { @class = "form-control", id = "prod_id" })            </div>
         </div>
     </div>
 
@@ -180,13 +272,11 @@
             </div>
         </div>
         <div class="col-md-3 col-sm-6 metric-period">
-            @if (metricType == "str" || metricType == "char")
-            {
-            <div class="input-group">
-                @Html.LabelFor(model => model.mtrc_period_max_str_size, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:133px" })
-                @Html.EditorFor(model => model.mtrc_period_max_str_size, new { htmlAttributes = new { @class = "form-control color-defaulted-value numClass", placeholder = "Enter Max String Size" } })
+            <div class="input-group metric-period">
+                @Html.LabelFor(model => model.mtrc_period_calc_yn, htmlAttributes: new { @class = "input-group-addon", style = "font-weight:bold; min-width:133px" })
+                @Html.EditorFor(model => model.mtrc_period_calc_yn, new { htmlAttributes = new { @class = "form-control flagYN", placeholder = "Y/N?" } })
+                @*@Html.ValidationMessageFor(model => model.mtrc_period_calc_yn, "", new { @class = "text-danger" })*@
             </div>
-            }
         </div>
     </div>
 
@@ -218,6 +308,13 @@
         </div>
 
         <div class="col-md-3 col-sm-6 metric-period">
+            @if (metricType == "str" || metricType == "char")
+            {
+                <div class="input-group">
+                    @Html.LabelFor(model => model.mtrc_period_max_str_size, htmlAttributes: new { @class = "input-group-addon indicate-defaulted-value asterisk", style = "font-weight:bold; min-width:133px" })
+                    @Html.EditorFor(model => model.mtrc_period_max_str_size, new { htmlAttributes = new { @class = "form-control color-defaulted-value numClass", placeholder = "Enter Max String Size" } })
+                </div>
+            }
         </div>
     </div>
     <div>
@@ -228,109 +325,112 @@
 
 
 
-@Html.Action("_productMetricColumns")
+    @Html.Action("_productMetricColumns")
 
-<div class="panel panel-primary" style="margin:0 auto; margin-top:15px; max-width:95%; border-top-width:2px">
-    <div class="panel-heading" style="padding:4px">METRIC PERIOD GOAL</div>
-    <div class="panel-body" style="min-height: 195px; margin:0 auto; padding: 15px 0px 0px 0px;">
-        <div class="row " style="margin:0; width:100%; padding-left:5px">
-            <div class="col-xs-12 col-sm-4 col-md-5 bordered-rnd" style="padding:0">
-                <div style="background-color: #f4f4f4">Goal Effective Dates</div>
-                <div style="text-align:left; padding:5px 10px;">
-                    <div class="row" style="margin:0 auto">
-                        <table style="margin:0 auto; width:100%">
-                            <tr>
-                                <td style="width:50%; text-align:center">
-                                    <div class="input-group">
-                                        <label class="input-group-addon" for="effStartDate" style="font-weight:bold; min-width:60px">Start</label>
-                                        <input class="form-control text-box single-line" id="effStartDate" name="effStartDate" placeholder="yyyy/mm/dd" type="text" style="width:150px" />
-                                    </div>
-                                </td>
-                                <td style="width:50%; text-align:center">
-                                    <div class="input-group">
-                                        <label class="input-group-addon" for="effEndDate" style="font-weight:bold; min-width:60px">End</label>
-                                        <input class="form-control text-box single-line" id="effEndDate" name="effEndDate" placeholder="yyyy/mm/dd" type="text" style="width:150px" />
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 col-md-3 col-md-offset-1" style="padding:0; padding-top:17px">
-                <div style="text-align:left; padding-left:10px;">
-                    <div class="input-group">
-                        <label class="input-group-addon" for="flgBldgOverride" style="font-weight:bold; min-width:120px">Allow Bldg Override</label>
-                        <input class="form-control text-box single-line flagYN" id="flgBldgOverride" name="flgBldgOverride" placeholder="Y/N" type="text" style="width:80px" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-4 col-md-3 " style="padding:0; padding-top:17px">
-                <div></div>
-                <div style="text-align:left; padding-left:10px;">
-                    <div class="input-group">
-                        <label class="input-group-addon" for="goal_disp_text" style="font-weight:bold; min-width:120px">Goal Disp Text</label>
-                        <input class="form-control text-box single-line" id="goal_disp_text" name="goal_disp_text" type="text" style="width:150px" disabled="disabled" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row" style="margin:0 auto; padding:2px; margin-top:5px; background-color:#f4f4f4">
-            Adjust the Metric Goal Values
-        </div>
-
-
-        <div class="row " style="margin:0 auto; padding-top:5px; height:65px">
-            <div class="col-xs-4 col-sm-4 col-md-3" style="padding:0; position:static">
-                <div style="position:relative; max-width:250px">
-                    <div style="position: absolute; top: -6px; left: 0; z-index: 02; margin-left: 10px; width:279px">
-                        <span id="lblMin" style="float:left">@minGoal</span>
-                        <span id="lblMax" style="float:right">@maxGoal</span>
-                    </div>
-                    <div id="divRangeSlider" style="position: absolute; top: 10px; left: 0; z-index: 03; margin-left: 10px">
-                        <input type="range" id="leftRange" value="@minGoal" min="@minGoal" max="@maxGoal" step="1" width="300" style="width:300px;" />
-                        <input type="range" id="rightRange" value="@maxGoal" min="@minGoal" max="@maxGoal" step="1" style="width:300px" />
-                    </div>
-                    <div id="divRangeColors" style="position: absolute; top: 10px; left: 0; z-index: 01;margin-left:10px; display:none">
-                        <table style="width:279px">
-                            <tr>
-                                <td><div id="divRange1" style="background-color:red; width:93px; height:40px; "></div></td>
-                                <td><div id="divRange2" style="background-color:green; width:93px; height:40px; "></div></td>
-                                <td><div id="divRange3" style="background-color:blue; width:93px; height:40px; "></div></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div style="position: absolute; top: 55px; left: 0; z-index: 10; margin-left: 10px; width:279px;">
-                        <div>
-                            <span style="float:left"><input type="checkbox" checked="checked" /></span>
-                            <span style="float:right"><input type="checkbox" checked="checked" /></span>
+    <div class="panel panel-primary" style="margin:0 auto; margin-top:15px; max-width:95%; border-top-width:2px">
+        <div class="panel-heading" style="padding:4px">METRIC PERIOD GOAL</div>
+        <div class="panel-body" style="min-height: 195px; margin:0 auto; padding: 15px 0px 0px 0px;">
+            <div class="row " style="margin:0; width:100%; padding-left:5px">
+                <div class="col-xs-12 col-sm-4 col-md-5 bordered-rnd" style="padding:0">
+                    <div style="background-color: #f4f4f4">Metric Period and Associated Goal's Effective Dates</div>
+                    <div style="text-align:left; padding:5px 10px;">
+                        <div class="row" style="margin:0 auto">
+                            <table style="margin:0 auto; width:100%">
+                                <tr>
+                                    <td style="width:50%; text-align:center">
+                                        <div class="input-group">
+                                            <label class="input-group-addon" for="effStartDate" style="font-weight:bold; min-width:60px">Start</label>
+                                            <input class="form-control text-box single-line" id="effStartDate" name="effStartDate" placeholder="yyyy/mm/dd" type="text" style="width:150px" />
+                                        </div>
+                                    </td>
+                                    <td style="width:50%; text-align:center">
+                                        <div class="input-group">
+                                            <label class="input-group-addon" for="effEndDate" style="font-weight:bold; min-width:60px">End</label>
+                                            <input class="form-control text-box single-line" id="effEndDate" name="effEndDate" placeholder="yyyy/mm/dd" value="12/31/2060" type="text" style="width:150px" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
-                        <div>
-                            <span style="float:left; font-size: x-small; margin-left:5px; margin-top:5px; ">Include Lower Limit</span>
-                            <span style="float:right; font-size: x-small; margin-right:5px; margin-top:5px;">Include Upper Limit</span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-3 col-md-offset-1" style="padding:0; padding-top:17px">
+                    <div style="text-align:left; padding-left:10px;">
+                        <div class="input-group">
+                            <label class="input-group-addon" for="flgBldgOverride" style="font-weight:bold; min-width:120px">Allow Bldg Override</label>
+                            <input class="form-control text-box single-line flagYN" id="flgBldgOverride" name="flgBldgOverride" placeholder="Y/N" type="text" style="width:80px" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-3 " style="padding:0; padding-top:17px">
+                    <div></div>
+                    <div style="text-align:left; padding-left:10px;">
+                        <div class="input-group">
+                            <label class="input-group-addon" for="goal_disp_text" style="font-weight:bold; min-width:120px">Goal Disp Text</label>
+                            <input class="form-control text-box single-line" id="goal_disp_text" name="goal_disp_text" type="text" style="width:150px" disabled="disabled" value="&ge; @minGoal" />
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-4 col-sm-4 col-md-3" style="padding:0; position:static">
-                <br />
-                <input type="text" id="selRange" name="selRange" style="min-width:300px;" value="@minGoal to @maxGoal" disabled="disabled" />
+            <div class="row" style="margin:0 auto; padding:2px; margin-top:5px; background-color:#f4f4f4">
+                Adjust the Metric Goal Values
+            </div>
+
+
+            <div class="row " style="margin:0 auto; padding-top:5px; height:65px">
+                <div class="col-xs-4 col-sm-4 col-md-3" style="padding:0; position:static">
+                    <div style="position:relative; max-width:250px; z-index: 0">
+                        <div id="divRangeColors" style="position: absolute; top: 10px; left: 0; z-index: 01;margin-left:10px; display:none">
+                            <table style="width:279px">
+                                <tr>
+                                    <td><div id="divRange1" style="background-color:red; width:93px; height:40px; "></div></td>
+                                    <td><div id="divRange2" style="background-color:green; width:93px; height:40px; "></div></td>
+                                    <td><div id="divRange3" style="background-color:blue; width:93px; height:40px; "></div></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="position: absolute; top: -6px; left: 0; z-index: 02; margin-left: 10px; width:279px">
+                            <span id="lblMin" style="float:left">@minGoal</span>
+                            <span id="lblMax" style="float:right">@maxGoal</span>
+                        </div>
+                        <div id="divRangeSlider" style="position: absolute; top: 10px; left: 0; z-index: 03; margin-left: 10px">
+                            <input type="range" id="leftRange" value="@minGoal" min="@minGoal" max="@maxGoal" step="1" width="300" style="width:300px;" oninput="showValue(value);" />
+                            <input type="range" id="rightRange" value="@maxGoal" min="@minGoal" max="@maxGoal" step="1" style="width:300px" oninput="showValue(value);" />
+                        </div>
+                        <div style="position: absolute; top: 55px; left: 0; z-index: 4; margin-left: 10px; width:279px;">
+                            <div>
+                                <span style="float:left"><input id="chkIncLowLim" type="checkbox" checked="checked" /></span>
+                                <span style="float:right"><input id="chkIncUpLim" type="checkbox" checked="checked" /></span>
+                            </div>
+                            <div>
+                                <span style="float:left; font-size: x-small; margin-left:5px; margin-top:5px; ">Include Lower Limit</span>
+                                <span style="float:right; font-size: x-small; margin-right:5px; margin-top:5px;">Include Upper Limit</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-3" style="padding:0; position:static">
+                    <br />
+                    <input type="text" id="selRange" name="selRange" style="min-width:350px;" value="@minGoal to @maxGoal" disabled="disabled" /><br />
+                    <label id="debugMsg"></label>
+                    <input type="hidden" id="isGoalValid" value="Y" />
+                    <input type="hidden" id="goalConditions" value="" />
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<hr />
-<div class="form-horizontal">
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="button" id="addMP" value="Create Metric Period" class="btn btn-default" disabled="disabled" />
-            <input type="button" id="btnDebug" value="Debug Form Values" class="btn btn-default" />
-            <input type="button" id="btnReset" value="Reset Form Values" class="btn btn-default">
+    <hr />
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="">
+                <input type="button" id="addMP" value="Create Metric Period" class="btn btn-default" disabled="disabled" />
+                @*<input type="button" id="btnDebug" value="Debug Form Values" class="btn btn-default" />*@
+                <input type="button" id="btnReset" value="Reset Form Values" class="btn btn-default" style="margin-left:30px">
+            </div>
         </div>
     </div>
-</div>
 }
 
 <br />
@@ -349,6 +449,13 @@
 
 
 <script>
+    var metricType = '@metricType';
+    function showValue(selectedValue) {
+        //$('#debugMsg').html(selectedValue);
+        $('#selRange').removeClass("fieldError");
+        adjustGoal();
+    }
+
     function formatI(iValue, type) {
         //switch (type) {
         //    'str':
@@ -369,186 +476,305 @@
 
     function validateInput() {
         var eMsg = "";
-        mpName = $('#mtrc_period_name');
-        mpDesc = $('#mtrc_period_desc');
-        mpType = $('#tpt_id');
-        mpToken = $('#mtrc_period_token');
-        mMaxDec = $('#mtrc_period_max_dec_places');
-        mpCalc = $('#mtrc_period_calc_yn');
-        mpMin = $('#mtrc_period_min_val');
-        mpMax = $('#mtrc_period_max_val');
-        mpNA = $('#mtrc_period_na_allow_yn');
-        mpImport = $('#mtrc_period_can_import_yn');
-        mpAuto = $('#mtrc_period_is_auto_yn');
-        mpDispText = $('#mtrc_prod_display_text');
+        var mpName = $('#mtrc_period_name');
+        var mpDesc = $('#mtrc_period_desc');
+        var mpType = $('#tpt_id');
+        var mpTypeText = $("#tpt_id option:selected").text();
+        var mpToken = $('#mtrc_period_token');
+        var mMaxDec = $('#mtrc_period_max_dec_places');
+        var mpCalc = $('#mtrc_period_calc_yn');
+        var mpMin = $('#mtrc_period_min_val');
+        var mpMax = $('#mtrc_period_max_val');
+        var mpNA = $('#mtrc_period_na_allow_yn');
+        var mpImport = $('#mtrc_period_can_import_yn');
+        var mpAuto = $('#mtrc_period_is_auto_yn');
+        var mpDispText = $('#mtrc_prod_display_text');
+        var mpAllowBldgOvr = $('#flgBldgOverride');
+        var mProdId = $('#prod_id');
 
-        if (mpName.val() == "") { eMsg += "Metric Period Name is Required\n"; mpName.addClass("fieldError"); }
-        if (mpDesc.val() == "") { eMsg += "Metric Period Description is Required\n"; mpDesc.addClass("fieldError"); }
-        if (mpType.val() == 0) { eMsg += "Select a Metric Type\n"; mpType.addClass("fieldError"); }
-        if (mpToken.val() == "") { eMsg += "Metric Period Token is Required\n"; mpToken.addClass("fieldError"); }
-        if (mMaxDec.val() == "") { eMsg += "Metric Period Max Decimals Value is Required\n"; mMaxDec.addClass("fieldError"); }
-        if (Number(mMaxDec.val()) == "NaN") { eMsg += "Metric Period Max Decimals Value Must be Numeric\n"; mMaxDec.addClass("fieldError"); }
-        if (mpCalc.val() == "") { eMsg += "Metric Period Calculated Flag is Required\n"; mpCalc.addClass("fieldError"); }
-        if (!(mpCalc.val() == "Y" || mpCalc.val() == "N")) { eMsg += "Metric Period Calculated Flag Must be 'Y' or 'N'\n"; mpCalc.addClass("fieldError"); }
-        if (mpMin.val() == "") { eMsg += "Metric Period Minimum Value is Required\n"; mpMin.addClass("fieldError"); }
-        if (Number(mpMin.val()) == "NaN") { eMsg += "Metric Period Minimum Value Must be Numeric\n"; mpMin.addClass("fieldError"); }
-        if (mpMax.val() == "") { eMsg += "Metric Period Maximum Value is Required\n"; mpMax.addClass("fieldError"); }
-        if (Number(mpMax.val()) == "NaN") { eMsg += "Metric Period Maximum Value Must be Numeric\n"; mpMax.addClass("fieldError"); }
-        if (mpNA.val() == "") { eMsg += "Metric Period 'NA Allowed' Flag is Required\n"; mpNA.addClass("fieldError"); }
-        if (!(mpNA.val() == "Y" || mpNA.val() == "N")) { eMsg += "Metric Period 'NA Allowed' Flag Must be 'Y' or 'N'\n"; mpNA.addClass("fieldError"); }
-        if (mpImport.val() == "") { eMsg += "Metric Period 'Can Inport' Flag is Required\n"; mpImport.addClass("fieldError"); }
-        if (!(mpImport.val() == "Y" || mpImport.val() == "N")) { eMsg += "Metric Period 'Can Import' Flag Must be 'Y' or 'N'\n"; mpImport.addClass("fieldError"); }
-        if (mpAuto.val() == "") { eMsg += "Metric Period 'Is Automatic' Flag is Required\n"; mpAuto.addClass("fieldError"); }
-        if (!(mpAuto.val() == "Y" || mpAuto.val() == "N")) { eMsg += "Metric Period 'Is Automatic' Flag Must be 'Y' or 'N'\n"; mpAuto.addClass("fieldError"); }
-        if (mpDispText.val() == "") { eMsg += "The Metric Column Display Text is Required\n"; mpDispText.addClass("fieldError"); }
+        if (mpName.val() == "") { eMsg += "Metric Period Name is Required<br />"; mpName.addClass("fieldError"); }
+        if (mpDesc.val() == "") { eMsg += "Metric Period Description is Required<br />"; mpDesc.addClass("fieldError"); }
+        if (mpTypeText != "Month") { eMsg += "Red Zone Application requires that all Periods must be of the 'Month' type<br />"; mpType.addClass("fieldError"); }
+        if (mpType.val() == 0) { eMsg += "Select a Metric Type<br />"; mpType.addClass("fieldError"); }
+        if (mpToken.val() == "") { eMsg += "Metric Period Token is Required<br />"; mpToken.addClass("fieldError"); }
+        if (mMaxDec.val() == "") { eMsg += "Metric Period Max Decimals Value is Required<br />\n"; mMaxDec.addClass("fieldError"); }
+        if (mProdId.val() == "") { eMsg += "Metric Product Id is Required<br />\n"; mProdId.addClass("fieldError"); }
+        if (Number(mMaxDec.val()) == "NaN") { eMsg += "Metric Period Max Decimals Value Must be Numeric<br />\n"; mMaxDec.addClass("fieldError"); }
+        if (mpCalc.val() == "") { eMsg += "Metric Period Calculated Flag is Required<br />\n"; mpCalc.addClass("fieldError"); }
+        if (!(mpCalc.val() == "Y" || mpCalc.val() == "N")) { eMsg += "Metric Period Calculated Flag Must be 'Y' or 'N'<br />\n"; mpCalc.addClass("fieldError"); }
+        if (mpMin.val() == "") { eMsg += "Metric Period Minimum Value is Required<br />\n"; mpMin.addClass("fieldError"); }
+        if (Number(mpMin.val()) == "NaN") { eMsg += "Metric Period Minimum Value Must be Numeric<br />\n"; mpMin.addClass("fieldError"); }
+        if (mpMax.val() == "") { eMsg += "Metric Period Maximum Value is Required<br />\n"; mpMax.addClass("fieldError"); }
+        if (Number(mpMax.val()) == "NaN") { eMsg += "Metric Period Maximum Value Must be Numeric<br />\n"; mpMax.addClass("fieldError"); }
+        if (mpNA.val() == "") { eMsg += "Metric Period 'NA Allowed' Flag is Required<br />\n"; mpNA.addClass("fieldError"); }
+        if (!(mpNA.val() == "Y" || mpNA.val() == "N")) { eMsg += "Metric Period 'NA Allowed' Flag Must be 'Y' or 'N'<br />\n"; mpNA.addClass("fieldError"); }
+        if (mpImport.val() == "") { eMsg += "Metric Period 'Can Inport' Flag is Required<br />\n"; mpImport.addClass("fieldError"); }
+        if (!(mpImport.val() == "Y" || mpImport.val() == "N")) { eMsg += "Metric Period 'Can Import' Flag Must be 'Y' or 'N'<br />\n"; mpImport.addClass("fieldError"); }
+        if (mpAuto.val() == "") { eMsg += "Metric Period 'Is Automatic' Flag is Required<br />\n"; mpAuto.addClass("fieldError"); }
+        if (!(mpAuto.val() == "Y" || mpAuto.val() == "N")) { eMsg += "Metric Period 'Is Automatic' Flag Must be 'Y' or 'N'<br />\n"; mpAuto.addClass("fieldError"); }
+        if (mpDispText.val() == "") { eMsg += "The Metric Column Display Text is Required<br />\n"; mpDispText.addClass("fieldError"); }
+        if (!(mpAllowBldgOvr.val() == "Y" || mpAllowBldgOvr.val() == "N")) { eMsg += "Metric Period 'Allow Bldg Override' Flag Must be 'Y' or 'N'<br />\n"; mpAllowBldgOvr.addClass("fieldError"); }
+        if (mpMin.hasClass('fieldError') || mpMax.hasClass('fieldError')) { eMsg += "Metric Period 'Min' and 'Max' Value Ranges is not valid<br />\n"; }
 
-        if ($('#selRange').val() == "Invalid Goal") {
+        //if ($('#selRange').val() == "Invalid Goal") {eMsg += "The Metric Period Goal is not Valid."; $('#selRange').addClass("fieldError"); }
+        if ($('#selRange').val() == '' || $('#selRange').val().substring(0, 1) == "E") {
             eMsg += "The Metric Period Goal is not Valid."; $('#selRange').addClass("fieldError");
         }
 
         if (eMsg == "") { return true; }
         else {
-            alert(eMsg);
+            showAlert(eMsg);
+            $('#addMP').button('reset');
             return false;
         }
 
     }
 
-    function parseGoal(range1, range2) {
-        var validGoal = true;
-        var minVal = parseInt($('#leftRange').prop("min"));
-        var maxVal = parseInt($('#leftRange').prop("max"));
-        var formattingChar = (("@metricType" == "pct") ? "%" : "");
+    function setGoalError(errMsg) {
+        $('#isGoalValid').val("N");
+        $('#goal_disp_text').val("");
+        $('#selRange').val(errMsg);
+    }
+    function getJsonCondition(cond, condValue) {
+        return '{"condition" : "' + cond + '", "value" : "' + condValue + '" }';
+    }
 
-        if (range1 == 'NaN' || range2 == 'NaN' || minVal == 'NaN' || maxVal == 'NaN') { return "Goal Can't be Parsed"; }
-        if (range1 == range2) { return "Invalid Goal"; }
+    function adjustGoal() {
+        var goalLower = Number($('#leftRange').val());
+        var goalUpper = Number($('#rightRange').val());
+        var minVal = Number($('#leftRange').prop("min"));          // or parseInt($('#leftRange').prop("min"));
+        var maxVal = Number($('#leftRange').prop("max"));          // or parseInt($('#leftRange').prop("max"));
+        var formattingChar = ((metricType == "pct") ? "%" : "");
+        //var validGoal = true;
+        var incLowLimit = $('#chkIncLowLim').prop('checked');      //bool  [true/false]
+        var incUpLimit = $('#chkIncUpLim').prop('checked');        //bool  [true/false]
+        var goalConditions = "";
 
-        if (range1 < range2) {//Standard Position
-            if (range1 == maxVal) {
+        $('#isGoalValid').val("N");
+        //Verify that all variables to calculate Goal are numeric
+        if (isNaN(goalLower) || isNaN(goalUpper) || isNaN(minVal) || isNaN(maxVal)) {
+            setGoalError("ERROR: Goal Can't be Parsed. Goal Values must be numeric");
+            return;
+        }
 
+        if (goalLower == goalUpper) {
+            $('#goal_disp_text').val("= " + goalUpper);
+            $('#selRange').val("Equals to " + goalUpper + formattingChar);
+            $('#isGoalValid').val("Y");
+            goalConditions = getJsonCondition("=", goalUpper);
+            return;
+        }
+
+        if (goalLower < goalUpper) {//Standard Position
+            if (goalLower == minVal) { //Lower Limit is irrelevant
+                //alert("Lower Limit is irrelevant: " + goalLower + " = " + minVal);
+                if (incUpLimit) {
+                    $('#goal_disp_text').val("≤ " + goalUpper);
+                    $('#selRange').val("Less than or Equal to " + goalUpper + formattingChar);
+                    goalConditions = getJsonCondition("<=", goalUpper);
+                }
+                else {
+                    $('#goal_disp_text').val("< " + goalUpper);
+                    $('#selRange').val("Less than " + goalUpper + formattingChar);
+                    goalConditions = getJsonCondition("<", goalUpper);
+                }
             }
-            return $('#leftRange').val() + formattingChar + " to " + $('#rightRange').val() + formattingChar;
+            else if (goalUpper == maxVal) {   //Upper Limit Is Irrelevant
+                //alert("Upper Limit is irrelevant: " + goalUpper + " = " + maxVal);
+                if (incLowLimit) {
+                    $('#goal_disp_text').val("≥ " + goalLower);
+                    $('#selRange').val("Greater than or Equal to " + goalLower + formattingChar);
+                    goalConditions = getJsonCondition(">=", goalLower);
+                }
+                else {
+                    $('#goal_disp_text').val("> " + goalLower);
+                    $('#selRange').val("Greater than " + goalLower + formattingChar);
+                    goalConditions = getJsonCondition(">", goalLower);
+                }
+            }
+            else { //This is a "Between" Goal
+                //alert("This is an 'inbetween Goal'");
+                if (incLowLimit) {
+                    $('#goal_disp_text').val(">= " + goalLower);
+                    $('#selRange').val("≥ " + goalLower + formattingChar);
+                    goalConditions = getJsonCondition(">=", goalLower);
+                }
+                else {
+                    $('#goal_disp_text').val("> " + goalLower);
+                    $('#selRange').val("Greater than " + goalLower + formattingChar);
+                    goalConditions = getJsonCondition(">", goalLower);
+                }
+
+                if (incUpLimit) {
+                    $('#goal_disp_text').val($('#goal_disp_text').val() + " and <= " + goalUpper);
+                    $('#selRange').val($('#selRange').val() + " and ≤ " + goalUpper + formattingChar);
+                    goalConditions += ", " + getJsonCondition("<=", goalUpper);
+                }
+                else {
+                    $('#goal_disp_text').val($('#goal_disp_text').val() + " and < " + goalUpper);
+                    $('#selRange').val($('#selRange').val() + " and Less than " + goalUpper + formattingChar);
+                    goalConditions += ", " + getJsonCondition("<", goalUpper);
+                }
+            }
         }
         else { //Crossed position
-            if (range1 == maxVal && range2 == minVal) { return "Invalid Goal"; }
-            if (range1 == maxVal) { return "Less than " + $('#rightRange').val() + formattingChar; }
-            if (range2 == minVal) { return "greater than " + $('#leftRange').val() + formattingChar; }
-            return "Less than " + $('#rightRange').val() + formattingChar + " or greater than " + $('#leftRange').val() + formattingChar;
+            //alert("Sliders are crossed: +/- Range!");
+            if (goalLower == maxVal && goalUpper == minVal) {
+                setGoalError("ERROR: Invalid Goal.");
+                return;
+            }
+            if (goalLower == maxVal) {
+                //Lower Goal is irrelevant
+                if (incUpLimit) {
+                    $('#goal_disp_text').val("<= " + goalUpper);
+                    $('#selRange').val("Less than or equal to " + goalUpper + formattingChar);
+                    goalConditions = getJsonCondition("<=", goalUpper);
+                }
+                else {
+                    $('#goal_disp_text').val("< " + goalUpper);
+                    $('#selRange').val("Less than " + goalUpper + formattingChar);
+                    goalConditions = getJsonCondition("<", goalUpper);
+                }
+            }
+            else if (goalUpper == minVal) {
+                //Upper Goal is irrelevant
+                if (incLowLimit) {
+                    $('#goal_disp_text').val(" >= " + goalLower);
+                    $('#selRange').val("Greater than or Equal to " + goalLower + formattingChar);
+                    goalConditions = getJsonCondition(">=", goalLower);
+                }
+                else {
+                    $('#goal_disp_text').val("> " + goalLower);
+                    $('#selRange').val("Greater than " + goalLower + formattingChar);
+                    goalConditions = getJsonCondition(">", goalLower);
+                }
+            }
+            else {
+                if (incLowLimit) {
+                    $('#goal_disp_text').val("<= " + goalUpper);
+                    $('#selRange').val("≤ " + goalUpper + formattingChar);
+                    goalConditions = getJsonCondition("<=", goalUpper);
+                }
+                else {
+                    $('#goal_disp_text').val("< " + goalUpper);
+                    $('#selRange').val("< " + goalUpper + formattingChar);
+                    goalConditions = getJsonCondition("<", goalUpper);
+                }
+
+                if (incUpLimit) {
+                    $('#goal_disp_text').val($('#goal_disp_text').val() + " or >= " + goalLower);
+                    $('#selRange').val($('#selRange').val() + " or ≥ " + goalLower + formattingChar);
+                    goalConditions += ", " + getJsonCondition(">=", goalLower);
+                }
+                else {
+                    $('#goal_disp_text').val($('#goal_disp_text').val() + " or > " + goalLower);
+                    $('#selRange').val($('#selRange').val() + " or > " + goalLower + formattingChar);
+                    goalConditions += ", " + getJsonCondition(">", goalLower);
+                }
+            }
         }
 
+        $('#isGoalValid').val("Y");
+        $('#goalConditions').val('[' + goalConditions + ']');
+        return;
     }
-    function adjustGoal() {
-        $('#selRange').val(parseGoal(parseInt($('#leftRange').val()), parseInt($('#rightRange').val())));
-        if ($('#selRange').val() == "Goal Can't be Parsed" || $('#selRange').val() == "Invalid Goal") {
-            $('#addMP').prop('disabled', true);
-            $('#selRange').addClass("fieldError");
+    function getJsonSubmitData() {
+        var formJson = "{";
+        if ($('#goalConditions').val() == "") { $('#goalConditions').val('[{"condition" : ">=", "value" : "' + $('#leftRange').prop("min") + '" }]'); }
+
+        var fieldValuePairs = $('#frmAddMP').serializeArray();   //Serialize after defaulting the "goalConditions" field
+        $.each(fieldValuePairs, function (index, fieldValuePair) {
+            if (fieldValuePair.name != "__RequestVerificationToken") {
+                formJson += '"' + fieldValuePair.name + '" : "' + fieldValuePair.value + '", ';
+            }
+        });
+
+        //Retrieve the display order of the new Metric Product and collect/include the changes required on the Column Order of the other product columns affected
+        //Loops through all Columns to get their new order of those that have changed their original position
+        var newSeq = 10;     //Start each column on seq=10 and increase by 10 for each column in the list
+        var columnOrder = '';
+        var mProdId = $('#prod_id').val();
+        alert("Product Id is: " + mProdId);
+        $('.column').each(function () {
+            var colName = $(this).find("#colName").first().html();
+            var oldSeq = $(this).find(".colOrder").first().val();
+            if (oldSeq == "999") {  //This is our new Metric Product Column
+                formJson += '"mtrc_prod_display_order" : "' + newSeq + '", ';
+            }
+            else { //This is an old existing column
+                if ((newSeq.toString()) != oldSeq) { //Check if the column's order has changed
+                    columnOrder += '{"prod_id" : ' + mProdId + ', "mtrc_prod_display_text" : "' + colName + '", "old_Order": "' + oldSeq + '", "mtrc_prod_display_order" : ' + newSeq + '}, ';
+                }
+            }
+            newSeq = newSeq + 10;
+        });
+        if (columnOrder.length > 20) {
+            columnOrder = columnOrder.slice(0, -2);   //Remove the last two characters ( ", " ) as they are not needed
         }
-        else {
-            $('#addMP').prop('disabled', false);
-            $('#selRange').removeClass("fieldError");
-        }
+
+        formJson += '"goal_disp_text" : "' + $('#goal_disp_text').val() + '", "goalConditions" : ' + $('#goalConditions').val() + ", ";
+        formJson += '"ColumnsOrder" : [' + columnOrder + "]}";
+        return formJson;
     }
 
     $(document).ready(function () {
         var originalToken = $('#mtrc_period_token').val();
         $("#effStartDate").datepicker({
             showOtherMonths: true,
-            selectOtherMonths: true
+            selectOtherMonths: true,
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            dateFormat: 'MM yy',
+            onClose: function (dateText, inst) {
+                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                $(this).datepicker('setDate', new Date(year, month, 1));
+            }
         });
+
         $("#effEndDate").datepicker({
             showOtherMonths: true,
-            selectOtherMonths: true
+            selectOtherMonths: true,
         });
-       
-        $('#leftRange, #rightRange').change(function () {
+
+        $('#leftRange, #rightRange, #chkIncLowLim, #chkIncUpLim').change(function () {
             adjustGoal();
+
+            if ($('#isGoalValid').val() == "Y") {
+                $('#addMP').prop('disabled', false);
+                $('#selRange').removeClass("fieldError");
+            }
+            else {
+                $('#addMP').prop('disabled', true);
+                $('#selRange').addClass("fieldError");
+            }
+
             $('#pageModified').val("Y");  //Flag the current page as modified
+            //$('#debugMsg').html($('#goalConditions').val());
+
             reloadFill();
         });
 
         //Debug Form Values Buttong for Debugging only
-        $('#btnDebug').click(function () {
-            var queryString = $('#frmAddMP').serialize();
-            alert("Query String is: \n" + queryString);
-
-            var fieldValuePairs = $('#frmAddMP').serializeArray();
-            var formJson = "{";
-            var formData = "";
-            $.each(fieldValuePairs, function (index, fieldValuePair) {
-                formData = formData + "Item " + index + " is [" + fieldValuePair.name + "," + fieldValuePair.value + "]\n";
-                formJson += '"' + fieldValuePair.name + '" : "' + fieldValuePair.value + '", ';
-            });
-            alert(formData);
-            return;
-            //Add the Columns Order to the Json Data
-            var newSeq = 10;
-            var columnData = "";
-            //formJson += '"ColumnOrder" : [' +
-            //      { "firstName":"John", "lastName":"Doe" },
-            //      { "firstName":"Anna", "lastName":"Smith" },
-            //      { "firstName":"Peter", "lastName":"Jones" }
-
-            mtrc_prod_id
-            prod_id
-            mtrc_period_id
-            mtrc_prod_top_lvl_parent_yn
-            mtrc_prod_display_text
-            mtrc_prod_display_order
-            mtrc_prod_eff_start_dt
-            mtrc_prod_eff_end_dt
-
-            $('.column').each(function () {
-                var mProdId = $(this).find(".mProdId").first().val();
-                var colName = $(this).find("#colName").first().html();
-                var oldSeq = $(this).find(".colOrder").first().val();
-                if ((newSeq.toString()) != oldSeq && oldSeq != "999") {
-                    message = message + mProdId + "~" + colName + "~" + oldSeq + "~" + newSeq + ",\n";
-                }
-                //if ( newSeq.toString() != oldSeq) {
-                //    message = message + (oldSeq == "999") ? "": $(this).children("#colName").first().val() + "~" + oldSeq + "~" + newSeq + ",";
-                //}
-                newSeq = newSeq + 10;
-            });
-
-
-            //    var message = "";
-            //    var newSeq = 10;
-            //    $('.column').each(function () {
-            //        var mProdId = $(this).find(".mProdId").first().val();
-            //        var colName = $(this).find("#colName").first().html();
-            //        var oldSeq = $(this).find(".colOrder").first().val();
-
-            //        if ((newSeq.toString()) != oldSeq && oldSeq != "999") {
-            //            message = message + mProdId + "~" + colName + "~" + oldSeq + "~" + newSeq + ",\n";
-            //        }
-            //        //if ( newSeq.toString() != oldSeq) {
-            //        //    message = message + (oldSeq == "999") ? "": $(this).children("#colName").first().val() + "~" + oldSeq + "~" + newSeq + ",";
-            //        //}
-            //        newSeq = newSeq + 10;
-            //    });
-            //    if (message == "") message = "No changes Detected";
-            //    alert(message);
-
-
-
-
-
-
-
-
-
-
-
-            alert("Json Data: \n" + formJson);
-            //alert("Full Form Elements Data: \n" + formData);
-        });
+        //$('#btnDebug').click(function () {
+        //    //var queryString = $('#frmAddMP').serialize();
+        //    //alert("Query String is: \n" + queryString);
+        //    //var formData = "";
+        //    //$.each(fieldValuePairs, function (index, fieldValuePair) {
+        //    //    formData = formData + "Item " + index + " is [" + fieldValuePair.name + "," + fieldValuePair.value + "]\n";
+        //    //});
+        //    //alert(formData);
+        //    var formPostData = getJsonSubmitData();
+        //    $('#postResults').html(formPostData).show();
+        //    return;
+        //});
 
 
         //Hides asterisk from Metric Period Detail fields with default values after those values have been changed.
         $("#frmAddMP").on('change', ".form-control", function () {
             //Perform Input Validation according to the Type of field
             var isInputValid = true;
-
             $(this).val($(this).val().trim());  //Trim Spaces by default on all entry fields
 
             if ($(this).hasClass('mustUpperCase')) { $(this).val($(this).val().toUpperCase()); }   //Uppercase Field Value if Neeeded
@@ -598,7 +824,7 @@
 
             if (isInputValid) {
                 $(this).removeClass("fieldError");
-                $('#addMP').prop('disabled', false);
+                $('#addMP').prop('disabled', false);                
                 $(this).siblings(".indicate-defaulted-value").removeClass("asterisk");
                 $(this).css("background-color", "white");
                 $('#pageModified').val("Y");  //Flag the current page as modified
@@ -676,26 +902,35 @@
         });
 
         $('#addMP').click(function () {
-            if (validateInput()) {
-                var jsonDataValue = '{"name":"Feliciano"}';
+            $(this).button('loading');
 
+            if (validateInput()) {
+                var jsonDataValue = getJsonSubmitData();
 
                 // ------------ Make the Ajax Call ---------------------------------------------
+                var token = $('input[name="__RequestVerificationToken"]').val();
                 $.ajax({
                     url: '/MetricPeriod/AddMetricPeriod',     // the url where we want to direct our Ajax Call
                     method: "POST",
                     cache: false,
-                    data: { jsonData: jsonDataValue },     //<---- Data Parameters (if not already passed in the Url)
+                    data: {
+                        __RequestVerificationToken: token,
+                        jsonData: jsonDataValue
+                    },     //<---- Data Parameters (if not already passed in the Url)
                     //--- On error, execute this function ------
                     error: function (xhr, status, error) {
-                        $('#postResults').html(xhr + "<br />STATUS: " + status);
-                        $('#postResults').addClass('alert-danger').show().fadeOut(5000);
+                        $('#postResults').html("<br />STATUS: " + status + "<br/>" + error);
+                        $('#postResults').addClass('alert-danger').show().fadeOut(20000);
+                        $('#addMP').button('reset');
                     }
                 }).done(function (d) {
-                    $('#postResults').html(d).addClass('alert-success').show().fadeOut(5000);
-                    
-                    //Scroll to the bottom of the page so that the newly retrieved data becomes visible
-                    window.scrollTo(0, document.body.scrollHeight);
+                    showAlert(d, "success", "N");
+                    window.location.href = "/MetricPeriod/Index/" + $('#mtrc_id').val();
+
+                    //$('#postResults').html(d).addClass('alert-success').show().fadeOut(20000);
+                    //$('#addMP').button('reset');
+                    ////Scroll to the bottom of the page so that the newly retrieved data becomes visible
+                    //window.scrollTo(0, document.body.scrollHeight);
                 });
 
 

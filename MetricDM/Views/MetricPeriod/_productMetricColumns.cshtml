@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<MetricDM.Models.dataPair>
-<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+@*<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">*@
 
 <div class="panel panel-primary" style="margin:0 auto; max-width:95%; border-top-width:2px; margin-top:10px">
     <div class="panel-heading">SELECT COLUMN ORDER TO USE IN THE DASHBOARD</div>
@@ -15,14 +15,14 @@
                         {
                             <li class="ui-state-default column" style="min-width:100px">
                                 <label style="min-width:70px"><span id="colName">@item.dataValue</span></label>
-                                <input type="hidden" name="colOrder" class="colOrder" value="@item.dataValue2" />
-                                <input type="hidden" name="mProdId" class="mProdId" value="@item.id" />
+                                <input type="hidden" id="colOrder" class="colOrder" value="@item.dataValue2" />
+                                <input type="hidden" id="mProdId" class="mProdId" value="@item.id" />
                             </li>
                         }
                         <li class="ui-state-default column" style="min-width:100px">
                             <label style="min-width:70px"><span class="newColumn" id="colName" style="color:blue; font-weight:bold">NEW METRIC</span></label>
-                            <input type="hidden" name="colOrder" class="colOrder" value="999" />
-                            <input type="hidden" name="mProdId" class="mProdId" value="0" />
+                            <input type="hidden" id="colOrder" class="colOrder" value="999" />
+                            <input type="hidden" id="mProdId" class="mProdId" value="0" />
                         </li>
                     </ul>
                 </div>

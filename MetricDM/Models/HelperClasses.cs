@@ -12,6 +12,7 @@ namespace MetricDM.Models
     public class dataPair
     {
         public int id { get; set; }
+        public int dataValueInt { get; set; }
         public string dataValue { get; set; }
         public string dataValue2 { get; set; }
     }

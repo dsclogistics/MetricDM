@@ -284,11 +284,53 @@
                 $("#msgLoading").hide();
                 $("#mpDetailsView").show();
                 $("#btnSaveMPDetail").prop("disabled", false);
-                $("#saveMessage").html("Data Saved Successfully!");
-                $("#saveMessage").show().fadeOut(3000);
+                //$("#saveMessage").html("Data Saved Successfully!");
+                $("#saveMessage").show().fadeOut(6000);
                 $(window).scrollTop(tempScrollTop);
             });
         });
+        //-------------------------------------------------------------------------------------------------------
+        //Delete Metric Period Data Button
+        $("#divOutput").on('click', '#btnDeleteMP', function (e) {
+            //var mtrc_id = $('#mtrc_id').val();
+            var mp_id = $('#mtrc_period_id').val();
+            var tempScrollTop = $(window).scrollTop();
+
+            $("#saveMessage").addClass("alert-warning");
+            $("#saveMessage").html("Please wait... Performing Deletion").show();
+
+            $(this).button('loading');            
+            //$('#btnDeleteMP').button('reset')
+            //--------- Perform actual Deletion via ajax -------------
+            $.ajax({
+                type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                //method    : 'POST',
+                url: '/MetricPeriod/_DeleteMP', // the url where we want to POST
+                //data    : { id: idToDisplay },     //<---- Data Parameters (if not already passed in the Url)
+                data: {
+                    mp_id: mp_id
+                }, // our data object created earlier
+                //dataType  : 'json', // what type of data do we expect back from the server (Remove line if expecting html [partial or full]view result)
+                //encode    : true,
+                cache: false,
+                //--- On error, execute this function ------
+                error: function (xhr, status, error) {
+                    $("#saveMessage").html("Error Deleting Metric Period: \n" + error);
+                    $('#btnDeleteMP').button('reset');
+                    $("#saveMessage").show().fadeOut(6000);
+                    //alert("An Error has Occurred.");  //<-- Trap and alert of any errors if they occurred
+                }
+            }).done(function (d) {
+                //This code Executes After the Ajax call completes successfully
+                alert(d);
+                location.reload(true);
+                //$("#saveMessage").html(d).show().fadeOut(6000);
+                //$('#btnDeleteMP').button('reset');
+                //$(window).scrollTop(tempScrollTop);
+            });
+        });
+
+
 
         //POSTing data using the Add Metric Period Button in the Add New Metric Period popup
         $("#btnAddMPPopup").click(function () {
@@ -296,7 +338,6 @@
             var formData = $('#frmAddMP').serialize();
             // ------------ Make the Ajax Call ---------------------------------------------
             $.ajax({
-                @*url: '@Url.Action("_metricPeriodDetails", "MetricPeriod")',*@
                 url: '/MetricPeriod/AddMetricPeriod',     // the url where we want to direct our Ajax Call
                 method: "POST",
                 cache: false,
@@ -310,7 +351,6 @@
                 //Insert the partial view retrieved into the output 'newMetricPeriodBody' panel
                 $('#newMetricPeriodForm').modal('hide');
                 alert(d);
-                //$('#divPeriodListView').load('@Url.Action("_metricPeriodList","MetricPeriod")/'+mtrcId);
                 location.reload();
             });
         });
@@ -368,7 +408,6 @@
 
             // ------------ Make the Ajax Call ---------------------------------------------
             $.ajax({
-                @*url: '@Url.Action("_metricPeriodDetails", "MetricPeriod")',*@
                 url: '/MetricPeriod/_metricPeriodDetails',     // the url where we want to direct our Ajax Call
                 method: "GET",
                 cache: false,
