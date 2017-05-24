@@ -281,7 +281,7 @@ namespace MetricDM.Controllers
                         //Add the New Metric Product Record with the new order sequence
                         MTRC_METRIC_PRODUCTS mproduct = new MTRC_METRIC_PRODUCTS
                         {
-                            prod_id = 1,
+                            prod_id = newMP.prod_id,
                             mtrc_period_id = mp_Id,
                             mtrc_prod_top_lvl_parent_yn = "Y",
                             mtrc_prod_display_text = newMP.mtrc_prod_display_text,
@@ -297,7 +297,7 @@ namespace MetricDM.Controllers
                         MTRC_MPG mpg = new MTRC_MPG
                         {
                             mtrc_period_id = mp_Id,
-                            prod_id = 1,
+                            prod_id = newMP.prod_id,
                             mpg_score = 1,
                             mpg_display_text = newMP.goal_disp_text,
                             mpg_allow_bldg_override = newMP.mtrc_period_na_allow_yn,
@@ -423,14 +423,17 @@ namespace MetricDM.Controllers
         }
         //= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 
-        [ChildActionOnly]
-        public ActionResult _productMetricColumns()
+        [HttpGet]
+        public ActionResult _productMetricColumns(string productId)
         {
+            short prod_id = 0;
             List<dataPair> columns = new List<dataPair>();
+            if (!short.TryParse(productId, out prod_id) || prod_id == 0) { return PartialView(columns); }
+
             try
             {
                 columns.AddRange(
-                    db.MTRC_METRIC_PRODUCTS.Where(x => x.prod_id == 1 && x.mtrc_prod_display_order != null)
+                    db.MTRC_METRIC_PRODUCTS.Where(x => x.prod_id == prod_id && x.mtrc_prod_display_order != null)
                     .Select(
                     y => new dataPair
                     {
@@ -518,6 +521,7 @@ namespace MetricDM.Controllers
             public string mtrc_period_desc { get; set; }
             public string tpt_id { get; set; }
             public string mtrc_period_token { get; set; }
+            public short prod_id { get; set; }
             public string mtrc_period_max_dec_places { get; set; }
             public string mtrc_period_max_str_size { get; set; }            
             public string mtrc_period_calc_yn { get; set; }

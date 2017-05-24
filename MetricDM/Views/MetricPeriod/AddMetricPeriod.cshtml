@@ -324,10 +324,16 @@
     </div>
 
 
+    <div id="divMPcolumns" style="height:187px; margin-bottom:0px"  >
+        <div class="panel panel-primary" style="margin:0 auto; max-width:95%; border-top-width:2px; margin-top:10px; margin-bottom:3px">
+            <div class="panel-heading" style="padding:5px">SELECT COLUMN ORDER TO USE IN THE DASHBOARD</div>
+            <div class="panel-body" style="padding:3px; height:140px">
+            </div>
+        </div>
+        @*@Html.Action("_productMetricColumns")*@
+    </div>
 
-    @Html.Action("_productMetricColumns")
-
-    <div class="panel panel-primary" style="margin:0 auto; margin-top:15px; max-width:95%; border-top-width:2px">
+    <div class="panel panel-primary" style="margin:0 auto; margin-top:0px; max-width:95%; border-top-width:2px">
         <div class="panel-heading" style="padding:4px">METRIC PERIOD GOAL</div>
         <div class="panel-body" style="min-height: 195px; margin:0 auto; padding: 15px 0px 0px 0px;">
             <div class="row " style="margin:0; width:100%; padding-left:5px">
@@ -368,7 +374,7 @@
                     <div style="text-align:left; padding-left:10px;">
                         <div class="input-group">
                             <label class="input-group-addon" for="goal_disp_text" style="font-weight:bold; min-width:120px">Goal Disp Text</label>
-                            <input class="form-control text-box single-line" id="goal_disp_text" name="goal_disp_text" type="text" style="width:150px" disabled="disabled" value="&ge; @minGoal" />
+                            <input class="form-control text-box single-line" id="goal_disp_text" name="goal_disp_text" type="text" style="width:150px" disabled="disabled" value=">= @minGoal" />
                         </div>
                     </div>
                 </div>
@@ -419,7 +425,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>   
 
     <hr />
     <div class="form-horizontal">
@@ -694,7 +700,6 @@
         var newSeq = 10;     //Start each column on seq=10 and increase by 10 for each column in the list
         var columnOrder = '';
         var mProdId = $('#prod_id').val();
-        alert("Product Id is: " + mProdId);
         $('.column').each(function () {
             var colName = $(this).find("#colName").first().html();
             var oldSeq = $(this).find(".colOrder").first().val();
@@ -713,7 +718,7 @@
         }
 
         formJson += '"goal_disp_text" : "' + $('#goal_disp_text').val() + '", "goalConditions" : ' + $('#goalConditions').val() + ", ";
-        formJson += '"ColumnsOrder" : [' + columnOrder + "]}";
+        formJson += '"ColumnsOrder" : [' + columnOrder + ']}';
         return formJson;
     }
 
@@ -769,7 +774,6 @@
         //    $('#postResults').html(formPostData).show();
         //    return;
         //});
-
 
         //Hides asterisk from Metric Period Detail fields with default values after those values have been changed.
         $("#frmAddMP").on('change', ".form-control", function () {
@@ -835,29 +839,41 @@
             }
         });
 
+        $('#prod_id').change(function () {
+            var prod_id = $(this).val();
+            if (prod_id == "") {
+                $('#divColInfo').html("");
+                return;
+            }
+            $('#divMPcolumns').html('<span style="padding:20px">Please wait while Column Information for ' + $(this).prop('text') + ' loads...</span>');
+
+            // ------------ Make the Ajax Call to retrieve the Columns Section for the Selected Product -------------------------
+            $.ajax({
+                url: '/MetricPeriod/_productMetricColumns',     // the url where we want to direct our Ajax Call
+                method: "GET",
+                cache: false,
+                data: {
+                    productId: prod_id
+                },     //<---- Data Parameters (if not already passed in the Url)
+                //--- On error, execute this function ------
+                error: function (xhr, status, error) {
+                    $('#divMPcolumns').html('<span class="alert-danger">Failed to Retrive Product Columns: <br />' + error + '</span>');
+                }
+            }).done(function (d) {
+                $('#divMPcolumns').html(d);
+            });
+
+
+        });
 
         $('#mtrc_id').change(function () {
             if ($('#pageModified').val() == "Y") {
                 if (confirm("Current Changes have not been Saved.\nDiscard Changes?")) {
-                    alert("Changes have been discarded.");
+                    window.location.href = "/MetricPeriod/AddMetricPeriod/" + $(this).val();
                 }
-                else {
-                    alert("Keep working then");
+                else { //Return Drop Down List back to it's previous value
+                    $('#mtrc_id').val($('#orig_mtrc_id').val());
                 }
-
-                var question = "Current Changes have not been Saved.\nDiscard Changes?";
-                showConfirmation(question).then(function (answer) {
-                    //var ansbool = Boolean.parse(answer.toString());
-                    if (answer == 'true') { //TRUE
-                        alert("You Answered Yes.\nGo to Id: " + $(this).val());
-                        //window.location.href = "/MetricPeriod/AddMetricPeriod/" + $(this).val();
-                    } else { //FALSE
-                        //Return Drop Down List back to it's previous value
-                        $('#mtrc_id').val($('#orig_mtrc_id').val());
-                        alert("You Answered NO!");
-                        //No Action taken.
-                    }
-                });
             }
             else {
                 window.location.href = "/MetricPeriod/AddMetricPeriod/" + $(this).val();

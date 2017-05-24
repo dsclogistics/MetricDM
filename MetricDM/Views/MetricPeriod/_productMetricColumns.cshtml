@@ -1,42 +1,48 @@
 ﻿@model IEnumerable<MetricDM.Models.dataPair>
 @*<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">*@
 
-<div class="panel panel-primary" style="margin:0 auto; max-width:95%; border-top-width:2px; margin-top:10px">
-    <div class="panel-heading">SELECT COLUMN ORDER TO USE IN THE DASHBOARD</div>
-    <div class="panel-body" style="padding:3px">
+<div class="panel panel-primary" style="margin:0 auto; max-width:95%; border-top-width:2px; margin-top:10px; margin-bottom:3px">
+    <div class="panel-heading" style="padding:5px">SELECT COLUMN ORDER TO USE IN THE DASHBOARD</div>
+    <div class="panel-body" id="divColInfo" style="padding:3px" >
         <div>NOTE: Your New Metric Period will get displayed as a column in the Metric's Dashboard</div>
-        <div>Drag and drop the column for the new Metric to it's final desired position in the Dashboard</div>
         @if (Model.Count() > 0)
         {
-            <div id="menu-outer">
-                <div class="table1">
-                    <ul id="horizontal-list" class="sortable">
-                        @foreach (var item in Model)
-                        {
-                            <li class="ui-state-default column" style="min-width:100px">
-                                <label style="min-width:70px"><span id="colName">@item.dataValue</span></label>
-                                <input type="hidden" id="colOrder" class="colOrder" value="@item.dataValue2" />
-                                <input type="hidden" id="mProdId" class="mProdId" value="@item.id" />
-                            </li>
-                        }
-                        <li class="ui-state-default column" style="min-width:100px">
-                            <label style="min-width:70px"><span class="newColumn" id="colName" style="color:blue; font-weight:bold">NEW METRIC</span></label>
-                            <input type="hidden" id="colOrder" class="colOrder" value="999" />
-                            <input type="hidden" id="mProdId" class="mProdId" value="0" />
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            @*<input type="button" id="btnReorder" value="View New Order" />*@
+            <div>Drag and drop the column for the new Metric to it's final desired position in the Dashboard</div>
         }
         else
         {
-            <div style="color:red;"> No Columns were retrieved from Database </div>
+            <div>This is the First and Only Metric currently Defined for this product.</div>
         }
-
+        <div id="menu-outer">
+            <div class="table1">
+                <ul id="horizontal-list" class="sortable">
+                    @foreach (var item in Model)
+                    {
+                        <li class="ui-state-default column" style="min-width:100px">
+                            <label style="min-width:70px"><span id="colName">@item.dataValue</span></label>
+                            <input type="hidden" id="colOrder" class="colOrder" value="@item.dataValue2" />
+                            <input type="hidden" id="mProdId" class="mProdId" value="@item.id" />
+                        </li>
+                    }
+                    <li class="ui-state-default column" style="min-width:100px">
+                        <label style="min-width:70px"><span class="newColumn" id="colName" style="color:blue; font-weight:bold">NEW METRIC</span></label>
+                        <input type="hidden" id="colOrder" class="colOrder" value="999" />
+                        <input type="hidden" id="mProdId" class="mProdId" value="0" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+        @*<input type="button" id="btnReorder" value="View New Order" />*@
     </div>
 </div>
 
+@*else
+    {
+        <div class="bordered-dbl" style="margin:0 auto; max-width:95%; margin-top:10px; padding:10px">
+            <span class="alert-info" style="padding:5px">There are no Columns to Display for Selected Product</span>
+        </div>
+
+    }*@
 
 <script>
     $(document).ready(function () {
