@@ -36,9 +36,29 @@ namespace MetricDM.Controllers
         // GET: /MetricPeriod/_metricPeriodList/
         public PartialViewResult _metricPeriodList(int id)
         {
-            List<MTRC_METRIC_PERIOD> metricPeriods = db.MTRC_METRIC_PERIOD.Where(x => x.mtrc_id == id).ToList();
+            //List<MTRC_METRIC_PERIOD> metricPeriods = db.MTRC_METRIC_PERIOD.Where(x => x.mtrc_id == id).ToList();
 
-            return PartialView(metricPeriods);
+            // GET all currently active product metric period goals for the specifid prodId.
+            var mp_Items = from a in db.MTRC_METRIC_PERIOD
+                        join b in db.MTRC_METRIC on a.mtrc_id equals b.mtrc_id
+                        join c in db.MTRC_TIME_PERIOD_TYPE on a.tpt_id equals c.tpt_id
+                        join d in db.MTRC_METRIC_PRODUCTS on a.mtrc_period_id equals d.mtrc_period_id
+                        join e in db.MTRC_PRODUCT on d.prod_id equals e.prod_id
+                        where a.mtrc_id == id
+                        select new METRIC_PERIOD_ITEM
+                        {
+                            mtrc_period_id = a.mtrc_period_id,
+                            mtrc_period_name = a.mtrc_period_name,
+                            mtrc_period_desc = a.mtrc_period_desc,
+                            metric_Name = b.mtrc_name,
+                            period_Type = c.tpt_name,
+                            product_Name = e.prod_name
+                        };
+
+            //return PartialView(metricPeriods);
+            return PartialView(mp_Items);
+
+
         }
 
         //= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
@@ -553,6 +573,16 @@ namespace MetricDM.Controllers
             public Int16 old_Order { get; set; }
             public Int16 mtrc_prod_display_order { get; set; }
         }
+
+        public class METRIC_PERIOD_ITEM { 
+            public int mtrc_period_id { get; set; }
+            public string mtrc_period_name { get; set; }
+            public string mtrc_period_desc { get; set; }
+            public string metric_Name { get; set; }
+            public string period_Type { get; set; }
+            public string product_Name { get; set; }
+        }
+
 
     }
 }

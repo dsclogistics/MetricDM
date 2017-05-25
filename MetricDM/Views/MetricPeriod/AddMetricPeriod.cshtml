@@ -451,9 +451,6 @@
 <br /><br /><br />
 
 
-
-
-
 <script>
     var metricType = '@metricType';
     function showValue(selectedValue) {
@@ -500,8 +497,10 @@
 
         if (mpName.val() == "") { eMsg += "Metric Period Name is Required<br />"; mpName.addClass("fieldError"); }
         if (mpDesc.val() == "") { eMsg += "Metric Period Description is Required<br />"; mpDesc.addClass("fieldError"); }
-        if (mpTypeText != "Month") { eMsg += "Red Zone Application requires that all Periods must be of the 'Month' type<br />"; mpType.addClass("fieldError"); }
-        if (mpType.val() == 0) { eMsg += "Select a Metric Type<br />"; mpType.addClass("fieldError"); }
+        if (mpType.val() == 0) { eMsg += "A 'Time Period' Selection is required<br />"; mpType.addClass("fieldError"); }
+        else {
+            if (mProdId.val() == "1" && mpTypeText != "Month") { eMsg += "The 'Time Period' Type must be 'Month' for Red Zone Metrics<br />"; mpType.addClass("fieldError"); }
+        }        
         if (mpToken.val() == "") { eMsg += "Metric Period Token is Required<br />"; mpToken.addClass("fieldError"); }
         if (mMaxDec.val() == "") { eMsg += "Metric Period Max Decimals Value is Required<br />\n"; mMaxDec.addClass("fieldError"); }
         if (mProdId.val() == "") { eMsg += "Metric Product Id is Required<br />\n"; mProdId.addClass("fieldError"); }

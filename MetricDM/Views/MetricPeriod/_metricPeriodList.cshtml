@@ -1,4 +1,5 @@
-﻿@model IEnumerable<MetricDM.Models.MTRC_METRIC_PERIOD>
+﻿@model IEnumerable<MetricDM.Controllers.MetricPeriodController.METRIC_PERIOD_ITEM>
+@*@model IEnumerable<MetricDM.Models.MTRC_METRIC_PERIOD>*@
 
 @*<p>
     @Html.ActionLink("Create New", "Create")
@@ -9,18 +10,11 @@
 <div class="row" style="margin:0 auto">
     <table class="table table-bordered table-condensed table-hover table-striped">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.mtrc_period_name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.mtrc_period_desc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MTRC_METRIC.mtrc_name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MTRC_TIME_PERIOD_TYPE.tpt_name)
-            </th>
+            <th style="text-align:center">Metric Period Name</th>
+            <th>Description</th>
+            <th style ="text-align:center">Metric Name</th>
+            <th style="text-align:center">Time Period Name</th>
+            <th style="text-align:center">Product</th>
             <th></th>
         </tr>
 
@@ -33,11 +27,17 @@
                     @Html.DisplayFor(modelItem => item.mtrc_period_desc)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MTRC_METRIC.mtrc_name)
+                    @*@Html.DisplayFor(modelItem => item.MTRC_METRIC.mtrc_name)*@
+                    @Html.DisplayFor(modelItem => item.metric_Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MTRC_TIME_PERIOD_TYPE.tpt_name)
+                    @*@Html.DisplayFor(modelItem => item.MTRC_TIME_PERIOD_TYPE.tpt_name)*@
+                    @Html.DisplayFor(modelItem => item.period_Type)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.product_Name)
+                </td>
+
                 <td>
                     <input type="hidden" id="MPId" value="@item.mtrc_period_id"/>
                     <input type="button" class="btnMPDetails" value="Details" />
@@ -46,7 +46,7 @@
 }
 
     </table>
-    @if (((List<MetricDM.Models.MTRC_METRIC_PERIOD>)Model).Count == 0)
+    @if ( Model.Count() == 0)
     { 
         <div style="border: 1px solid red; border-radius:4px; color:red; margin:0 auto; max-width:500px; padding: 15px; font-style:italic ">
             No Metric Periods have been set up for this Metric
